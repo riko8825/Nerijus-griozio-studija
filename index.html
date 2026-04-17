@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Akva Studio — profesionali grožio studija. Blakstienų priauginimas, laminavimas, depiliacija. Registruokitės internetu.">
+  <title>Akva Studio — Beauty · Care · Confidence</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;1,6..12,300;1,6..12,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="src/css/styles.css">
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header class="header" id="top">
+    <div class="container">
+      <nav class="nav">
+        <a href="#top" class="nav-logo">
+          <span class="nav-logo-name">AKVA</span>
+          <span class="nav-logo-sub">STUDIO</span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#services" data-i18n="nav_services">Paslaugos</a></li>
+          <li><a href="#about" data-i18n="nav_about">Apie mus</a></li>
+          <li><a href="#portfolio" data-i18n="nav_portfolio">Darbai</a></li>
+          <li><a href="#reviews" data-i18n="nav_reviews">Atsiliepimai</a></li>
+        </ul>
+
+        <div class="nav-right">
+          <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="lt">LT</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="no">NO</button>
+          </div>
+          <a href="#booking" class="btn btn-primary" data-i18n="nav_book">Rezervuoti</a>
+          <button class="nav-burger" aria-label="Meniu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile nav overlay -->
+  <div class="mobile-nav" id="mobile-nav">
+    <button class="mobile-nav-close" aria-label="Uždaryti">✕</button>
+    <a href="#services" data-i18n="nav_services">Paslaugos</a>
+    <a href="#about" data-i18n="nav_about">Apie mus</a>
+    <a href="#portfolio" data-i18n="nav_portfolio">Darbai</a>
+    <a href="#reviews" data-i18n="nav_reviews">Atsiliepimai</a>
+    <a href="#booking" class="btn btn-primary" data-i18n="nav_book">Rezervuoti</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <span class="hero-badge" data-i18n="hero_badge">Profesionali grožio studija</span>
+
+          <h1 class="hero-title">
+            <span data-i18n="hero_title_1">Tavo</span>
+            <em data-i18n="hero_title_2"> grožis —</em><br>
+            <span data-i18n="hero_title_3">mūsų rūpestis</span>
+          </h1>
+
+          <p class="hero-subtitle" data-i18n="hero_sub">
+            Blakstienų priauginimas, laminavimas ir viso kūno depiliacija. Profesionaliai. Švelnus pojūtis. Aukštas rezultatas.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#booking" class="btn btn-primary" data-i18n="hero_cta1">Registruotis procedūrai</a>
+            <a href="#portfolio" class="btn btn-outline" data-i18n="hero_cta2">Peržiūrėti darbus</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-number">200+</span>
+              <span class="stat-label" data-i18n="stat_clients">Patenkintų klientių</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">3+</span>
+              <span class="stat-label" data-i18n="stat_years">Metų patirtis</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">500+</span>
+              <span class="stat-label" data-i18n="stat_procedures">Procedūrų per metus</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-image-frame">
+            <!-- Čia bus klientės nuotrauka -->
+            <div class="hero-image-placeholder">
+              <span class="placeholder-icon">✦</span>
+              <span>Akva Studio</span>
+            </div>
+          </div>
+          <div class="hero-floating-card">
+            <div class="card-icon">✓</div>
+            <div class="card-text">
+              <strong data-i18n="book_btn">Rezervuoti</strong>
+              <span data-i18n="hero_badge">Greita registracija</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ── -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="services-header">
+        <span class="section-label" data-i18n="services_label">Mūsų paslaugos</span>
+        <h2 class="section-title" data-i18n="services_title">Ką mes siūlome</h2>
+        <div class="divider divider-center"></div>
+        <p class="section-subtitle" data-i18n="services_sub">
+          Kiekviena procedūra – aukštos kokybės medžiagos ir profesionalus atlikimas.
+        </p>
+      </div>
+
+      <div class="services-grid">
+
+        <!-- Blakstienų priauginimas -->
+        <div class="service-card">
+          <div class="service-icon">👁</div>
+          <h3 data-i18n="svc1_name">Blakstienų priauginimas</h3>
+          <p data-i18n="svc1_desc">Klasikinis, rusiškas apimtis, hibridas. Ilgaamžiai ir natūralūs rezultatai.</p>
+          <div class="service-price">
+            <span class="price-tag" data-i18n="svc1_price">nuo €40</span>
+            <a href="#booking" class="btn btn-primary btn-sm" data-i18n="book_btn">Rezervuoti</a>
+          </div>
+        </div>
+
+        <!-- Laminavimas -->
+        <div class="service-card">
+          <div class="service-icon">✨</div>
+          <h3 data-i18n="svc2_name">Blakstienų laminavimas</h3>
+          <p data-i18n="svc2_desc">Gamtinių blakstienų sulenkimas ir stiprinimas. Efektas trunka 4–6 savaites.</p>
+          <div class="service-price">
+            <span class="price-tag" data-i18n="svc2_price">nuo €35</span>
+            <a href="#booking" class="btn btn-primary btn-sm" data-i18n="book_btn">Rezervuoti</a>
+          </div>
+        </div>
+
+        <!-- Depiliacija -->
+        <div class="service-card">
+          <div class="service-icon">🌿</div>
+          <h3 data-i18n="svc3_name">Cukraus pasta depiliacija</h3>
+          <p data-i18n="svc3_desc">Švelnus ir ilgalaikis plaukų šalinimas viso kūno zonoms. Unikalus mieste.</p>
+          <div class="service-price">
+            <span class="price-tag" data-i18n="svc3_price">nuo €20</span>
+            <a href="#booking" class="btn btn-primary btn-sm" data-i18n="book_btn">Rezervuoti</a>
+          </div>
+        </div>
+
+        <!-- Produktai -->
+        <div class="service-card">
+          <div class="service-icon">🧴</div>
+          <h3 data-i18n="svc4_name">Produktų pardavimas</h3>
+          <p data-i18n="svc4_desc">Profesionali priežiūros kosmetika namų naudojimui. Prailgink procedūros efektą.</p>
+          <div class="service-price">
+            <span class="price-tag" data-i18n="svc4_price">nuo €10</span>
+            <a href="#booking" class="btn btn-outline btn-sm" data-i18n="book_btn">Rezervuoti</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-inner">
+        <div class="about-image-wrap">
+          <div class="about-image">
+            <!-- Čia bus Akvilės nuotrauka -->
+            <div class="about-image-placeholder">Akvilės nuotrauka</div>
+          </div>
+          <div class="about-decor"></div>
+        </div>
+
+        <div class="about-content">
+          <span class="section-label" data-i18n="about_label">Apie studiją</span>
+          <h2 class="section-title" data-i18n="about_title">Kas mes esame</h2>
+          <div class="divider"></div>
+
+          <p class="about-p" data-i18n="about_p1">
+            Akva Studio — tai profesionali grožio studija, įsikūrusi jūsų mieste. Teikiame blakstienų priauginimo, laminavimo ir depiliacijos paslaugas. Esame vienintelė studija mieste, siūlanti cukraus pasta depiliaciją.
+          </p>
+          <p class="about-p" data-i18n="about_p2">
+            Mums svarbu ne tik rezultatas, bet ir kliento komfortas. Naudojame tik aukštos kokybės medžiagas ir nuolat tobuliname įgūdžius.
+          </p>
+
+          <ul class="about-list">
+            <li data-i18n="about_li1">Patirties turinčios specialistės</li>
+            <li data-i18n="about_li2">Tik aukštos kokybės medžiagos</li>
+            <li data-i18n="about_li3">Patogi ir šilta aplinka</li>
+            <li data-i18n="about_li4">Individualus požiūris į kiekvieną klientę</li>
+          </ul>
+
+          <a href="#booking" class="btn btn-primary" data-i18n="about_cta">Rezervuoti vizitą</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHY US ── -->
+  <section class="whyus" id="whyus">
+    <div class="container">
+      <div class="whyus-header">
+        <span class="section-label" data-i18n="whyus_label">Kodėl mes</span>
+        <h2 class="section-title" data-i18n="whyus_title">Jūsų pasirinkimas — teisingas</h2>
+        <div class="divider divider-center"></div>
+        <p class="section-subtitle" data-i18n="whyus_sub">
+          Akva Studio — tai kokybė, profesionalumas ir jūsų grožis mūsų rankose.
+        </p>
+      </div>
+
+      <div class="whyus-grid">
+        <div class="whyus-item">
+          <span class="whyus-number">01</span>
+          <h3 data-i18n="why1_t">Profesionalumas</h3>
+          <p data-i18n="why1_d">Nuolat mokomės ir tobulėjame. Tik sertifikuotos technikės.</p>
+        </div>
+        <div class="whyus-item">
+          <span class="whyus-number">02</span>
+          <h3 data-i18n="why2_t">Kokybė</h3>
+          <p data-i18n="why2_d">Naudojame tik patikrintas, aukštos kokybės medžiagas.</p>
+        </div>
+        <div class="whyus-item">
+          <span class="whyus-number">03</span>
+          <h3 data-i18n="why3_t">Komfortas</h3>
+          <p data-i18n="why3_d">Šilta, jauki aplinka. Jautiesi kaip namuose.</p>
+        </div>
+        <div class="whyus-item">
+          <span class="whyus-number">04</span>
+          <h3 data-i18n="why4_t">Unikalumas</h3>
+          <p data-i18n="why4_d">Vienintelė cukraus pasta depiliacija jūsų mieste.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PORTFOLIO ── -->
+  <section class="portfolio" id="portfolio">
+    <div class="container">
+      <div class="portfolio-header">
+        <span class="section-label" data-i18n="portfolio_label">Mūsų darbai</span>
+        <h2 class="section-title" data-i18n="portfolio_title">Rezultatai kalba patys</h2>
+        <div class="divider divider-center"></div>
+        <p class="section-subtitle" data-i18n="portfolio_sub">
+          Tikri darbai. Tikri rezultatai. Tikros klientės.
+        </p>
+      </div>
+
+      <div class="portfolio-grid">
+        <!-- Portfolio images — klientė atsiųs nuotraukas -->
+        <div class="portfolio-item">
+          <div class="portfolio-placeholder">
+            <span class="placeholder-icon">✦</span>
+            <span>Darbų nuotraukos</span>
+          </div>
+          <div class="portfolio-overlay"><span>Blakstienų priauginimas</span></div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-placeholder">
+            <span class="placeholder-icon">✦</span>
+            <span>Darbų nuotraukos</span>
+          </div>
+          <div class="portfolio-overlay"><span>Laminavimas</span></div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-placeholder">
+            <span class="placeholder-icon">✦</span>
+            <span>Darbų nuotraukos</span>
+          </div>
+          <div class="portfolio-overlay"><span>Depiliacija</span></div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-placeholder">
+            <span class="placeholder-icon">✦</span>
+            <span>Darbų nuotraukos</span>
+          </div>
+          <div class="portfolio-overlay"><span>Rezultatai</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ── -->
+  <section class="testimonials" id="reviews">
+    <div class="container">
+      <div class="testimonials-header">
+        <span class="section-label" data-i18n="reviews_label">Atsiliepimai</span>
+        <h2 class="section-title" data-i18n="reviews_title">Ką sako klientės</h2>
+        <div class="divider divider-center divider-no-bottom"></div>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text" data-i18n="rev1_text">
+            "Labai profesionali studija! Blakstienų priauginimas liko 4 savaites. Tikrai grįšiu."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">L</div>
+            <div>
+              <span class="author-name" data-i18n="rev1_name">Laura K.</span>
+              <span class="author-detail" data-i18n="rev1_sub">Blakstienų priauginimas</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text" data-i18n="rev2_text">
+            "Cukraus pasta depiliacija — pirmą kartą gyvenime taip neskaudėjo. Rekomenduoju visoms!"
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">M</div>
+            <div>
+              <span class="author-name" data-i18n="rev2_name">Monika P.</span>
+              <span class="author-detail" data-i18n="rev2_sub">Depiliacija</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text" data-i18n="rev3_text">
+            "Akvilė labai kruopšti ir maloni. Studija jauki. Grįžtu kiekvieną mėnesį."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">G</div>
+            <div>
+              <span class="author-name" data-i18n="rev3_name">Gintarė S.</span>
+              <span class="author-detail" data-i18n="rev3_sub">Nuolatinė klientė</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BOOKING ── -->
+  <section class="booking" id="booking">
+    <div class="container">
+      <div class="booking-inner">
+        <div class="booking-content">
+          <span class="section-label" data-i18n="booking_label">Registracija</span>
+          <h2 class="section-title" data-i18n="booking_title">Rezervuokite savo vizitą</h2>
+          <div class="divider"></div>
+          <p data-i18n="booking_sub">Užpildykite formą ir susisieksime per 24 val.</p>
+
+          <div class="booking-features">
+            <div class="booking-feature" data-i18n="book_f1">Greita registracija internetu</div>
+            <div class="booking-feature" data-i18n="book_f2">Atsakome per 24 val.</div>
+            <div class="booking-feature" data-i18n="book_f3">Galima atšaukti ar perkelti vizitą</div>
+          </div>
+        </div>
+
+        <div class="booking-form">
+          <h3 data-i18n="booking_title">Rezervuokite savo vizitą</h3>
+
+          <!-- action="" — reikia pakeisti su Formspree URL kai bus sukurta paskyra -->
+          <form id="booking-form" action="https://formspree.io/f/REPLACE_WITH_FORMSPREE_ID" method="POST">
+
+            <div class="form-group">
+              <label data-i18n="form_name">Vardas</label>
+              <input type="text" name="name" required data-i18n-placeholder="form_name" placeholder="Vardas">
+            </div>
+
+            <div class="form-group">
+              <label data-i18n="form_phone">Telefono numeris</label>
+              <input type="tel" name="phone" required data-i18n-placeholder="form_phone" placeholder="Telefono numeris">
+            </div>
+
+            <div class="form-group">
+              <label data-i18n="form_service">Paslauga</label>
+              <select name="service" required>
+                <option value="" data-i18n="form_service_def">Pasirinkite paslaugą</option>
+                <option value="lash-extensions" data-i18n="svc1_name">Blakstienų priauginimas</option>
+                <option value="lash-lamination" data-i18n="svc2_name">Blakstienų laminavimas</option>
+                <option value="depilation" data-i18n="svc3_name">Cukraus pasta depiliacija</option>
+                <option value="products" data-i18n="svc4_name">Produktų pardavimas</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label data-i18n="form_msg">Pageidavimai</label>
+              <textarea name="message" data-i18n-placeholder="form_msg" placeholder="Pageidavimai (neprivaloma)"></textarea>
+            </div>
+
+            <button type="submit" class="form-submit" data-i18n="form_submit">Siųsti užklausą</button>
+            <p class="form-note" data-i18n="form_note">Susisieksime per 24 val. · akvile.suziedelyte5@gmail.com</p>
+            <div class="form-success" data-i18n="form_success"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="nav-logo-name">AKVA</span>
+          <span class="nav-logo-sub">STUDIO · BEAUTY · CARE · CONFIDENCE</span>
+          <p data-i18n="footer_about">Profesionali grožio studija. Blakstienų priauginimas, laminavimas, depiliacija.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footer_nav_t">Navigacija</h4>
+          <ul>
+            <li><a href="#services" data-i18n="nav_services">Paslaugos</a></li>
+            <li><a href="#about" data-i18n="nav_about">Apie mus</a></li>
+            <li><a href="#portfolio" data-i18n="nav_portfolio">Darbai</a></li>
+            <li><a href="#reviews" data-i18n="nav_reviews">Atsiliepimai</a></li>
+            <li><a href="#booking" data-i18n="nav_book">Rezervuoti</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-contact">
+          <h4 data-i18n="footer_contact_t">Kontaktai</h4>
+          <p><a href="mailto:akvile.suziedelyte5@gmail.com">akvile.suziedelyte5@gmail.com</a></p>
+          <p class="footer-tagline">Beauty · Care · Confidence</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p data-i18n="footer_copy">© 2025 Akva Studio. Visos teisės saugomos.</p>
+        <p>Made by <a href="https://empirra.com" target="_blank" rel="noopener">Empirra</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/js/main.js"></script>
+
+  <!-- Cookie Consent — Silktide -->
+  <link rel="stylesheet" href="src/css/silktide-consent-manager.css">
+  <script defer src="src/js/silktide-consent-manager.js"></script>
+  <script defer src="src/js/consent-init.js"></script>
+</body>
+</html>
