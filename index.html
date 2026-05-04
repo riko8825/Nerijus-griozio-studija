@@ -26,6 +26,7 @@
 
         <ul class="nav-links">
           <li><a href="#services" data-i18n="nav_services">Paslaugos</a></li>
+          <li><a href="#products" data-i18n="nav_products">Produktai</a></li>
           <li><a href="#about" data-i18n="nav_about">Apie mus</a></li>
           <li><a href="#portfolio" data-i18n="nav_portfolio">Darbai</a></li>
           <li><a href="#reviews" data-i18n="nav_reviews">Atsiliepimai</a></li>
@@ -50,10 +51,16 @@
   <div class="mobile-nav" id="mobile-nav">
     <button class="mobile-nav-close" aria-label="Uždaryti">✕</button>
     <a href="#services" data-i18n="nav_services">Paslaugos</a>
+    <a href="#products" data-i18n="nav_products">Produktai</a>
     <a href="#about" data-i18n="nav_about">Apie mus</a>
     <a href="#portfolio" data-i18n="nav_portfolio">Darbai</a>
     <a href="#reviews" data-i18n="nav_reviews">Atsiliepimai</a>
     <a href="#booking" class="btn btn-primary" data-i18n="nav_book">Rezervuoti</a>
+    <div class="mobile-nav-langs lang-switcher">
+      <button class="lang-btn active" data-lang="lt">LT</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="no">NO</button>
+    </div>
   </div>
 
   <!-- ── HERO ── -->
@@ -84,7 +91,7 @@
               <span class="stat-label" data-i18n="stat_clients">Patenkintų klientių</span>
             </div>
             <div class="stat-item">
-              <span class="stat-number">3+</span>
+              <span class="stat-number">10+</span>
               <span class="stat-label" data-i18n="stat_years">Metų patirtis</span>
             </div>
             <div class="stat-item">
@@ -95,13 +102,7 @@
         </div>
 
         <div class="hero-visual">
-          <div class="hero-image-frame">
-            <!-- Čia bus klientės nuotrauka -->
-            <div class="hero-image-placeholder">
-              <span class="placeholder-icon">✦</span>
-              <span>Akva Studio</span>
-            </div>
-          </div>
+          <div class="hero-image-frame hero-image-frame--empty"></div>
           <div class="hero-floating-card">
             <div class="card-icon">✓</div>
             <div class="card-text">
@@ -126,52 +127,240 @@
         </p>
       </div>
 
-      <div class="services-grid">
+      <div class="services-categories">
 
-        <!-- Blakstienų priauginimas -->
-        <div class="service-card">
-          <div class="service-icon">👁</div>
-          <h3 data-i18n="svc1_name">Blakstienų priauginimas</h3>
-          <p data-i18n="svc1_desc">Klasikinis, rusiškas apimtis, hibridas. Ilgaamžiai ir natūralūs rezultatai.</p>
-          <div class="service-price">
-            <span class="price-tag" data-i18n="svc1_price">nuo €40</span>
-            <a href="#booking" class="btn btn-primary btn-sm" data-i18n="book_btn">Rezervuoti</a>
+        <!-- ── DEPILIACIJA ── -->
+        <article class="service-category">
+          <header class="service-category-header">
+            <span class="service-category-icon">🌿</span>
+            <h3 class="service-category-title" data-i18n="cat_depil_name">Depiliacija</h3>
+            <p class="service-category-sub" data-i18n="cat_depil_sub">Cukrumi arba vašku · vienintelė mieste cukraus pasta</p>
+          </header>
+
+          <div class="service-subgroup">
+            <h4 class="service-subgroup-title" data-i18n="sub_face">Veidas</h4>
+            <ul class="service-list">
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_face_lip">Viršutinė lūpa</span>
+                <span class="service-row-time">10 min</span>
+                <span class="service-row-price">100 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_face_brow">Antakiai</span>
+                <span class="service-row-time">10 min</span>
+                <span class="service-row-price">100 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_face_chin">Smakras</span>
+                <span class="service-row-time">10 min</span>
+                <span class="service-row-price">100 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_face_cheek">Skruostai</span>
+                <span class="service-row-time">10 min</span>
+                <span class="service-row-price">100 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_face_full">Visas veidas</span>
+                <span class="service-row-time">30 min</span>
+                <span class="service-row-price">300 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+            </ul>
           </div>
-        </div>
 
-        <!-- Laminavimas -->
-        <div class="service-card">
-          <div class="service-icon">✨</div>
-          <h3 data-i18n="svc2_name">Blakstienų laminavimas</h3>
-          <p data-i18n="svc2_desc">Gamtinių blakstienų sulenkimas ir stiprinimas. Efektas trunka 4–6 savaites.</p>
-          <div class="service-price">
-            <span class="price-tag" data-i18n="svc2_price">nuo €35</span>
-            <a href="#booking" class="btn btn-primary btn-sm" data-i18n="book_btn">Rezervuoti</a>
+          <div class="service-subgroup">
+            <h4 class="service-subgroup-title" data-i18n="sub_legs">Kojos</h4>
+            <ul class="service-list">
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_legs_full">Kojos pilnai</span>
+                <span class="service-row-time">40 min</span>
+                <span class="service-row-price">700 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_legs_half">Kojos iki kelių (pusė)</span>
+                <span class="service-row-time">20 min</span>
+                <span class="service-row-price">400 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_legs_upper">Kojos virš kelių</span>
+                <span class="service-row-time">20 min</span>
+                <span class="service-row-price">400 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+            </ul>
           </div>
-        </div>
 
-        <!-- Depiliacija -->
-        <div class="service-card">
-          <div class="service-icon">🌿</div>
-          <h3 data-i18n="svc3_name">Cukraus pasta depiliacija</h3>
-          <p data-i18n="svc3_desc">Švelnus ir ilgalaikis plaukų šalinimas viso kūno zonoms. Unikalus mieste.</p>
-          <div class="service-price">
-            <span class="price-tag" data-i18n="svc3_price">nuo €20</span>
-            <a href="#booking" class="btn btn-primary btn-sm" data-i18n="book_btn">Rezervuoti</a>
+          <div class="service-subgroup">
+            <h4 class="service-subgroup-title" data-i18n="sub_arms">Rankos</h4>
+            <ul class="service-list">
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_arms_full">Rankos pilnai</span>
+                <span class="service-row-time">30 min</span>
+                <span class="service-row-price">500 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_arms_half">Rankos iki alkūnių</span>
+                <span class="service-row-time">20 min</span>
+                <span class="service-row-price">250 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+            </ul>
           </div>
-        </div>
 
-        <!-- Produktai -->
-        <div class="service-card">
-          <div class="service-icon">🧴</div>
-          <h3 data-i18n="svc4_name">Produktų pardavimas</h3>
-          <p data-i18n="svc4_desc">Profesionali priežiūros kosmetika namų naudojimui. Prailgink procedūros efektą.</p>
-          <div class="service-price">
-            <span class="price-tag" data-i18n="svc4_price">nuo €10</span>
-            <a href="#booking" class="btn btn-outline btn-sm" data-i18n="book_btn">Rezervuoti</a>
+          <div class="service-subgroup">
+            <h4 class="service-subgroup-title" data-i18n="sub_bikini">Bikini</h4>
+            <ul class="service-list">
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_bikini_line">Bikini linija</span>
+                <span class="service-row-time">15 min</span>
+                <span class="service-row-price">350 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_bikini_brazil">Braziliškas bikini</span>
+                <span class="service-row-time">20 min</span>
+                <span class="service-row-price">600 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+            </ul>
           </div>
-        </div>
 
+          <div class="service-subgroup">
+            <h4 class="service-subgroup-title" data-i18n="sub_underarms">Pažastys</h4>
+            <ul class="service-list">
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_underarms">Pažastys</span>
+                <span class="service-row-time">15 min</span>
+                <span class="service-row-price">200 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ── BLAKSTIENOS ── -->
+        <article class="service-category">
+          <header class="service-category-header">
+            <span class="service-category-icon">👁</span>
+            <h3 class="service-category-title" data-i18n="cat_lash_name">Blakstienos</h3>
+            <p class="service-category-sub" data-i18n="cat_lash_sub">Priauginimas, papildymai ir laminavimas</p>
+          </header>
+
+          <div class="service-subgroup">
+            <h4 class="service-subgroup-title" data-i18n="sub_lash_new">Priauginimas</h4>
+            <ul class="service-list">
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_lash_classic">Klasikinis priauginimas</span>
+                <span class="service-row-time">2 h</span>
+                <span class="service-row-price">800 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_lash_volume">Volume priauginimas</span>
+                <span class="service-row-time">2 h</span>
+                <span class="service-row-price">900 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-subgroup">
+            <h4 class="service-subgroup-title" data-i18n="sub_lash_refill">Papildymai</h4>
+            <ul class="service-list">
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_lash_2_3">Po 2–3 savaičių</span>
+                <span class="service-row-time">1 h</span>
+                <span class="service-row-price">700 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_lash_3_4">Po 3–4 savaičių</span>
+                <span class="service-row-time">1 h 15 min</span>
+                <span class="service-row-price">750 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_lash_4_5">Po 4–5 savaičių</span>
+                <span class="service-row-time">1 h 30 min</span>
+                <span class="service-row-price">800 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-subgroup">
+            <h4 class="service-subgroup-title" data-i18n="sub_lash_lam">Laminavimas</h4>
+            <ul class="service-list">
+              <li class="service-row">
+                <span class="service-row-name" data-i18n="srv_lash_lamination">Blakstienų laminavimas</span>
+                <span class="service-row-time">1 h</span>
+                <span class="service-row-price">650 kr</span>
+                <a href="#booking" class="service-row-btn" data-i18n="book_btn">Rezervuoti</a>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRODUCTS ── -->
+  <section class="products" id="products">
+    <div class="container">
+      <div class="products-header">
+        <span class="section-label" data-i18n="products_label">Produktai</span>
+        <h2 class="section-title" data-i18n="products_title">Profesionali priežiūra namuose</h2>
+        <div class="divider divider-center"></div>
+        <p class="section-subtitle" data-i18n="products_sub">
+          Kruopščiai atrinkti produktai, kurie pratęsia procedūros efektą. Pilnas asortimentas — netrukus.
+        </p>
+      </div>
+
+      <div class="products-grid">
+
+        <article class="product-card">
+          <div class="product-icon">🌸</div>
+          <h3 class="product-card-title" data-i18n="prod1_title">Blakstienų priežiūrai</h3>
+          <p class="product-card-desc" data-i18n="prod1_desc">
+            Šepetėliai, valikliai ir serumai blakstienų priauginimui prižiūrėti.
+          </p>
+          <span class="product-card-tag" data-i18n="products_tag">Netrukus</span>
+        </article>
+
+        <article class="product-card">
+          <div class="product-icon">✨</div>
+          <h3 class="product-card-title" data-i18n="prod2_title">Po depiliacijos</h3>
+          <p class="product-card-desc" data-i18n="prod2_desc">
+            Drėkinantys aliejai ir kremai jautriai odai po procedūros.
+          </p>
+          <span class="product-card-tag" data-i18n="products_tag">Netrukus</span>
+        </article>
+
+        <article class="product-card">
+          <div class="product-icon">🧴</div>
+          <h3 class="product-card-title" data-i18n="prod3_title">Veido priežiūrai</h3>
+          <p class="product-card-desc" data-i18n="prod3_desc">
+            Profesionalios serijos kremai, serumai ir kaukės kasdienei priežiūrai.
+          </p>
+          <span class="product-card-tag" data-i18n="products_tag">Netrukus</span>
+        </article>
+
+      </div>
+
+      <div class="products-cta">
+        <p class="products-cta-text" data-i18n="products_cta_text">
+          Domina konkretus produktas? Parašyk — pakonsultuosiu ir pasakysiu turimas atsargas.
+        </p>
+        <a href="#booking" class="btn btn-primary" data-i18n="products_cta_btn">Susisiekti dėl produktų</a>
       </div>
     </div>
   </section>
@@ -183,28 +372,28 @@
         <div class="about-image-wrap">
           <div class="about-image">
             <!-- Čia bus Akvilės nuotrauka -->
-            <div class="about-image-placeholder">Akvilės nuotrauka</div>
+            <div class="about-image-placeholder">Akvilė · Akva Studio</div>
           </div>
           <div class="about-decor"></div>
         </div>
 
         <div class="about-content">
-          <span class="section-label" data-i18n="about_label">Apie studiją</span>
-          <h2 class="section-title" data-i18n="about_title">Kas mes esame</h2>
+          <span class="section-label" data-i18n="about_label">Apie mane</span>
+          <h2 class="section-title" data-i18n="about_title">Labas, mieloji ✨</h2>
           <div class="divider"></div>
 
           <p class="about-p" data-i18n="about_p1">
-            Akva Studio — tai profesionali grožio studija, įsikūrusi jūsų mieste. Teikiame blakstienų priauginimo, laminavimo ir depiliacijos paslaugas. Esame vienintelė studija mieste, siūlanti cukraus pasta depiliaciją.
+            Jei jau esi čia, vadinasi skiri laiko sau ir savo grožiui. Labai džiaugiuosi, kad užsukai. Esu Akvilė — profesionali grožio specialistė, dirbanti su viso kūno depiliacijomis cukrumi (vienintelė mieste), vašku, blakstienų priauginimu bei laminavimu.
           </p>
           <p class="about-p" data-i18n="about_p2">
-            Mums svarbu ne tik rezultatas, bet ir kliento komfortas. Naudojame tik aukštos kokybės medžiagas ir nuolat tobuliname įgūdžius.
+            Mano tikslas — ne tik gražus rezultatas, bet ir tai, kad jaustumeisi pasitikinti savimi. Kiekviena procedūra ir kiekvienas produktas mano studijoje yra kruopščiai atrinktas, kad suteiktų matomus rezultatus ir malonią patirtį. Tu tikrai esi gerose rankose.
           </p>
 
           <ul class="about-list">
-            <li data-i18n="about_li1">Patirties turinčios specialistės</li>
-            <li data-i18n="about_li2">Tik aukštos kokybės medžiagos</li>
-            <li data-i18n="about_li3">Patogi ir šilta aplinka</li>
-            <li data-i18n="about_li4">Individualus požiūris į kiekvieną klientę</li>
+            <li data-i18n="about_li1">10 metų patirtis nuo 2016 m.</li>
+            <li data-i18n="about_li2">Vienintelė mieste cukraus depiliacija</li>
+            <li data-i18n="about_li3">Kruopščiai atrinkti produktai</li>
+            <li data-i18n="about_li4">Asmeninis dėmesys kiekvienai klientei</li>
           </ul>
 
           <a href="#booking" class="btn btn-primary" data-i18n="about_cta">Rezervuoti vizitą</a>
@@ -347,6 +536,48 @@
             </div>
           </div>
         </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text" data-i18n="rev4_text">
+            "Geriausias blakstienų laminavimas iš visų patirtų! Akvilė labai kruopšti ir rami. Rekomenduoju iš visos širdies."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">J</div>
+            <div>
+              <span class="author-name" data-i18n="rev4_name">Janne H.</span>
+              <span class="author-detail" data-i18n="rev4_sub">Blakstienų laminavimas</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text" data-i18n="rev5_text">
+            "Cukraus depiliacija buvo daug mažiau skausminga nei vašku. Oda po procedūros lygi ir rami. Tikrai grįšiu!"
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">M</div>
+            <div>
+              <span class="author-name" data-i18n="rev5_name">Marie L.</span>
+              <span class="author-detail" data-i18n="rev5_sub">Cukraus depiliacija</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text" data-i18n="rev6_text">
+            "Mano blakstienos atrodo natūraliai ir tankiai. Studija jauki, o Akvilė — tikra profesionalė."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">A</div>
+            <div>
+              <span class="author-name" data-i18n="rev6_name">Anita B.</span>
+              <span class="author-detail" data-i18n="rev6_sub">Blakstienų priauginimas</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -388,10 +619,49 @@
               <label data-i18n="form_service">Paslauga</label>
               <select name="service" required>
                 <option value="" data-i18n="form_service_def">Pasirinkite paslaugą</option>
-                <option value="lash-extensions" data-i18n="svc1_name">Blakstienų priauginimas</option>
-                <option value="lash-lamination" data-i18n="svc2_name">Blakstienų laminavimas</option>
-                <option value="depilation" data-i18n="svc3_name">Cukraus pasta depiliacija</option>
-                <option value="products" data-i18n="svc4_name">Produktų pardavimas</option>
+
+                <optgroup label="Depiliacija — Veidas" data-i18n-label="opt_g_face">
+                  <option value="face-lip" data-i18n="srv_face_lip">Viršutinė lūpa (10 min · 100 kr)</option>
+                  <option value="face-brow" data-i18n="srv_face_brow">Antakiai (10 min · 100 kr)</option>
+                  <option value="face-chin" data-i18n="srv_face_chin">Smakras (10 min · 100 kr)</option>
+                  <option value="face-cheek" data-i18n="srv_face_cheek">Skruostai (10 min · 100 kr)</option>
+                  <option value="face-full" data-i18n="srv_face_full">Visas veidas (30 min · 300 kr)</option>
+                </optgroup>
+
+                <optgroup label="Depiliacija — Kojos" data-i18n-label="opt_g_legs">
+                  <option value="legs-full" data-i18n="srv_legs_full">Kojos pilnai (40 min · 700 kr)</option>
+                  <option value="legs-half" data-i18n="srv_legs_half">Kojos iki kelių (20 min · 400 kr)</option>
+                  <option value="legs-upper" data-i18n="srv_legs_upper">Kojos virš kelių (20 min · 400 kr)</option>
+                </optgroup>
+
+                <optgroup label="Depiliacija — Rankos" data-i18n-label="opt_g_arms">
+                  <option value="arms-full" data-i18n="srv_arms_full">Rankos pilnai (30 min · 500 kr)</option>
+                  <option value="arms-half" data-i18n="srv_arms_half">Rankos iki alkūnių (20 min · 250 kr)</option>
+                </optgroup>
+
+                <optgroup label="Depiliacija — Bikini" data-i18n-label="opt_g_bikini">
+                  <option value="bikini-line" data-i18n="srv_bikini_line">Bikini linija (15 min · 350 kr)</option>
+                  <option value="bikini-brazil" data-i18n="srv_bikini_brazil">Braziliškas bikini (20 min · 600 kr)</option>
+                </optgroup>
+
+                <optgroup label="Depiliacija — Pažastys" data-i18n-label="opt_g_underarms">
+                  <option value="underarms" data-i18n="srv_underarms">Pažastys (15 min · 200 kr)</option>
+                </optgroup>
+
+                <optgroup label="Blakstienos — Priauginimas" data-i18n-label="opt_g_lash_new">
+                  <option value="lash-classic" data-i18n="srv_lash_classic">Klasikinis priauginimas (2 h · 800 kr)</option>
+                  <option value="lash-volume" data-i18n="srv_lash_volume">Volume priauginimas (2 h · 900 kr)</option>
+                </optgroup>
+
+                <optgroup label="Blakstienos — Papildymai" data-i18n-label="opt_g_lash_refill">
+                  <option value="lash-refill-2-3" data-i18n="srv_lash_2_3">Po 2–3 savaičių (1 h · 700 kr)</option>
+                  <option value="lash-refill-3-4" data-i18n="srv_lash_3_4">Po 3–4 savaičių (1 h 15 min · 750 kr)</option>
+                  <option value="lash-refill-4-5" data-i18n="srv_lash_4_5">Po 4–5 savaičių (1 h 30 min · 800 kr)</option>
+                </optgroup>
+
+                <optgroup label="Blakstienos — Laminavimas" data-i18n-label="opt_g_lash_lam">
+                  <option value="lash-lamination" data-i18n="srv_lash_lamination">Blakstienų laminavimas (1 h · 650 kr)</option>
+                </optgroup>
               </select>
             </div>
 
@@ -401,7 +671,7 @@
             </div>
 
             <button type="submit" class="form-submit" data-i18n="form_submit">Siųsti užklausą</button>
-            <p class="form-note" data-i18n="form_note">Susisieksime per 24 val. · akvile.suziedelyte5@gmail.com</p>
+            <p class="form-note" data-i18n="form_note">Susisieksime per 24 val. · akvastudio75@gmail.com</p>
             <div class="form-success" data-i18n="form_success"></div>
           </form>
         </div>
@@ -423,6 +693,7 @@
           <h4 data-i18n="footer_nav_t">Navigacija</h4>
           <ul>
             <li><a href="#services" data-i18n="nav_services">Paslaugos</a></li>
+            <li><a href="#products" data-i18n="nav_products">Produktai</a></li>
             <li><a href="#about" data-i18n="nav_about">Apie mus</a></li>
             <li><a href="#portfolio" data-i18n="nav_portfolio">Darbai</a></li>
             <li><a href="#reviews" data-i18n="nav_reviews">Atsiliepimai</a></li>
@@ -432,7 +703,7 @@
 
         <div class="footer-col footer-contact">
           <h4 data-i18n="footer_contact_t">Kontaktai</h4>
-          <p><a href="mailto:akvile.suziedelyte5@gmail.com">akvile.suziedelyte5@gmail.com</a></p>
+          <p><a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a></p>
           <p class="footer-tagline">Beauty · Care · Confidence</p>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 ## PROJEKTAS
 **Akva Studio** — grožio studija (blakstienų priauginimas, laminavimas, depiliacija, produktų pardavimas)
-**Klientas:** Akvilė Suziedelytė · akvile.suziedelyte5@gmail.com
+**Klientas:** Akvilė Suziedelytė · akvastudio75@gmail.com
 **Statusas:** Kūrimo fazė
 
 ---
@@ -53,7 +53,7 @@ Moterys 16–70 metų. Problema: nori išryškintos išvaizdos, pašalinti nepag
 ## TECH STACK
 - **Frontend:** HTML / CSS / JS (be framework)
 - **Hosting:** Vercel (rekomenduojama)
-- **Forma/Rezervacija:** Kontaktų forma → akvile.suziedelyte5@gmail.com (Formspree arba EmailJS)
+- **Forma/Rezervacija:** Kontaktų forma → akvastudio75@gmail.com (Formspree arba EmailJS)
 - **Kalbos:** LT (default) · EN · NO — JS switcher
 - **Integracijos:** Nė vienos (0 pažymėta klausimyne)
 
@@ -81,8 +81,11 @@ akva-studio/
 
 ## SYNC KOMANDA
 ```bash
-cp src/pages/index.html index.html
+cp src/pages/index.html index.html && \
+  sed -i 's|"\.\./css/|"src/css/|g; s|"\.\./js/|"src/js/|g; s|"\.\./assets/|"src/assets/|g' index.html
 ```
+
+**Kodėl sed:** `src/pages/index.html` naudoja `../css/`, `../js/`, `../assets/` kelius (relative iš `src/pages/`), bet root `index.html` turi naudoti `src/css/`, `src/js/`, `src/assets/` (relative iš root). Be konvertimo CSS/JS nesikrauna paleidus root failą.
 
 ---
 

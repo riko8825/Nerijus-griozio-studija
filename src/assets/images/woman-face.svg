@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" role="img" aria-label="Moters veido iliustracija" fill="none">
+  <title>Akva Studio — moters veido iliustracija</title>
+  <defs>
+    <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B07D6A"/>
+      <stop offset="60%" stop-color="#C9967F"/>
+      <stop offset="100%" stop-color="#D4A48E"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Plaukai -->
+  <path d="M130,82 C118,60 116,32 128,18 C142,2 165,4 182,10 C192,14 198,20 200,18 C208,12 228,4 252,12 C272,20 280,44 276,70 C273,86 268,100 270,118 C272,138 280,155 278,175" stroke="url(#rg)" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Veido kontūras kairė -->
+  <path d="M130,82 C116,100 110,130 110,158 C110,186 116,210 124,232 C134,260 150,282 160,305 C168,324 172,344 172,362 C172,382 168,402 170,420 C172,432 180,442 200,444 C220,442 228,432 230,420 C232,402 228,382 228,362 C228,344 232,324 240,305 C250,282 266,260 276,232 C284,210 290,186 290,158 C290,130 284,100 270,82" stroke="url(#rg)" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Kaklas -->
+  <path d="M178,442 C176,458 175,474 178,488 C182,498 190,506 200,506 C210,506 218,498 222,488 C225,474 224,458 222,442" stroke="url(#rg)" stroke-width="1.6" stroke-linecap="round"/>
+
+  <!-- Antakiai -->
+  <path d="M136,165 C144,156 156,152 168,152 C176,152 183,155 186,160" stroke="url(#rg)" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M214,160 C217,155 224,152 232,152 C244,152 256,156 264,165" stroke="url(#rg)" stroke-width="1.7" stroke-linecap="round"/>
+
+  <!-- Akys -->
+  <path d="M136,185 C144,175 157,170 168,171 C180,172 189,178 192,186 C189,194 180,200 168,200 C157,200 144,195 136,186" stroke="url(#rg)" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="166" cy="185" r="5" stroke="url(#rg)" stroke-width="1.4"/>
+  <path d="M208,186 C211,178 220,172 232,171 C244,170 257,175 264,185 C257,195 244,200 232,200 C220,200 211,194 208,187" stroke="url(#rg)" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="234" cy="185" r="5" stroke="url(#rg)" stroke-width="1.4"/>
+
+  <!-- Blakstienos kairės -->
+  <path d="M136,185 C131,180 128,174 127,168" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M145,178 C143,171 143,165 145,160" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M156,173 C156,166 158,160 161,156" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M168,171 C169,164 172,158 175,155" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M179,173 C182,167 186,163 190,161" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M189,178 C193,173 197,170 201,169" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round"/>
+
+  <!-- Blakstienos dešinės -->
+  <path d="M264,185 C269,180 272,174 273,168" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M255,178 C257,171 257,165 255,160" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M244,173 C244,166 242,160 239,156" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M232,171 C231,164 228,158 225,155" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M221,173 C218,167 214,163 210,161" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M211,178 C207,173 203,170 199,169" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round"/>
+
+  <!-- Nosis -->
+  <path d="M197,208 C196,228 192,252 188,264 C185,274 186,282 190,286 C194,290 200,291 200,291 C200,291 206,290 210,286 C214,282 215,274 212,264 C208,252 204,228 203,208" stroke="url(#rg)" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M190,286 C184,290 178,290 174,287" stroke="url(#rg)" stroke-width="1.4" stroke-linecap="round"/>
+  <path d="M210,286 C216,290 222,290 226,287" stroke="url(#rg)" stroke-width="1.4" stroke-linecap="round"/>
+
+  <!-- Lūpos -->
+  <path d="M172,322 C180,310 190,306 200,306 C210,306 220,310 228,322" stroke="url(#rg)" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M172,322 C180,336 190,342 200,342 C210,342 220,336 228,322" stroke="url(#rg)" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M174,323 C186,325 194,325 200,325 C206,325 214,325 226,323" stroke="url(#rg)" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Žvaigždutė -->
+  <path d="M200,44 L202.5,51 L210,51 L204,55.5 L206.5,62.5 L200,58 L193.5,62.5 L196,55.5 L190,51 L197.5,51 Z" stroke="url(#rg)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Spindesys aplink žvaigždutę -->
+  <path d="M200,34 L200,28" stroke="url(#rg)" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
+  <path d="M214,38 L218,34" stroke="url(#rg)" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
+  <path d="M186,38 L182,34" stroke="url(#rg)" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
+  <path d="M218,51 L224,51" stroke="url(#rg)" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
+  <path d="M182,51 L176,51" stroke="url(#rg)" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
+
+  <!-- Taškeliai -->
+  <circle cx="154" cy="50" r="1.8" fill="#C9967F" opacity="0.65"/>
+  <circle cx="246" cy="50" r="1.8" fill="#C9967F" opacity="0.65"/>
+  <circle cx="136" cy="66" r="1.2" fill="#D4A48E" opacity="0.45"/>
+  <circle cx="264" cy="66" r="1.2" fill="#D4A48E" opacity="0.45"/>
+</svg>
