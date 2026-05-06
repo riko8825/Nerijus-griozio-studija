@@ -493,6 +493,12 @@ p {
   box-shadow: var(--shadow-lg);
 }
 
+.hero-image-frame picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .hero-image-frame img {
   width: 100%;
   height: 100%;
@@ -992,6 +998,23 @@ p {
   font-size: 0.9rem;
 }
 
+.about-video {
+  width: 100%;
+  aspect-ratio: 4/5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface2);
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.about-video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .about-decor {
   position: absolute;
   top: -14px;
@@ -1101,17 +1124,24 @@ p {
 
 .portfolio-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-3);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
 }
 
 .portfolio-item {
-  border-radius: var(--radius-md);
+  border-radius: 8px;
   overflow: hidden;
-  aspect-ratio: 3/4;
+  height: 280px;
   background: var(--color-surface2);
   position: relative;
   cursor: pointer;
+  margin: 0;
+}
+
+.portfolio-item picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .portfolio-item img {
@@ -1123,6 +1153,37 @@ p {
 
 .portfolio-item:hover img {
   transform: scale(1.04);
+}
+
+.portfolio-video-block {
+  margin: var(--space-7) auto 0;
+  max-width: 320px;
+  text-align: center;
+}
+
+.portfolio-video-frame {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 8px;
+  overflow: hidden;
+  background: oklch(18% 0.03 35);
+  box-shadow: var(--shadow-md);
+}
+
+.portfolio-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: oklch(18% 0.03 35);
+}
+
+.portfolio-video-caption {
+  margin-top: var(--space-3);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  letter-spacing: 0.04em;
+  text-align: center;
 }
 
 .portfolio-placeholder {
@@ -1416,6 +1477,42 @@ p {
   display: block;
 }
 
+/* Setmore booking embed */
+.booking-fallback {
+  margin-top: var(--space-5);
+  font-size: 0.85rem;
+  color: oklch(97% 0.012 55 / 0.6);
+}
+
+.booking-fallback a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.booking-embed {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.booking-iframe {
+  width: 100%;
+  height: 720px;
+  border: 0;
+  border-radius: var(--radius-md);
+  display: block;
+  background: var(--color-bg);
+}
+
+.booking-embed-cta {
+  align-self: center;
+  text-align: center;
+}
+
 /* ─────────────────────────────────────────
    FOOTER
    ───────────────────────────────────────── */
@@ -1640,13 +1737,16 @@ p {
 
   .services-grid,
   .whyus-grid,
-  .portfolio-grid,
   .testimonials-grid {
     grid-template-columns: 1fr;
   }
 
   .portfolio-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .portfolio-item {
+    height: 220px;
   }
 
   .footer-inner {
@@ -1661,6 +1761,14 @@ p {
 
   .booking-form {
     padding: var(--space-5);
+  }
+
+  .booking-embed {
+    padding: var(--space-2);
+  }
+
+  .booking-iframe {
+    height: 640px;
   }
 
   /* iOS zoom prevention — 16px minimum */
@@ -1678,7 +1786,11 @@ p {
   }
 
   .portfolio-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .portfolio-item {
+    height: 180px;
   }
 
   .nav-right .lang-switcher {

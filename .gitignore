@@ -1,0 +1,26 @@
+# Vercel
+.vercel
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Env
+.env
+.env.local
+.env*.local
+
+# Python (scripts/optimize-images.py)
+__pycache__/
+*.pyc
+.venv/
+venv/

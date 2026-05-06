@@ -82,10 +82,12 @@ akva-studio/
 ## SYNC KOMANDA
 ```bash
 cp src/pages/index.html index.html && \
-  sed -i 's|"\.\./css/|"src/css/|g; s|"\.\./js/|"src/js/|g; s|"\.\./assets/|"src/assets/|g' index.html
+  sed -i 's|\.\./css/|src/css/|g; s|\.\./js/|src/js/|g; s|\.\./assets/|src/assets/|g' index.html
 ```
 
 **Kodėl sed:** `src/pages/index.html` naudoja `../css/`, `../js/`, `../assets/` kelius (relative iš `src/pages/`), bet root `index.html` turi naudoti `src/css/`, `src/js/`, `src/assets/` (relative iš root). Be konvertimo CSS/JS nesikrauna paleidus root failą.
+
+**Pastaba:** sed pattern be `"` priekyje — kad apimtų ir multi-line `srcset` atributus, kur kelias prasideda be kabučių (kelias antroje eilutėje atsiranda po įtrauktais tarpais, ne po `"`).
 
 ---
 
