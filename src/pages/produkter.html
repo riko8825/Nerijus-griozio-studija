@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Akva Studio nettbutikk — profesjonelle hudpleieprodukter fra Aromatic89. Frakt i hele Norge.">
+  <title>Produkter — Akva Studio</title>
+
+  <!-- Sanity config (placeholder — fyll inn etter Studio er deployed) -->
+  <meta name="sanity-project-id" content="vwtjc4wg">
+  <meta name="sanity-dataset" content="production">
+  <meta name="sanity-api-version" content="2026-01-01">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Produkter — Akva Studio">
+  <meta property="og:description" content="Profesjonelle hudpleieprodukter fra Aromatic89. Frakt i hele Norge.">
+  <meta property="og:type" content="website">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;1,6..12,300;1,6..12,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="page-shop">
+
+  <!-- ── HEADER ── -->
+  <header class="header" id="top">
+    <div class="container">
+      <nav class="nav">
+        <a href="/" class="nav-logo">
+          <span class="nav-logo-name">AKVA</span>
+          <span class="nav-logo-sub">STUDIO</span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="/#services">Tjenester</a></li>
+          <li><a href="/produkter" class="is-active">Produkter</a></li>
+          <li><a href="/#about">Om oss</a></li>
+          <li><a href="/#portfolio">Galleri</a></li>
+          <li><a href="/#reviews">Anmeldelser</a></li>
+        </ul>
+
+        <div class="nav-right">
+          <a href="/handlekurv" class="cart-icon" data-cart-icon aria-label="Handlekurv">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 3h2l2.4 12.3a2 2 0 0 0 2 1.7h8.7a2 2 0 0 0 2-1.6L22 8H6"/>
+              <circle cx="9" cy="20" r="1.5"/>
+              <circle cx="18" cy="20" r="1.5"/>
+            </svg>
+            <span class="cart-icon-count is-empty" data-cart-count>0</span>
+          </a>
+          <a href="/#booking" class="btn btn-primary">Bestill</a>
+          <button class="nav-burger" aria-label="Meny">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile nav overlay -->
+  <div class="mobile-nav" id="mobile-nav">
+    <button class="mobile-nav-close" aria-label="Lukk">✕</button>
+    <a href="/#services">Tjenester</a>
+    <a href="/produkter">Produkter</a>
+    <a href="/#about">Om oss</a>
+    <a href="/#portfolio">Galleri</a>
+    <a href="/#reviews">Anmeldelser</a>
+    <a href="/handlekurv">Handlekurv</a>
+    <a href="/#booking" class="btn btn-primary">Bestill</a>
+  </div>
+
+  <main>
+    <!-- ── SHOP HERO ── -->
+    <section class="shop-hero">
+      <div class="container">
+        <span class="section-label">Nettbutikk</span>
+        <h1 class="section-title">Aromatic89 hudpleie</h1>
+        <div class="divider divider-center"></div>
+        <p class="section-subtitle">
+          Profesjonelle produkter brukt i Akva Studio — nå tilgjengelig hjem til deg. Frakt i hele Norge.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── PRODUCTS CATALOG ── -->
+    <section class="shop-catalog">
+      <div class="container">
+        <div class="products-toolbar">
+          <div class="products-filters" data-products-filters></div>
+        </div>
+        <div class="products-grid" data-products-grid>
+          <p class="products-loading">Laster produkter…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SHOP INFO ── -->
+    <section class="shop-info">
+      <div class="container">
+        <div class="shop-info-grid">
+          <div class="shop-info-item">
+            <div class="shop-info-icon">🚚</div>
+            <h3>Fri frakt over 500 kr</h3>
+            <p>Levering 2-4 virkedager med Bring eller PostNord.</p>
+          </div>
+          <div class="shop-info-item">
+            <div class="shop-info-icon">↩️</div>
+            <h3>14 dagers angrerett</h3>
+            <p>Returner uåpnede produkter innen 14 dager.</p>
+          </div>
+          <div class="shop-info-item">
+            <div class="shop-info-icon">💳</div>
+            <h3>Trygg betaling</h3>
+            <p>Sikker handel via norske betalingsløsninger (kommer snart).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-col">
+          <a href="/" class="nav-logo footer-logo">
+            <span class="nav-logo-name">AKVA</span>
+            <span class="nav-logo-sub">STUDIO</span>
+          </a>
+          <p>Profesjonell skjønnhetsstudio i Norge.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Butikk</h4>
+          <ul>
+            <li><a href="/produkter">Alle produkter</a></li>
+            <li><a href="/handlekurv">Handlekurv</a></li>
+            <li><a href="/#booking">Bestill behandling</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Kontakt</h4>
+          <ul>
+            <li><a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Akva Studio. Alle rettigheter forbeholdt.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../js/modules/shop-init.js"></script>
+</body>
+</html>

@@ -7,6 +7,8 @@ const translations = {
   lt: {
     nav_services:      'Paslaugos',
     nav_products:      'Produktai',
+    nav_shop:          'Parduotuvė',
+    nav_cart:          'Krepšelis',
     nav_about:         'Apie mus',
     nav_portfolio:     'Darbai',
     nav_reviews:       'Atsiliepimai',
@@ -121,7 +123,6 @@ const translations = {
     rev6_sub:          'Blakstienų priauginimas',
     booking_label:     'Registracija',
     booking_title:     'Rezervuokite savo vizitą',
-    booking_sub:       'Užpildykite formą ir susisieksime per 24 val.',
     book_f1:           'Rezervacija realiu laiku',
     book_f2:           'Automatinis patvirtinimas el. paštu',
     book_f3:           'Galima atšaukti ar perkelti vizitą',
@@ -131,7 +132,8 @@ const translations = {
     portfolio_cap_2:   'Antakiai · Blakstienos',
     portfolio_cap_3:   'Volume priauginimas',
     portfolio_cap_4:   'Klasikinis priauginimas',
-    portfolio_cap_5:   'Procedūros akimirka',
+    portfolio_cap_5:   'Depiliacija · Prieš · Po',
+    portfolio_cap_video: 'Procedūros akimirka',
     form_name:         'Vardas',
     form_phone:        'Telefono numeris',
     form_service:      'Paslauga',
@@ -148,6 +150,8 @@ const translations = {
   en: {
     nav_services:      'Services',
     nav_products:      'Products',
+    nav_shop:          'Shop',
+    nav_cart:          'Cart',
     nav_about:         'About',
     nav_portfolio:     'Portfolio',
     nav_reviews:       'Reviews',
@@ -262,7 +266,6 @@ const translations = {
     rev6_sub:          'Lash Extensions',
     booking_label:     'Booking',
     booking_title:     'Book your visit',
-    booking_sub:       'Fill in the form and we will contact you within 24 hours.',
     book_f1:           'Real-time booking',
     book_f2:           'Automatic email confirmation',
     book_f3:           'Easy to cancel or reschedule',
@@ -272,7 +275,8 @@ const translations = {
     portfolio_cap_2:   'Brows · Lashes',
     portfolio_cap_3:   'Volume extensions',
     portfolio_cap_4:   'Classic extensions',
-    portfolio_cap_5:   'Procedure moment',
+    portfolio_cap_5:   'Hair removal · Before · After',
+    portfolio_cap_video: 'Procedure moment',
     form_name:         'Name',
     form_phone:        'Phone number',
     form_service:      'Service',
@@ -289,6 +293,8 @@ const translations = {
   no: {
     nav_services:      'Tjenester',
     nav_products:      'Produkter',
+    nav_shop:          'Butikk',
+    nav_cart:          'Handlekurv',
     nav_about:         'Om oss',
     nav_portfolio:     'Portefølje',
     nav_reviews:       'Anmeldelser',
@@ -403,7 +409,6 @@ const translations = {
     rev6_sub:          'Vippe-extensions',
     booking_label:     'Bestilling',
     booking_title:     'Bestill ditt besøk',
-    booking_sub:       'Fyll ut skjemaet og vi kontakter deg innen 24 timer.',
     book_f1:           'Sanntids bestilling',
     book_f2:           'Automatisk bekreftelse på e-post',
     book_f3:           'Enkel avbestilling eller ombooking',
@@ -413,7 +418,8 @@ const translations = {
     portfolio_cap_2:   'Bryn · Vipper',
     portfolio_cap_3:   'Volum-vipper',
     portfolio_cap_4:   'Klassiske vipper',
-    portfolio_cap_5:   'Behandling i øyeblikket',
+    portfolio_cap_5:   'Hårfjerning · Før · Etter',
+    portfolio_cap_video: 'Behandling i øyeblikket',
     form_name:         'Navn',
     form_phone:        'Telefonnummer',
     form_service:      'Tjeneste',
@@ -572,6 +578,33 @@ function initSmoothScroll() {
   });
 }
 
+// ── CART ICON COUNTER (homepage'ui — be ES module dependencies) ──
+function initCartIcon() {
+  const icons = document.querySelectorAll('[data-cart-icon]');
+  if (icons.length === 0) return;
+  const update = () => {
+    let count = 0;
+    try {
+      const raw = localStorage.getItem('akva_cart_v1');
+      if (raw) {
+        const cart = JSON.parse(raw);
+        count = (cart.items || []).reduce((sum, i) => sum + (i.quantity || 0), 0);
+      }
+    } catch { /* ignore */ }
+    icons.forEach(icon => {
+      const counter = icon.querySelector('[data-cart-count]');
+      if (counter) {
+        counter.textContent = count;
+        counter.classList.toggle('is-empty', count === 0);
+      }
+    });
+  };
+  update();
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'akva_cart_v1') update();
+  });
+}
+
 // ── INIT ───────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initScrollHeader();
@@ -579,5 +612,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initLangSwitcher();
   initSmoothScroll();
   initForm();
+  initCartIcon();
   applyLang(currentLang);
 });

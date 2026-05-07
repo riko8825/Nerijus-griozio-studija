@@ -26,7 +26,7 @@
 
         <ul class="nav-links">
           <li><a href="#services" data-i18n="nav_services">Paslaugos</a></li>
-          <li><a href="#products" data-i18n="nav_products">Produktai</a></li>
+          <li><a href="/produkter" data-i18n="nav_shop">Parduotuvė</a></li>
           <li><a href="#about" data-i18n="nav_about">Apie mus</a></li>
           <li><a href="#portfolio" data-i18n="nav_portfolio">Darbai</a></li>
           <li><a href="#reviews" data-i18n="nav_reviews">Atsiliepimai</a></li>
@@ -38,6 +38,14 @@
             <button class="lang-btn" data-lang="en">EN</button>
             <button class="lang-btn" data-lang="no">NO</button>
           </div>
+          <a href="/handlekurv" class="cart-icon" data-cart-icon aria-label="Krepšelis">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 3h2l2.4 12.3a2 2 0 0 0 2 1.7h8.7a2 2 0 0 0 2-1.6L22 8H6"/>
+              <circle cx="9" cy="20" r="1.5"/>
+              <circle cx="18" cy="20" r="1.5"/>
+            </svg>
+            <span class="cart-icon-count is-empty" data-cart-count>0</span>
+          </a>
           <a href="#booking" class="btn btn-primary" data-i18n="nav_book">Rezervuoti</a>
           <button class="nav-burger" aria-label="Meniu">
             <span></span><span></span><span></span>
@@ -51,10 +59,11 @@
   <div class="mobile-nav" id="mobile-nav">
     <button class="mobile-nav-close" aria-label="Uždaryti">✕</button>
     <a href="#services" data-i18n="nav_services">Paslaugos</a>
-    <a href="#products" data-i18n="nav_products">Produktai</a>
+    <a href="/produkter" data-i18n="nav_shop">Parduotuvė</a>
     <a href="#about" data-i18n="nav_about">Apie mus</a>
     <a href="#portfolio" data-i18n="nav_portfolio">Darbai</a>
     <a href="#reviews" data-i18n="nav_reviews">Atsiliepimai</a>
+    <a href="/handlekurv" data-i18n="nav_cart">Krepšelis</a>
     <a href="#booking" class="btn btn-primary" data-i18n="nav_book">Rezervuoti</a>
     <div class="mobile-nav-langs lang-switcher">
       <button class="lang-btn active" data-lang="lt">LT</button>
@@ -102,27 +111,16 @@
         </div>
 
         <div class="hero-visual">
-          <div class="hero-image-frame">
-            <picture>
-              <source
-                type="image/webp"
-                srcset="src/assets/images/hero-lashes-480w.webp 480w,
-                        src/assets/images/hero-lashes-768w.webp 768w,
-                        src/assets/images/hero-lashes-1200w.webp 1200w"
-                sizes="(max-width: 768px) 100vw, 480px">
-              <img
-                src="src/assets/images/hero-lashes-768w.jpg"
-                srcset="src/assets/images/hero-lashes-480w.jpg 480w,
-                        src/assets/images/hero-lashes-768w.jpg 768w,
-                        src/assets/images/hero-lashes-1200w.jpg 1200w"
-                sizes="(max-width: 768px) 100vw, 480px"
-                width="1200"
-                height="1904"
-                alt="Blakstienų priauginimas — Akva Studio darbo pavyzdys"
-                loading="eager"
-                fetchpriority="high"
-                decoding="async">
-            </picture>
+          <div class="hero-image-frame hero-image-frame--illustration">
+            <img
+              class="hero-illustration"
+              src="src/assets/images/siluetas.png"
+              width="1280"
+              height="800"
+              alt="Akva Studio — moters siluetas su rose-gold šviesos spinduliais"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async">
           </div>
           <div class="hero-floating-card">
             <div class="card-icon">✓</div>
@@ -573,23 +571,32 @@
           </picture>
           <figcaption class="portfolio-overlay" data-i18n="portfolio_cap_4"><span>Klasikinis priauginimas</span></figcaption>
         </figure>
-      </div>
 
-      <figure class="portfolio-video-block">
-        <div class="portfolio-video-frame">
+        <figure class="portfolio-item portfolio-item-wide">
+          <img
+            src="src/assets/images/pavyzdys-1.png"
+            width="1536"
+            height="1024"
+            alt="Depiliacijos prieš ir po — viršutinė lūpa ir pažastys"
+            loading="lazy"
+            decoding="async">
+          <figcaption class="portfolio-overlay" data-i18n="portfolio_cap_5"><span>Depiliacija · Prieš · Po</span></figcaption>
+        </figure>
+
+        <figure class="portfolio-item portfolio-item-video">
           <video
-            class="portfolio-video"
             poster="src/assets/images/portfolio-3-volume-768w.jpg"
-            controls
+            autoplay
             muted
+            loop
             playsinline
-            preload="metadata">
+            preload="metadata"
+            aria-label="Procedūros akimirka — Akva Studio">
             <source src="src/assets/images/akva-video-2.mp4" type="video/mp4">
-            Jūsų naršyklė nepalaiko video.
           </video>
-        </div>
-        <figcaption class="portfolio-video-caption" data-i18n="portfolio_cap_5">Procedūros akimirka</figcaption>
-      </figure>
+          <figcaption class="portfolio-overlay" data-i18n="portfolio_cap_video"><span>Procedūros akimirka</span></figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -698,7 +705,6 @@
           <span class="section-label" data-i18n="booking_label">Registracija</span>
           <h2 class="section-title" data-i18n="booking_title">Rezervuokite savo vizitą</h2>
           <div class="divider"></div>
-          <p data-i18n="booking_sub">Pasirinkite paslaugą ir laisvą laiką — patvirtinimas iškart el. paštu.</p>
 
           <div class="booking-features">
             <div class="booking-feature" data-i18n="book_f1">Rezervacija realiu laiku</div>

@@ -24,3 +24,16 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# Sanity Studio
+studio/node_modules
+studio/.sanity
+studio/dist
+studio/.env
+studio/.env.local
+
+# Node
+node_modules/
+package-lock.json
+
+.vercel
