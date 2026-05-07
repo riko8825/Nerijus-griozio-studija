@@ -1,7 +1,7 @@
 # SESSION STATUS — AKVA STUDIO
 
-**Paskutinė sesija:** 2026-05-07 (#5)
-**Statusas:** 🟢 Hero mobile redesign + booking CTA overflow fix · LIVE Vercel'e
+**Paskutinė sesija:** 2026-05-07 (#6)
+**Statusas:** 🟢 Sanity Studio deployed · Klientės invite išsiųstas · CORS pridėtas · Production verify pass
 
 ---
 
@@ -14,6 +14,55 @@
 | 2026-05-05 | #3 | Setmore booking integracija (19 service btn → tiesioginis link, iframe embed); klientės nuotraukos + video integruoti su `<picture>` + srcset (3 dydžiai × WebP/JPG); about sekcija → background video; portfolio 4 nuotraukos + 1 vertikalus video; sync skripto fix |
 | 2026-05-07 | #4 | E-shop F1 fundament: Sanity Studio (5 schemos), 3 nauji NO puslapiai (produkter/produkt/handlekurv), 8 ES modules, krepšelio sistema, Vercel rewrites, hero siluetas, depiliacijos pavyzdys, video grid integracija, visi Rezervuoti btns → Setmore tiesiogiai, Setmore embed mobile fix, abs paths fix, Vercel live |
 | 2026-05-07 | #5 | Hero mobile redesign — `siluetas.png` kaip full background image (<1024px) su fine-tuned position 768px/480px breakpoint'ams; `hero-visual` paslėptas mobile, `hero-content` su gradient overlay. Booking CTA overflow fix — `min-width: 0`, `max-width: 100%`, mobile `width: 100%` + `padding: 16px` kad „Atidaryti rezervaciją naujame lange" mygtukas neuzeitų už container'io (390px CTA → 319px @ 390px viewport) |
+| 2026-05-07 | #6 | Sanity Studio deployed (`akva-studio.sanity.studio`, appId `pzscsmv1w270no5ojmth9il5`); klientės invite išsiųstas (akvastudio75@gmail.com → editor); Vercel CORS pridėtas; `sanity.cli.ts` `autoUpdates` migracija į `deployment.{appId, autoUpdates}`; production Playwright verify (390/360/1280 + /produkter Sanity fetch) — visi pass |
+
+---
+
+## SESIJA #6 (2026-05-07) — DETALĖS
+
+### Atlikta
+
+**Sanity Studio deploy**
+- Login → `npx sanity login` (Google OAuth)
+- Deploy → `npx sanity deploy` su hostname `akva-studio` → `https://akva-studio.sanity.studio/`
+- Sanity 4.22.0 upgrade (lokaliai buvo 3.99.0, runtime 4.22.0) — pirmas build crash'ino dėl OneDrive lock'o ant `styled-components.esm.js` (`[commonjs--resolver] The service was stopped`); antras `deploy` su jau install'intais paketais — pavyko
+
+**Klientės invite**
+- `npx sanity users invite akvastudio75@gmail.com --role editor`
+- Klientė gaus email iš Sanity → accept → login `akva-studio.sanity.studio`
+
+**Vercel CORS**
+- `npx sanity cors add https://akva-studio.vercel.app --no-credentials`
+- CORS list dabar: localhost:3000/3333/8080, akva-studio.sanity.studio, akva-studio.vercel.app
+
+**`sanity.cli.ts` config fix**
+- `autoUpdates: true` → `deployment: { appId: 'pzscsmv1w270no5ojmth9il5', autoUpdates: true }`
+- Eliminates Sanity 4.x deprecation warning + skip's hostname prompt sekančiam deploy
+
+### Production verify (Playwright)
+
+| Viewport | Hero | Booking CTA | Horizontal scroll | Console |
+|---|---|---|---|---|
+| 390×844 (iPhone) | siluetas.png bg ✓ | 167px, telpa ✓ | none (375px) | favicon 404 (non-critical) |
+| 360×800 (Android) | siluetas.png bg ✓ | 167px, telpa ✓ | none (345px) | favicon 404 |
+| 1280×900 (Desktop) | split layout ✓ (heroBg=none) | n/a | none (1265px) | clean |
+| /produkter | n/a | n/a | n/a | 0 errors, 1 produktas fetch ✓ |
+
+### Ko NE padaryta / nepatvirtinta
+
+- Realūs Aromatic89 produktai Sanity'je — dabar tik 1 test produktas ("Kavapukas nr 1")
+- Klientė vis dar nepradėjo naudotis Studio (laukia invite accept)
+- Custom domain (`vercel.app` subdomain nepatogus klientei)
+- Akvilės nuotrauka about sekcijoje (dabar video)
+- Logo SVG/PNG vector
+- favicon.ico — `404` ant home page (Playwright console rodė)
+
+### Kitas žingsnis (sesija #7)
+
+1. Patikrinti ar klientė accept'ino invite + pradėjo pildyti produktus → `https://akva-studio.sanity.studio/`
+2. Jei produktai pradėti pildyti → verify ant `/produkter` (kainos, nuotraukos, kategorijos)
+3. Custom domain sprendimas su kliente — `akvastudio.no` ar kt.; po to Vercel → Domains + Sanity CORS update
+4. `favicon.ico` pridėti į `src/assets/` + `<link rel="icon">` HTML head'e
 
 ---
 

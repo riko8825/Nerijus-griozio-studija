@@ -40,3 +40,7 @@ node_modules/
 package-lock.json
 
 .vercel
+
+# Playwright test artifacts
+.playwright-mcp/
+prod-*.png

@@ -32,10 +32,10 @@
 
 | Modulis | Statusas | Pastaba |
 |---|---|---|
-| Sanity Studio | 🟡 Lokalus | `studio/` su 5 schemos veikia `localhost:3333`; **NEPADEPLOY'INTAS** į akva-studio.sanity.studio |
+| Sanity Studio | ✅ Production | `https://akva-studio.sanity.studio/` (appId: `pzscsmv1w270no5ojmth9il5`); deploy 2026-05-07 |
 | Sanity projektas | ✅ Production | ID: `vwtjc4wg`, dataset: `production`, dabartiniai produktai: 1 (test „Kavapukas nr 1") |
-| Sanity CORS | 🟡 Iš dalies | Pridėti localhost:3000/3333/8080; **TRŪKSTA `https://akva-studio.vercel.app`** |
-| Klientės invite | ⬜ Nedaryta | Klientė neturi prieigos prie Studio |
+| Sanity CORS | ✅ Pilna | localhost:3000/3333/8080, akva-studio.sanity.studio, akva-studio.vercel.app |
+| Klientės invite | 🟡 Išsiųsta | Email akvastudio75@gmail.com → editor (laukia accept) |
 | Frontend katalogas (`/produkter`) | ✅ Live | Render iš Sanity CDN su fallback į src/data/*.json (dabar tuščias `[]`) |
 | Produkto puslapis (`/produkter/[slug]`) | ✅ Live | Vercel rewrite veikia, Schema.org Product+Offer markup |
 | Krepšelis (`/handlekurv`) | ✅ Live | localStorage state, mailto checkout placeholder |
@@ -50,30 +50,28 @@
 
 ## BLOCKERS
 
-1. **Studio NE deploy'intas** — klientė negali prisijungti, redaguoti produktų
-2. **Sanity CORS Vercel domenui** — produkcijoje gali blokuotis `apicdn.sanity.io` fetch'ai
-3. **Klientės invite nepadarytas** — laukia Studio deploy + Members invite
-4. **Mobile fix nepatikrintas vizualiai** — Setmore embed iframe gali vis dar overflow'inti
-5. **Aromatic89 realūs produktai** — be jų katalogas tuščias (live'e tik test produktas)
-6. **Akvilės nuotrauka** — about sekcijoje rodomas video, ne foto
-7. **Custom domain** — be jo URL nepatogus klientei (`vercel.app` subdomain)
+1. **Klientė nepradėjo naudotis Studio** — invite išsiųstas, laukia accept + login + produktų pildymo
+2. **Aromatic89 realūs produktai** — be jų katalogas tuščias (live'e tik test produktas „Kavapukas nr 1")
+3. **Akvilės nuotrauka** — about sekcijoje rodomas video, ne foto
+4. **Custom domain** — be jo URL nepatogus klientei (`vercel.app` subdomain)
+5. **Logo SVG/PNG vector** — turima tik JPG
+6. **favicon.ico** — `404` ant home page (Playwright console rodo)
 
 ## RESOLVED THIS SESSION
 
-- ~~E-shop fundament~~ → **F1 LIVE** (Sanity + frontend katalogas + cart + Vercel deploy)
-- ~~Hero blakstienos~~ → **siluetas.png** (rose-gold linijinis siluetas)
-- ~~Visi „Rezervuoti" → iframe~~ → **tiesiai į Setmore** naujame lange
-- ~~Setmore embed mobile overflow~~ → CSS fix įdėtas (vizualiai laukia patvirtinimo)
-- ~~Sync skriptas manualus~~ → `bash scripts/sync-html.sh` (4 puslapiai)
-- ~~Vercel deploy~~ → **live `https://akva-studio.vercel.app`** ✅
+- ~~Studio NE deploy'intas~~ → **`https://akva-studio.sanity.studio/`** ✅
+- ~~Sanity CORS Vercel domenui~~ → **pridėta** `https://akva-studio.vercel.app`
+- ~~Klientės invite nepadarytas~~ → **invite email išsiųstas** akvastudio75@gmail.com → editor
+- ~~Mobile fix nepatikrintas vizualiai~~ → **Playwright production verify pass** (390/360/1280)
+- ~~Sanity 4.x deprecation warning~~ → `sanity.cli.ts` migracija į `deployment.{appId, autoUpdates}`
 
 ## NEXT SESSION ENTRY POINTS
 
-- A) **Studio deploy + klientės invite** — `cd studio && npm run deploy`, sanity.io/manage Members
-- B) **Sanity CORS** — `https://akva-studio.vercel.app` pridėti
-- C) **Mobile fix patvirtinimas** — Chrome DevTools 390/360 viewport tikrinimas
-- D) **Aromatic89 realūs produktai** — klientė pildo per Studio arba tu importuoji per JSON
+- A) **Klientė pradėjo Studio?** — verify ar produktai pildomi → `https://akva-studio.sanity.studio/`
+- B) **Realūs Aromatic89 produktai** verify ant `/produkter` (kainos, foto, kategorijos)
+- C) **Custom domain** — Vercel → Domains + Sanity CORS update + DNS setup
+- D) **favicon.ico** — pridėti į `src/assets/` + `<link rel="icon">` head'e
 - E) **F2 mokėjimų sprendimas** — klientės pasirinkimas tarp Snipcart/Shopify/Stripe
-- F) **Custom domain** — Vercel → Domains setup
-- G) **Cache-buster** — pridėti `?v=YYYYMMDD` prie CSS/JS `<link>` ir `<script>`
-- H) **Akvilės nuotrauka** — pakeisti about video į foto kai gausim
+- F) **Akvilės nuotrauka** — pakeisti about video į foto kai gausim
+- G) **Logo SVG/PNG vector** — paprašyti klientės
+- H) **Cache-buster** — pridėti `?v=YYYYMMDD` prie CSS/JS `<link>` ir `<script>`
