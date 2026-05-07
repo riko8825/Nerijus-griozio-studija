@@ -81,13 +81,21 @@ akva-studio/
 
 ## SYNC KOMANDA
 ```bash
+bash scripts/sync-html.sh
+```
+sync'ina visus 4 puslapius (index, produkter, produkt, handlekurv).
+
+Manualiai vienam failui:
+```bash
 cp src/pages/index.html index.html && \
-  sed -i 's|\.\./css/|src/css/|g; s|\.\./js/|src/js/|g; s|\.\./assets/|src/assets/|g' index.html
+  sed -i 's|\.\./css/|/src/css/|g; s|\.\./js/|/src/js/|g; s|\.\./assets/|/src/assets/|g' index.html
 ```
 
-**Kodėl sed:** `src/pages/index.html` naudoja `../css/`, `../js/`, `../assets/` kelius (relative iš `src/pages/`), bet root `index.html` turi naudoti `src/css/`, `src/js/`, `src/assets/` (relative iš root). Be konvertimo CSS/JS nesikrauna paleidus root failą.
+**Kodėl sed:** `src/pages/*.html` naudoja `../css/`, `../js/`, `../assets/` (relative iš `src/pages/`), bet root failai turi naudoti **absolute** kelius `/src/css/`, `/src/js/`, `/src/assets/`. Be konvertimo CSS/JS nesikrauna paleidus root failą arba pakeliami iš nested URL'o (pvz., `/produkter/[slug]`).
 
-**Pastaba:** sed pattern be `"` priekyje — kad apimtų ir multi-line `srcset` atributus, kur kelias prasideda be kabučių (kelias antroje eilutėje atsiranda po įtrauktais tarpais, ne po `"`).
+**Pastabos:**
+- sed pattern be `"` priekyje — kad apimtų ir multi-line `srcset` atributus, kur kelias prasideda be kabučių (kelias antroje eilutėje atsiranda po įtrauktais tarpais, ne po `"`).
+- **Absolute paths privalomi** (`/src/...` su slash priekyje) — be jų Vercel rewrite'inti URL'ai bando užkrauti `/produkter/src/css/styles.css` (404).
 
 ---
 

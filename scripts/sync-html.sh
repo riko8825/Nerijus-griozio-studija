@@ -15,7 +15,7 @@ PAGES=(
 for page in "${PAGES[@]}"; do
   if [ -f "src/pages/$page" ]; then
     cp "src/pages/$page" "$page"
-    sed -i 's|\.\./css/|src/css/|g; s|\.\./js/|src/js/|g; s|\.\./assets/|src/assets/|g' "$page"
+    sed -i 's|\.\./css/|/src/css/|g; s|\.\./js/|/src/js/|g; s|\.\./assets/|/src/assets/|g' "$page"
     echo "✓ Synced: $page"
   else
     echo "⚠ Missing: src/pages/$page"
