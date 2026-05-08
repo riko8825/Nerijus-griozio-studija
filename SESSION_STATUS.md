@@ -1,7 +1,7 @@
 # SESSION STATUS — AKVA STUDIO
 
-**Paskutinė sesija:** 2026-05-07 (#6)
-**Statusas:** 🟢 Sanity Studio deployed · Klientės invite išsiųstas · CORS pridėtas · Production verify pass
+**Paskutinė sesija:** 2026-05-08 (#7)
+**Statusas:** 🟡 Hero mobile redesign #2 — naujas `hero-mobile.png`, `contain` (be cropping); `.hero-floating-card` pašalinta; `mobile-preview.html` pridėtas. Lokaliai verify pass. Production deploy pending.
 
 ---
 
@@ -15,6 +15,61 @@
 | 2026-05-07 | #4 | E-shop F1 fundament: Sanity Studio (5 schemos), 3 nauji NO puslapiai (produkter/produkt/handlekurv), 8 ES modules, krepšelio sistema, Vercel rewrites, hero siluetas, depiliacijos pavyzdys, video grid integracija, visi Rezervuoti btns → Setmore tiesiogiai, Setmore embed mobile fix, abs paths fix, Vercel live |
 | 2026-05-07 | #5 | Hero mobile redesign — `siluetas.png` kaip full background image (<1024px) su fine-tuned position 768px/480px breakpoint'ams; `hero-visual` paslėptas mobile, `hero-content` su gradient overlay. Booking CTA overflow fix — `min-width: 0`, `max-width: 100%`, mobile `width: 100%` + `padding: 16px` kad „Atidaryti rezervaciją naujame lange" mygtukas neuzeitų už container'io (390px CTA → 319px @ 390px viewport) |
 | 2026-05-07 | #6 | Sanity Studio deployed (`akva-studio.sanity.studio`, appId `pzscsmv1w270no5ojmth9il5`); klientės invite išsiųstas (akvastudio75@gmail.com → editor); Vercel CORS pridėtas; `sanity.cli.ts` `autoUpdates` migracija į `deployment.{appId, autoUpdates}`; production Playwright verify (390/360/1280 + /produkter Sanity fetch) — visi pass |
+| 2026-05-08 | #7 | `.hero-floating-card` pašalinta (HTML + CSS); naujas `hero-mobile.png` (1536×1024, kliento įkeltas); mobile hero `cover` → `contain` (pilnas paveiksliukas matomas, be cropping); `padding-top: calc(72px + 100vw / 1.5)` rezervuoja paveiksliuko aukštį, gradient overlay pašalintas; `mobile-preview.html` dev tool su 5 device presets |
+
+---
+
+## SESIJA #7 (2026-05-08) — DETALĖS
+
+### Atlikta
+
+**1. `.hero-floating-card` pašalinta**
+- HTML: [src/pages/index.html:113-124](src/pages/index.html) `<div class="hero-floating-card">` su ✓ + "Rezervuoti" + "Greita registracija" išmestas
+- CSS: [src/css/styles.css](src/css/styles.css) 4 blokai (`.hero-floating-card`, `.card-icon`, `.card-text strong`, `.card-text span`) — 39 eilutės šalintos
+- Klientės prašymas — kortelė nereikalinga
+
+**2. Hero mobile redesign #2 — naujas paveiksliukas, neapkarpytas**
+- Klientė įkėlė `paveiksliukas nr2.png` (1536×1024, 1.6 MB) → kopija `src/assets/images/hero-mobile.png`
+- Klientės skundas: `cover` zoom'ino + kirpto paveiksliuko viršų/apačią
+- Fix: `background-size: cover` → `contain` visuose 3 mobile media queries (1024px, 768px, 480px)
+- `min-height: calc(100vh - 72px)` → `min-height: auto`
+- `padding-top: calc(72px + 100vw / 1.5)` rezervuoja paveiksliuko aukštį (header 72px + image 1.5:1 ratio)
+- `hero-content` gradient overlay pašalintas — paveiksliukas baigiasi virš content, overlay'us nereikalingas
+- `background-position: center 72px` (po header'iu)
+
+**3. `mobile-preview.html` dev tool**
+- iframe wrapper su 5 device presets: Android 360, iPhone 14 Pro 390, Pixel 7 412, iPhone 15 Pro Max 430, iPad 768
+- Default — iPhone 14 Pro
+- Reload + atidaryti pilną nuorodos
+- Tikslas — klientei rodyti mobile vaizdą per kompiuterį be DevTools
+
+### Local Playwright verify
+
+| Viewport | Hero paveiksliukas | Cropping | Content layout |
+|---|---|---|---|
+| 360×800 (Android) | pilnas, neapkarpytas ✓ | none ✓ | content po image OK |
+| 390×844 (iPhone 14 Pro) | pilnas, neapkarpytas ✓ | none ✓ | content po image OK |
+| 768×1024 (iPad) | pilnas, neapkarpytas ✓ | none ✓ | content po image OK |
+| 1280×900 (Desktop) | split layout (siluetas.png frame) ✓ | n/a | nepaliestas |
+
+### Ko NE padaryta / nepatvirtinta
+
+- Production deploy (Vercel) — klientė dar nepatvirtino naujo dizaino
+- Klientė nepatikrino lokalaus preview ant savo telefono
+- `paveiksliukas nr2.png` originalas paliktas šalia `hero-mobile.png` — duplikatas
+- Debug screenshot'ai (`akva-mobile-*.png`, `akva-tablet-*.png`, `akva-desktop-*.png` × 7) palikti repo root — į `.gitignore` arba ištrinti
+- `Greita registracija` i18n raktas `src/js/main.js` (eilutė ~107) — orphaned (HTML nebenaudoja)
+- `mobile-preview.html` — į `.gitignore` ar palikti repo? (dev only tool)
+- favicon.ico vis dar 404 (paveldėta iš #6)
+
+### Kitas žingsnis (sesija #8)
+
+1. Klientės approval ant naujo mobile dizaino → jei OK, `git add` + `git commit` + push į Vercel
+2. Cleanup: ištrinti debug screenshot'us repo root + `paveiksliukas nr2.png` duplikatą; nuspręsti dėl `mobile-preview.html` (gitignore ar palikti)
+3. Production verify Playwright — 360/390/768/1280 ant `akva-studio.vercel.app`
+4. Carry-over iš #6: ar klientė accept'ino Sanity invite? ar pradėjo pildyti produktus?
+
+---
 
 ---
 

@@ -10,6 +10,10 @@ PAGES=(
   "produkter.html"
   "produkt.html"
   "handlekurv.html"
+  "privatumas.html"
+  "slapukai.html"
+  "salygos.html"
+  "naudojimosi-taisykles.html"
 )
 
 for page in "${PAGES[@]}"; do

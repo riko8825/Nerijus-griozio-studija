@@ -4,7 +4,7 @@
 |---|---|---|
 | Projekto struktūra | ✅ Sukurta | CLAUDE.md, aplankai, sync workflow (sed pattern atnaujintas — absolute paths /src/) |
 | Header / nav | ✅ Įgyvendinta | LT/EN/NO switcher, mobile nav, „Parduotuvė" + „Krepšelis" + cart icon counter |
-| Hero | ✅ Desktop split + mobile full-bg | Desktop: split layout (text + frame). Mobile (<1024px): `siluetas.png` kaip full background image, `hero-visual` paslėptas, content gradient overlay |
+| Hero | ✅ Desktop split + mobile full-image | Desktop: split layout (text + frame). Mobile (<1024px): `hero-mobile.png` (1536×1024) `background-size: contain` (pilnas paveiksliukas matomas, neapkarpytas), content seka po image. `.hero-floating-card` pašalinta sesijoje #7 |
 | Paslaugos | ✅ Pilna | 2 kategorijos × 8 subkategorijos × 17 paslaugų; visi 19 „Rezervuoti" mygtukų rodo į Setmore |
 | Produktai (homepage placeholder) | 🟡 Senos kortelės | 3 generinės „Netrukus" kortelės — orphan po e-shop sukūrimo |
 | Apie mus | ✅ Tekstas + video | Klientės balsas, foninis video1 (autoplay/muted/loop, aria-hidden) — Akvilės foto vis dar nėra |
@@ -57,7 +57,14 @@
 5. **Logo SVG/PNG vector** — turima tik JPG
 6. **favicon.ico** — `404` ant home page (Playwright console rodo)
 
-## RESOLVED THIS SESSION
+## RESOLVED THIS SESSION (#7)
+
+- ~~`.hero-floating-card` ant hero~~ → **pašalinta** (HTML + 4 CSS blokai)
+- ~~Mobile hero `cover` zoom + cropping~~ → **`contain`** (pilnas paveiksliukas matomas) + `padding-top: calc(72px + 100vw / 1.5)` rezervuoja aukštį
+- ~~Klientės naujas paveiksliukas neintegruotas~~ → `hero-mobile.png` (1536×1024) live mobile
+- ~~Mobile preview be DevTools~~ → `mobile-preview.html` su 5 device presets
+
+## RESOLVED IN #6
 
 - ~~Studio NE deploy'intas~~ → **`https://akva-studio.sanity.studio/`** ✅
 - ~~Sanity CORS Vercel domenui~~ → **pridėta** `https://akva-studio.vercel.app`

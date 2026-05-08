@@ -47,9 +47,10 @@ Atnaujinta: 2026-05-04
 - `.testimonial-card` — atsiliepimo kortelė
 - `.booking-form` — kontaktų forma
 - `.lang-switcher` `.lang-btn.active` — kalbų switcher
-- `.hero-floating-card` — plaukiojanti kortelė hero sekcijoje
-- `.hero-image-frame--illustration` — modifier hero SVG iliustracijai ← **NAUJAS**
-- `.hero-illustration` — img tag stiliai ← **NAUJAS**
+- ~~`.hero-floating-card` — plaukiojanti kortelė~~ — **pašalinta sesijoje #7**
+- `.hero-image-frame--illustration` — modifier hero SVG iliustracijai (desktop only)
+- `.hero-illustration` — img tag stiliai (desktop only)
+- Mobile (<1024px): `.hero` `background-image: url('../assets/images/hero-mobile.png')` `background-size: contain` ← **#7**
 
 ### Būsenos
 - `.header.scrolled` — pridedama scroll metu
