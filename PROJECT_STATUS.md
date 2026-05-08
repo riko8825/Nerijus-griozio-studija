@@ -12,8 +12,10 @@
 | Portfolio | ✅ 5 nuotraukos + video grid | 4 darbai + depiliacijos pavyzdys (span 2) + video (span 2, autoplay) |
 | Atsiliepimai | 🟡 Mišrus | 3 LT placeholder + 3 norvegiški (Janne/Marie/Anita) |
 | **Rezervacija** | ✅ **Setmore tiesioginis** | Visi 15 mygtukų → `https://akvastudio.setmore.com/akvile` `target=_blank` |
-| Footer | ✅ Įgyvendinta | Kontaktai, navigacija, copyright |
-| LT/EN/NO i18n | ✅ Pilni | ~145 raktų × 3 kalbos; e-shop puslapiai NO only |
+| Footer | ✅ Įgyvendinta | Kontaktai, navigacija, copyright + Teisinė informacija (4 nuorodos) + Impressum eilutė (atsakingas asmuo + email + telefonas) |
+| LT/EN/NO i18n | ✅ Pilni | ~735 raktų × 3 kalbos (po sesijos #8 pridėta ~590 legal raktai); e-shop puslapiai NO only |
+| Legal puslapiai | ✅ 4 puslapiai | `/privatumas`, `/slapukai`, `/salygos`, `/naudojimosi-taisykles` (LT/EN/NO i18n; placeholder'iai laukia klientės) |
+| Impressum | ✅ Įgyvendinta | Inline footer'yje visuose 8 puslapiuose; `[ATSAKINGAS ASMUO]` + `[TELEFONAS]` placeholder'iai |
 | Cookie consent | ✅ Įgyvendinta | Silktide consent manager |
 | Klientės nuotraukos | 🟡 Iš dalies | 5 nuotraukos (hero + 4 portfolio + depiliacija) integruotos; Akvilės foto trūksta |
 | Klientės video | ✅ Integruota | 2 failai: about background + portfolio grid (autoplay) |
@@ -22,7 +24,7 @@
 | Setmore embed mobile | ✅ Pataisyta | CTA `min-width: 0`, mobile `width: 100%` + 16px padding; iframe telpa 390/360 viewport'e (Playwright verify ✓) |
 | Image optimization | ✅ Sukurta | `scripts/optimize-images.py` (PIL, WebP+JPG, 3 dydžiai) |
 | Video compress | ⬜ Nedaryta | `akva-video-2.mp4` 5MB — reikia ffmpeg install + compress |
-| Cache-buster | ⬜ Nedaryta | CSS/JS link'uose nėra `?v=...`, klientė turi hard reload |
+| Cache-buster | ✅ Įgyvendinta | `?v=20260508` styles.css/main.js visuose 8 puslapiuose (sesija #8) |
 | **Deploy (Vercel)** | ✅ **Live** | `https://akva-studio.vercel.app` ✅; custom domain laukia |
 | Klientės patvirtinimas | 🟡 Reikia | Live URL klientei dar nepasidalintas |
 
@@ -56,8 +58,17 @@
 4. **Custom domain** — be jo URL nepatogus klientei (`vercel.app` subdomain)
 5. **Logo SVG/PNG vector** — turima tik JPG
 6. **favicon.ico** — `404` ant home page (Playwright console rodo)
+7. **Legal placeholder'iai** — `[ATSAKINGAS ASMUO]`, `[TELEFONAS]`, `[ĮMONĖS PAVADINIMAS]`, `[ADRESAS]`, `[ĮMONĖS KODAS]`, `[DOMAIN]`, `[DATA]`, `[ŠALIES]` — klientė nepateikė
+8. **Production verify nepilnas (#8)** — `/slapukai`, `/salygos`, `/naudojimosi-taisykles` + mobile + i18n switcher netestuoti (Claude Code crash)
 
-## RESOLVED THIS SESSION (#7)
+## RESOLVED THIS SESSION (#8)
+
+- ~~Privatumo politika nėra~~ → **4 legal puslapiai** (`/privatumas`, `/slapukai`, `/salygos`, `/naudojimosi-taisykles`) × LT/EN/NO i18n
+- ~~Impressum nėra~~ → **inline footer'yje visuose 8 puslapiuose** (atsakingas asmuo + email + telefonas)
+- ~~Cache-buster nedaryta~~ → **`?v=20260508`** styles.css/main.js (Vercel CDN cache fix)
+- ~~Footer be teisinių nuorodų~~ → 4-toji kolona „Teisinė informacija" su 4 legal nuorodom
+
+## RESOLVED IN #7
 
 - ~~`.hero-floating-card` ant hero~~ → **pašalinta** (HTML + 4 CSS blokai)
 - ~~Mobile hero `cover` zoom + cropping~~ → **`contain`** (pilnas paveiksliukas matomas) + `padding-top: calc(72px + 100vw / 1.5)` rezervuoja aukštį
@@ -81,4 +92,7 @@
 - E) **F2 mokėjimų sprendimas** — klientės pasirinkimas tarp Snipcart/Shopify/Stripe
 - F) **Akvilės nuotrauka** — pakeisti about video į foto kai gausim
 - G) **Logo SVG/PNG vector** — paprašyti klientės
-- H) **Cache-buster** — pridėti `?v=YYYYMMDD` prie CSS/JS `<link>` ir `<script>`
+- H) ~~**Cache-buster**~~ → padaryta sesijoje #8
+- I) **Production verify legal puslapių** — `/slapukai`, `/salygos`, `/naudojimosi-taisykles` + mobile 390 + i18n switcher (Playwright)
+- J) **Klientė užpildo legal placeholder'ius** — be jų puslapiai juridiškai neatitinka
+- K) **Cleanup** — debug screenshot'ai (`akva-*.png` × ~15) į `.gitignore` arba ištrinti

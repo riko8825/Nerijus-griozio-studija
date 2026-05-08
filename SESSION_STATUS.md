@@ -1,7 +1,7 @@
 # SESSION STATUS — AKVA STUDIO
 
-**Paskutinė sesija:** 2026-05-08 (#7)
-**Statusas:** 🟡 Hero mobile redesign #2 — naujas `hero-mobile.png`, `contain` (be cropping); `.hero-floating-card` pašalinta; `mobile-preview.html` pridėtas. Lokaliai verify pass. Production deploy pending.
+**Paskutinė sesija:** 2026-05-08 (#8)
+**Statusas:** 🟢 Legal/Impressum infrastruktūra: 4 nauji legal puslapiai (privatumas/slapukai/salygos/naudojimosi-taisykles) × 3 kalbos + Impressum eilutė visuose 8 puslapiuose. Cache-buster pridėtas. Production deploy ✅ (commit'ai 8b90159 + c74a74a). `/privatumas` desktop verify pass; `/slapukai` + `/salygos` + `/naudojimosi-taisykles` + mobile + i18n switcher — verify ne pilnas (Claude Code crash sutrukdė).
 
 ---
 
@@ -16,6 +16,72 @@
 | 2026-05-07 | #5 | Hero mobile redesign — `siluetas.png` kaip full background image (<1024px) su fine-tuned position 768px/480px breakpoint'ams; `hero-visual` paslėptas mobile, `hero-content` su gradient overlay. Booking CTA overflow fix — `min-width: 0`, `max-width: 100%`, mobile `width: 100%` + `padding: 16px` kad „Atidaryti rezervaciją naujame lange" mygtukas neuzeitų už container'io (390px CTA → 319px @ 390px viewport) |
 | 2026-05-07 | #6 | Sanity Studio deployed (`akva-studio.sanity.studio`, appId `pzscsmv1w270no5ojmth9il5`); klientės invite išsiųstas (akvastudio75@gmail.com → editor); Vercel CORS pridėtas; `sanity.cli.ts` `autoUpdates` migracija į `deployment.{appId, autoUpdates}`; production Playwright verify (390/360/1280 + /produkter Sanity fetch) — visi pass |
 | 2026-05-08 | #7 | `.hero-floating-card` pašalinta (HTML + CSS); naujas `hero-mobile.png` (1536×1024, kliento įkeltas); mobile hero `cover` → `contain` (pilnas paveiksliukas matomas, be cropping); `padding-top: calc(72px + 100vw / 1.5)` rezervuoja paveiksliuko aukštį, gradient overlay pašalintas; `mobile-preview.html` dev tool su 5 device presets |
+| 2026-05-08 | #8 | 4 nauji legal puslapiai (`/privatumas`, `/slapukai`, `/salygos`, `/naudojimosi-taisykles`) × LT/EN/NO i18n; Impressum eilutė visuose 8 footer'iuose (atsakingas asmuo + email + telefonas); naujas `.legal-page` + `.footer-impressum` CSS; `scripts/sync-html.sh` papildytas 4 puslapiais; cache-buster `?v=20260508` styles.css/main.js (Vercel CDN cache fix); commit'ai 8b90159 + c74a74a deployed |
+
+---
+
+## SESIJA #8 (2026-05-08) — DETALĖS
+
+### Atlikta
+
+**1. 4 legal puslapiai (LT/EN/NO i18n)**
+- `/privatumas` — Privatumo politika (10 skirsnių, BDAR/GDPR + Norvegijos asmens duomenų apsaugos)
+- `/slapukai` — Slapukų politika (essential cookies lentelė: `akva_lang`, `akva_cart_v1`)
+- `/salygos` — Naudojimo sąlygos ir pirkimo taisyklės (12 skirsnių; rezervacija, atšaukimas, grąžinimai)
+- `/naudojimosi-taisykles` — Naudojimosi taisyklės (vartotojo elgsenos, draudžiama veikla, 12 skirsnių)
+- Visi puslapiai naudoja `data-i18n` atributus → automatiškas LT/EN/NO switcher veikimas
+- Placeholder'iai klientei užpildyti: `[ĮMONĖS PAVADINIMAS]`, `[ADRESAS]`, `[ĮMONĖS KODAS]`, `[ATSAKINGAS ASMUO]`, `[TELEFONAS]`, `[DOMAIN]`, `[DATA]`, `[ŠALIES]`
+
+**2. Impressum eilutė visuose 8 footer'iuose**
+- Inline blokas tarp `.footer-inner` ir `.footer-bottom`
+- Turinys: `Atsakingas asmuo: [ATSAKINGAS ASMUO] · akvastudio75@gmail.com · [TELEFONAS]`
+- LT (i18n) — index, privatumas, slapukai, salygos, naudojimosi-taisykles
+- NO (hardcoded) — produkter, produkt, handlekurv (`Ansvarlig person: [ANSVARLIG PERSON] · ... · [TELEFON]`)
+
+**3. CSS naujai**
+- `.legal-page` (`80px` paddingas viršuje header'iui), `.legal-content` (max-width 760px, baltas card, border-radius 22px, shadow-sm)
+- `.legal-section h2` (Gilda Display), `.legal-section a` (color primary), `.legal-table` (responsive overflow-x)
+- `.footer-impressum` (flex, 0.82rem, oklch tamsios temos colors); mobile centruotas
+- `--font-serif` → `--font-display` rebind (initial mistake)
+
+**4. i18n raktai (~590 nauji)**
+- `legal_priv_*` (38), `legal_cook_*` (32), `legal_terms_*` (39), `legal_rules_*` (38) × 3 kalbos
+- `footer_legal_*` (4), `footer_impressum_*` (3) × 3 kalbos
+- `src/js/main.js`: 618 → 1208 eilučių
+
+**5. Cache-buster fix**
+- Klaida: pirmas commit'as deploy'intas be cache-buster'io; production CSS buvo `max-age=86400` cached → nauji legal puslapiai be `.legal-content` / `.footer-impressum` stilių
+- Fix: `?v=20260508` pridėtas prie styles.css + main.js link'ų visuose 8 puslapiuose
+- Verify: po `c74a74a` deploy `/privatumas` desktop CSS pritaikytas (`bg: #fff`, `padding: 32px 24px`, `max-width: 760px`)
+
+### Production verify (Playwright)
+
+| Puslapis | Viewport | Statusas | Pastaba |
+|---|---|---|---|
+| `/` (index) | 1280 | ✅ pass | Impressum + 4 legal nuorodos visi rodomi |
+| `/privatumas` | 1280 | ✅ pass | CSS pritaikyta, footer Impressum OK |
+| `/slapukai` | — | ⏸ ne testuota | Claude Code crash (kodas `2147483651`) sutrukdė |
+| `/salygos` | — | ⏸ ne testuota | Claude Code crash sutrukdė |
+| `/naudojimosi-taisykles` | — | ⏸ ne testuota | Claude Code crash sutrukdė |
+| Mobile 390 | — | ⏸ ne testuota | Claude Code crash sutrukdė |
+| i18n switcher (EN/NO) | — | ⏸ ne testuota | Claude Code crash sutrukdė |
+| `/produkter` | — | ⏸ ne testuota | Claude Code crash sutrukdė |
+
+### Kas liko / nepatvirtinta
+
+- **3 legal puslapiai dar netikrinti production'e** — `/slapukai`, `/salygos`, `/naudojimosi-taisykles` (CSS turėtų veikti tas pats kaip `/privatumas`, bet vizualiai nepatvirtinta)
+- **Mobile responsive testas neatliktas** — visi 4 legal puslapiai ant 390px viewport
+- **i18n switcher neištestuotas** — ar EN/NO veikia ant legal puslapių (raktai pridėti, bet runtime nepatikrintas)
+- **Klientė neužpildė placeholder'ių** — `[ATSAKINGAS ASMUO]`, `[TELEFONAS]`, `[ĮMONĖS PAVADINIMAS]`, `[ADRESAS]`, `[ĮMONĖS KODAS]`, `[DOMAIN]`, `[DATA]`, `[ŠALIES]`
+- **Cookie consent banner** — atidėtas (klientė pasakė „ne dabar")
+- **Debug screenshot'ai dar repo root'e** — sesijos #7 (11) + #8 (4) = ~15 PNG'ų
+- **`paveiksliukas nr2.png`** — duplikatas šalia `hero-mobile.png` (paveldėta iš #7)
+
+### Kitas žingsnis
+
+1. **Dotaisyti production verify** — patestuoti likusius 3 legal puslapius + mobile 390 + i18n switcher (Playwright)
+2. **Klientė užpildo Impressum + legal placeholder'ius** — be jų puslapiai juridiniam reikalavimui neatitinka
+3. **Cleanup** — debug screenshot'ai į `.gitignore` arba ištrinti repo root'e
 
 ---
 
