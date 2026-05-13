@@ -7,12 +7,40 @@
   <meta name="robots" content="index, follow">
   <title data-i18n="legal_cook_meta_title">Slapukų politika — Akva Studio</title>
 
+  <!-- ── Consent Mode v2 + Analytics ── -->
+  <!-- 1. Default consent state (BEFORE Cookiebot + GA4) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'functionality_storage': 'granted',
+      'security_storage': 'granted',
+      'wait_for_update': 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+    gtag('set', 'url_passthrough', true);
+  </script>
+
+  <!-- 2. Cookiebot CMP (auto-blocking) -->
+  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="CBID-PLACEHOLDER" data-blockingmode="auto" type="text/javascript"></script>
+
+  <!-- 3. GA4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXX', { 'anonymize_ip': true });
+  </script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;1,6..12,300;1,6..12,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/src/css/styles.css?v=20260508">
+  <link rel="stylesheet" href="/src/css/styles.css?v=20260513e">
 </head>
 <body>
 
@@ -81,31 +109,39 @@
         <header class="legal-header">
           <span class="legal-eyebrow" data-i18n="legal_cook_eyebrow">Slapukų politika</span>
           <h1 data-i18n="legal_cook_title">Slapukų politika</h1>
-          <p class="legal-meta" data-i18n="legal_cook_updated">Paskutinį kartą atnaujinta: [DATA]</p>
+          <p class="legal-meta" data-i18n="legal_cook_updated">Paskutinį kartą atnaujinta: 2026-05-13</p>
         </header>
 
         <section class="legal-section">
           <h2 data-i18n="legal_cook_h_what">1. Kas yra slapukai</h2>
           <p data-i18n="legal_cook_p_what">
-            Slapukai (angl. „cookies") — tai maži tekstiniai failai, kuriuos jūsų naršyklė išsaugo įrenginyje, kai lankotės svetainėje. Jie padeda svetainei atsiminti jūsų pasirinkimus (pvz., kalbą), užtikrinti veikimą ir pagerinti naudotojo patirtį.
+            Slapukai (angl. „cookies") — tai maži tekstiniai failai, kuriuos jūsų naršyklė išsaugo įrenginyje, kai lankotės svetainėje. Šalia jų svetainė taip pat naudoja vietinės atminties saugyklą (localStorage), kuri techniškai nėra slapukas, bet veikia panašiu principu — saugo duomenis tik jūsų naršyklėje. Slapukai padeda atsiminti jūsų pasirinkimus (pvz., kalbą, krepšelio turinį), užtikrinti svetainės veikimą ir, su jūsų sutikimu, matuoti naudojimo statistiką.
           </p>
         </section>
 
         <section class="legal-section">
-          <h2 data-i18n="legal_cook_h_use">2. Kaip naudojame slapukus</h2>
-          <p data-i18n="legal_cook_p_use">Akva Studio svetainė naudoja minimalų slapukų ir vietinės atminties (localStorage) kiekį, reikalingą tik svetainės veikimui. Mes <strong>nenaudojame</strong> reklamos ar trečiųjų šalių analitikos slapukų.</p>
+          <h2 data-i18n="legal_cook_h_use">2. Kaip Akva Studio naudoja slapukus</h2>
+          <p data-i18n="legal_cook_p_use">akvastudio.no naudoja <strong>minimalų slapukų ir localStorage kiekį</strong>, reikalingą funkcionalumui (kalbos pasirinkimui ir krepšeliui), sutikimo valdymui (CMP) bei — tik su jūsų aktyviu sutikimu — anonimizuotai statistikai (Google Analytics 4). Mes <strong>nenaudojame</strong> reklamos slapukų, neprofiluojame ir neperduodame jūsų duomenų rinkodaros tinklams.</p>
         </section>
 
         <section class="legal-section">
-          <h2 data-i18n="legal_cook_h_types">3. Slapukų tipai</h2>
+          <h2 data-i18n="legal_cook_h_consentmode">3. Consent Mode v2 — sutikimo modelis</h2>
+          <p data-i18n="legal_cook_p_consentmode">
+            Akva Studio veikia pagal Google Consent Mode v2 modelį. Tai reiškia, kad <strong>pagal nutylėjimą visi rinkodaros, analitikos, asmenizacijos ir reklamos slapukai yra išjungti</strong> (<code>denied</code>), kol jūs neaiškiai jų neįjungiate sutikimo lange. Tik <em>būtinieji</em> ir <em>saugumo</em> slapukai yra įjungti pagal nutylėjimą (<code>granted</code>), nes be jų svetainė techniškai neveiks.
+          </p>
+        </section>
 
-          <h3 data-i18n="legal_cook_h_essential">3.1. Būtini (essential)</h3>
-          <p data-i18n="legal_cook_p_essential">Šie slapukai/raktai būtini svetainės veikimui ir nereikalauja sutikimo:</p>
+        <section class="legal-section">
+          <h2 data-i18n="legal_cook_h_types">4. Slapukai ir saugyklos, naudojami šioje svetainėje</h2>
+
+          <h3 data-i18n="legal_cook_h_essential">4.1. Būtinieji (essential) — nereikalauja sutikimo</h3>
+          <p data-i18n="legal_cook_p_essential">Šie elementai būtini svetainės veikimui:</p>
           <div class="legal-table">
             <table>
               <thead>
                 <tr>
                   <th data-i18n="legal_cook_th_name">Pavadinimas</th>
+                  <th data-i18n="legal_cook_th_type">Tipas</th>
                   <th data-i18n="legal_cook_th_purpose">Paskirtis</th>
                   <th data-i18n="legal_cook_th_duration">Galiojimas</th>
                 </tr>
@@ -113,49 +149,116 @@
               <tbody>
                 <tr>
                   <td><code>akva_lang</code></td>
-                  <td data-i18n="legal_cook_td_lang">Naudotojo pasirinktos kalbos (LT/EN/NO) atmintis (localStorage).</td>
+                  <td data-i18n="legal_cook_td_localstorage">localStorage</td>
+                  <td data-i18n="legal_cook_td_lang">Atsimena jūsų pasirinktą kalbą (LT / EN / NO).</td>
                   <td data-i18n="legal_cook_td_persistent">Iki ištrynimo</td>
                 </tr>
                 <tr>
                   <td><code>akva_cart_v1</code></td>
-                  <td data-i18n="legal_cook_td_cart">Pirkinių krepšelio turinys (localStorage). Saugomas tik jūsų naršyklėje.</td>
+                  <td data-i18n="legal_cook_td_localstorage">localStorage</td>
+                  <td data-i18n="legal_cook_td_cart">Pirkinių krepšelio turinys (produkto ID, kiekis). Niekur nesiunčiamas.</td>
                   <td data-i18n="legal_cook_td_persistent">Iki ištrynimo</td>
+                </tr>
+                <tr>
+                  <td><code>CookieConsent</code></td>
+                  <td data-i18n="legal_cook_td_cookie">Slapukas (Cookiebot)</td>
+                  <td data-i18n="legal_cook_td_consent">Saugo jūsų sutikimo pasirinkimus (kurias kategorijas leidote).</td>
+                  <td data-i18n="legal_cook_td_1year">1 metai</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <h3 data-i18n="legal_cook_h_third">3.2. Trečiųjų šalių paslaugos</h3>
-          <p data-i18n="legal_cook_p_third">Kai lankotės šių paslaugų srityse, gali būti naudojami papildomi slapukai pagal jų politikas:</p>
+          <h3 data-i18n="legal_cook_h_stats">4.2. Statistiniai (analytics) — tik su sutikimu</h3>
+          <p data-i18n="legal_cook_p_stats">Įjungiami tik tada, kai sutikote „Statistika" kategorijai. IP adresas anonimizuojamas.</p>
+          <div class="legal-table">
+            <table>
+              <thead>
+                <tr>
+                  <th data-i18n="legal_cook_th_name">Pavadinimas</th>
+                  <th data-i18n="legal_cook_th_provider">Tiekėjas</th>
+                  <th data-i18n="legal_cook_th_purpose">Paskirtis</th>
+                  <th data-i18n="legal_cook_th_duration">Galiojimas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>_ga</code></td>
+                  <td>Google Analytics 4</td>
+                  <td data-i18n="legal_cook_td_ga">Unikalaus lankytojo identifikatorius (anonimizuotas).</td>
+                  <td data-i18n="legal_cook_td_2years">2 metai</td>
+                </tr>
+                <tr>
+                  <td><code>_ga_*</code></td>
+                  <td>Google Analytics 4</td>
+                  <td data-i18n="legal_cook_td_ga_session">Saugo sesijos būseną (puslapio peržiūros, įvykiai).</td>
+                  <td data-i18n="legal_cook_td_2years">2 metai</td>
+                </tr>
+                <tr>
+                  <td><code>_gid</code></td>
+                  <td>Google Analytics 4</td>
+                  <td data-i18n="legal_cook_td_gid">Skiria lankytojus per 24 valandų laikotarpį.</td>
+                  <td data-i18n="legal_cook_td_24h">24 valandos</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p data-i18n="legal_cook_p_stats_note"><strong>Pastaba:</strong> kol klientė nepateikė GA4 ID (matomas kaip <code>G-XXXXXXXX</code>), analytics yra <strong>neaktyvus</strong> — šie slapukai dar nenustatomi.</p>
+
+          <h3 data-i18n="legal_cook_h_marketing">4.3. Rinkodaros (marketing)</h3>
+          <p data-i18n="legal_cook_p_marketing"><strong>Nenaudojama.</strong> Akva Studio neturi reklamos ar profiliavimo slapukų. Jūsų naršymo elgsenos neperduodame trečiosioms reklamų platformoms (Facebook Pixel, Google Ads, TikTok ir t. t.).</p>
+        </section>
+
+        <section class="legal-section">
+          <h2 data-i18n="legal_cook_h_third">5. Trečiųjų šalių slapukai</h2>
+          <p data-i18n="legal_cook_p_third">Kai naudojatės įterptiniais komponentais arba pereinate į išorinius puslapius, atitinkamas tiekėjas gali nustatyti savo slapukus pagal savo politiką:</p>
           <ul>
-            <li data-i18n="legal_cook_li_third_1"><strong>Setmore</strong> — rezervacijos puslapis. <a href="https://www.setmore.com/privacy-policy" target="_blank" rel="noopener">Politika</a>.</li>
-            <li data-i18n="legal_cook_li_third_2"><strong>Google Fonts</strong> — šriftų užkrovimas. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Politika</a>.</li>
-            <li data-i18n="legal_cook_li_third_3"><strong>Vercel</strong> — talpinimas. Gali naudoti techninius slapukus saugumui. <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Politika</a>.</li>
+            <li data-i18n="legal_cook_li_third_setmore"><strong>Setmore</strong> (rezervacijos sistema) — kai paspaudžiate „Rezervuoti", atidaroma <code>akvastudio.setmore.com/akvile</code>. Setmore gali nustatyti session ir analytics slapukus. <a href="https://www.setmore.com/privacy-policy" target="_blank" rel="noopener">Setmore privatumo politika</a>.</li>
+            <li data-i18n="legal_cook_li_third_cookiebot"><strong>Cookiebot</strong> (sutikimo valdymo platforma) — pateikia sutikimo langą ir saugo jūsų pasirinkimus. <a href="https://www.cookiebot.com/en/privacy-policy/" target="_blank" rel="noopener">Cookiebot privatumo politika</a>.</li>
+            <li data-i18n="legal_cook_li_third_google"><strong>Google</strong> — Google Fonts (šriftai) ir, su sutikimu, Google Analytics 4. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google privatumo politika</a>.</li>
+            <li data-i18n="legal_cook_li_third_vercel"><strong>Vercel</strong> (talpinimas) — gali naudoti techninius slapukus saugumui ir veikimui. <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Vercel privatumo politika</a>.</li>
+            <li data-i18n="legal_cook_li_third_sanity"><strong>Sanity</strong> (el. parduotuvės katalogo CMS) — užkrauna produktų duomenis iš CDN. Slapukų lankytojui nenustato. <a href="https://www.sanity.io/legal/privacy" target="_blank" rel="noopener">Sanity privatumo politika</a>.</li>
           </ul>
         </section>
 
         <section class="legal-section">
-          <h2 data-i18n="legal_cook_h_manage">4. Kaip valdyti slapukus</h2>
-          <p data-i18n="legal_cook_p_manage_intro">Galite ištrinti arba blokuoti slapukus naršyklės nustatymuose. Atminkite — kai kurios funkcijos (pvz., kalbos pasirinkimas, krepšelis) gali nebeveikti.</p>
+          <h2 data-i18n="legal_cook_h_consent">6. Slapukų sutikimo valdymas</h2>
+          <p data-i18n="legal_cook_p_consent_intro">Šioje svetainėje slapukų sutikimą valdo <strong>Cookiebot CMP</strong> (Consent Management Platform). Atvykę pirmą kartą matote sutikimo langą su trimis kategorijomis: <em>būtinieji</em> (visada įjungti), <em>statistiniai</em> ir <em>rinkodaros</em> (pagal pasirinkimą). Jūsų sprendimas saugomas <code>CookieConsent</code> slapuke 1 metus arba kol jį pakeisite.</p>
+          <p data-i18n="legal_cook_p_consent_withdraw">Sutikimą galite bet kada atšaukti arba pakeisti — paspauskite mygtuką žemiau ir vėl matysite sutikimo langą:</p>
+          <p>
+            <button type="button" class="btn btn-secondary" onclick="if(window.Cookiebot){Cookiebot.renew();}else{alert('Cookiebot dar neaktyvus — laukiama CBID iš klientės.');}" data-i18n="legal_cook_btn_renew">Atnaujinti slapukų pasirinkimus</button>
+          </p>
+          <h3 data-i18n="legal_cook_h_declaration">Aktyvūs slapukai šioje svetainėje (Cookiebot deklaracija)</h3>
+          <p data-i18n="legal_cook_p_declaration">Žemiau esanti lentelė automatiškai atnaujinama Cookiebot pagal realiai svetainėje aptiktus slapukus. Kol klientė nepateikė tikro Cookiebot CBID, ši deklaracija dar tuščia.</p>
+          <!-- Cookiebot Declaration: auto-generated lentelė pagal sutikimo kategorijas -->
+          <script id="CookieDeclaration" src="https://consent.cookiebot.com/CBID-PLACEHOLDER/cd.js" type="text/javascript" async></script>
+        </section>
+
+        <section class="legal-section">
+          <h2 data-i18n="legal_cook_h_manage">7. Kaip valdyti slapukus naršyklėje</h2>
+          <p data-i18n="legal_cook_p_manage_intro">Slapukus galite ištrinti arba blokuoti savo naršyklės nustatymuose — bet kuris pasirinkimas svetainėje galios tik tame įrenginyje ir tame profilyje. Atminkite: ištrynus <code>akva_lang</code>, kalba grįš į numatytąją (LT); ištrynus <code>akva_cart_v1</code>, krepšelis bus tuščias; ištrynus <code>CookieConsent</code> — sutikimo langas pasirodys iš naujo.</p>
           <ul>
-            <li data-i18n="legal_cook_li_manage_1"><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Chrome</a></li>
-            <li data-i18n="legal_cook_li_manage_2"><a href="https://support.mozilla.org/kb/clear-cookies-and-site-data-firefox" target="_blank" rel="noopener">Firefox</a></li>
-            <li data-i18n="legal_cook_li_manage_3"><a href="https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac" target="_blank" rel="noopener">Safari</a></li>
-            <li data-i18n="legal_cook_li_manage_4"><a href="https://support.microsoft.com/microsoft-edge" target="_blank" rel="noopener">Edge</a></li>
+            <li data-i18n="legal_cook_li_manage_1"><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Google Chrome</a></li>
+            <li data-i18n="legal_cook_li_manage_2"><a href="https://support.mozilla.org/kb/clear-cookies-and-site-data-firefox" target="_blank" rel="noopener">Mozilla Firefox</a></li>
+            <li data-i18n="legal_cook_li_manage_3"><a href="https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac" target="_blank" rel="noopener">Apple Safari</a></li>
+            <li data-i18n="legal_cook_li_manage_4"><a href="https://support.microsoft.com/microsoft-edge" target="_blank" rel="noopener">Microsoft Edge</a></li>
           </ul>
         </section>
 
         <section class="legal-section">
-          <h2 data-i18n="legal_cook_h_changes">5. Politikos pakeitimai</h2>
+          <h2 data-i18n="legal_cook_h_changes">8. Politikos pakeitimai</h2>
           <p data-i18n="legal_cook_p_changes">
-            Slapukų sąrašas gali keistis. Naujausią versiją visada rasite šiame puslapyje.
+            Slapukų sąrašas gali keistis — pridedant naujas paslaugas (pvz., mokėjimo gateway, live chat) arba pašalinus esamas. Reikšmingus pakeitimus pažymėsime aiškiai svetainėje. Datą puslapio viršuje atnaujinsime kiekvieną kartą, kai politika keičiama.
           </p>
         </section>
 
         <section class="legal-section">
-          <h2 data-i18n="legal_cook_h_contact">6. Susisiekite</h2>
+          <h2 data-i18n="legal_cook_h_contact">9. Susisiekite</h2>
           <p data-i18n="legal_cook_p_contact">
-            Klausimai dėl slapukų: <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>. Plačiau apie duomenų tvarkymą — <a href="/privatumas" data-i18n="legal_cook_link_priv">Privatumo politika</a>.
+            Klausimai dėl slapukų ar sutikimo:<br>
+            El. paštas: <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a><br>
+            Telefonas: <a href="tel:+4746240853">+47 462 40 853</a><br>
+            Plačiau apie duomenų tvarkymą — žr. <a href="/privatumas" data-i18n="legal_cook_link_priv">Privatumo politiką</a>.
           </p>
         </section>
 
@@ -195,20 +298,15 @@
           </ul>
         </div>
 
-        <div class="footer-col footer-contact">
-          <h4 data-i18n="footer_contact_t">Kontaktai</h4>
-          <p><a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a></p>
-          <p class="footer-tagline">Beauty · Care · Confidence</p>
-        </div>
       </div>
 
       <div class="footer-impressum">
         <span class="footer-impressum-label" data-i18n="footer_impressum_label">Atsakingas asmuo:</span>
-        <span data-i18n="footer_impressum_person">[ATSAKINGAS ASMUO]</span>
+        <span data-i18n="footer_impressum_person">Akvilė Sužiedelytė</span>
         <span class="footer-impressum-sep" aria-hidden="true">·</span>
         <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>
         <span class="footer-impressum-sep" aria-hidden="true">·</span>
-        <a href="tel:[TELEFONAS]" data-i18n="footer_impressum_phone">[TELEFONAS]</a>
+        <a href="tel:+4746240853" data-i18n="footer_impressum_phone">+47 462 40 853</a>
       </div>
 
       <div class="footer-bottom">
@@ -218,6 +316,6 @@
     </div>
   </footer>
 
-  <script src="/src/js/main.js?v=20260508"></script>
+  <script src="/src/js/main.js?v=20260513e"></script>
 </body>
 </html>

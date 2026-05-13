@@ -7,12 +7,40 @@
   <meta name="robots" content="index, follow">
   <title data-i18n="legal_priv_meta_title">Privatumo politika — Akva Studio</title>
 
+  <!-- ── Consent Mode v2 + Analytics ── -->
+  <!-- 1. Default consent state (BEFORE Cookiebot + GA4) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'functionality_storage': 'granted',
+      'security_storage': 'granted',
+      'wait_for_update': 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+    gtag('set', 'url_passthrough', true);
+  </script>
+
+  <!-- 2. Cookiebot CMP (auto-blocking) -->
+  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="CBID-PLACEHOLDER" data-blockingmode="auto" type="text/javascript"></script>
+
+  <!-- 3. GA4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXX', { 'anonymize_ip': true });
+  </script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;1,6..12,300;1,6..12,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../css/styles.css?v=20260508">
+  <link rel="stylesheet" href="../css/styles.css?v=20260513e">
 </head>
 <body>
 
@@ -81,69 +109,73 @@
         <header class="legal-header">
           <span class="legal-eyebrow" data-i18n="legal_priv_eyebrow">Privatumo politika</span>
           <h1 data-i18n="legal_priv_title">Privatumo politika</h1>
-          <p class="legal-meta" data-i18n="legal_priv_updated">Paskutinį kartą atnaujinta: [DATA]</p>
+          <p class="legal-meta" data-i18n="legal_priv_updated">Paskutinį kartą atnaujinta: 2026-05-13</p>
         </header>
 
         <section class="legal-section">
           <h2 data-i18n="legal_priv_h_intro">1. Įvadas</h2>
           <p data-i18n="legal_priv_p_intro">
-            Ši privatumo politika nustato, kaip [ĮMONĖS PAVADINIMAS] (toliau — „Akva Studio", „mes") renka, naudoja ir saugo jūsų asmens duomenis, kai naudojatės mūsų svetaine [DOMAIN], rezervuojate procedūras ar perkate produktus. Mes gerbiame jūsų privatumą ir laikomės Bendrojo duomenų apsaugos reglamento (BDAR / GDPR) bei Norvegijos asmens duomenų apsaugos įstatymo reikalavimų.
+            Ši privatumo politika nustato, kaip Akvilė Sužiedelytė (individuali veikla; toliau — „Akva Studio", „mes") renka, naudoja ir saugo jūsų asmens duomenis, kai naudojatės svetaine akvastudio.no, rezervuojate procedūras per Setmore arba perkate produktus mūsų el. parduotuvėje. Laikomės Bendrojo duomenų apsaugos reglamento (BDAR / GDPR) ir Norvegijos asmens duomenų apsaugos įstatymo (personopplysningsloven) reikalavimų.
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_priv_h_controller">2. Duomenų valdytojas</h2>
           <p data-i18n="legal_priv_p_controller">
-            Duomenų valdytojas: [ĮMONĖS PAVADINIMAS]<br>
-            Adresas: [ADRESAS]<br>
-            Įmonės kodas: [ĮMONĖS KODAS]<br>
+            Duomenų valdytojas: <strong>Akvilė Sužiedelytė</strong> (individuali veikla, „Akva Studio")<br>
+            Adresas: [ADRESAS — pateiks klientė]<br>
+            Įmonės kodas / org.nr.: [ĮMONĖS KODAS — pateiks klientė]<br>
             El. paštas: <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a><br>
-            Telefonas: [TELEFONAS]<br>
-            Atsakingas asmuo: [ATSAKINGAS ASMUO]
+            Telefonas: <a href="tel:+4746240853">+47 462 40 853</a><br>
+            Svetainė: <a href="https://akvastudio.no">akvastudio.no</a>
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_priv_h_data">3. Kokius duomenis renkame</h2>
-          <p data-i18n="legal_priv_p_data_intro">Renkame tik tuos duomenis, kurie būtini paslaugoms teikti:</p>
+          <p data-i18n="legal_priv_p_data_intro">Renkame tik tuos duomenis, kurie būtini paslaugoms teikti ir teisinėms pareigoms vykdyti:</p>
           <ul>
-            <li data-i18n="legal_priv_li_data_1"><strong>Kontaktiniai duomenys</strong> — vardas, telefono numeris, el. paštas (registracijos formoje).</li>
-            <li data-i18n="legal_priv_li_data_2"><strong>Rezervacijos duomenys</strong> — pasirinkta paslauga, data, laikas, pageidavimai (per Setmore platformą).</li>
-            <li data-i18n="legal_priv_li_data_3"><strong>Pirkimo duomenys</strong> — užsakymo informacija, pristatymo adresas, mokėjimo detalės (apdorojami per mokėjimų teikėją; mes nesaugome kortelės duomenų).</li>
-            <li data-i18n="legal_priv_li_data_4"><strong>Techniniai duomenys</strong> — IP adresas, naršyklės tipas, slapukai (žr. <a href="/slapukai" data-i18n="legal_priv_link_cookies">Slapukų politiką</a>).</li>
+            <li data-i18n="legal_priv_li_data_1"><strong>Rezervacijos duomenys (Setmore)</strong> — vardas, el. paštas, telefono numeris, pasirinkta procedūra, data ir laikas. Renkami, kai rezervuojate per <a href="https://akvastudio.setmore.com/akvile" target="_blank" rel="noopener">akvastudio.setmore.com/akvile</a>.</li>
+            <li data-i18n="legal_priv_li_data_2"><strong>Susirašinėjimo duomenys (el. paštas)</strong> — kai rašote mums į <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>, saugome susirašinėjimo turinį ir kontaktinius duomenis, kuriuos pats nurodėte.</li>
+            <li data-i18n="legal_priv_li_data_3"><strong>El. parduotuvės pirkimo duomenys</strong> — kai užsisakote produktus (Aromatic89 ir kt.) per krepšelį, renkame vardą, pavardę, el. paštą, pristatymo adresą ir užsakymo turinį. Užsakymas išsiunčiamas mums el. paštu; <strong>mes nesaugome jūsų kortelės ar mokėjimo duomenų</strong> — juos apdoroja mokėjimų teikėjas tiesiogiai.</li>
+            <li data-i18n="legal_priv_li_data_4"><strong>Techniniai duomenys</strong> — IP adresas, naršyklės tipas, įrenginio tipas, lankymosi laikas. Renkami tik su jūsų sutikimu per slapukus (žr. <a href="/slapukai" data-i18n="legal_priv_link_cookies">Slapukų politiką</a>). Google Analytics 4 naudoja anonimizuotą IP.</li>
           </ul>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_priv_h_purpose">4. Tikslai ir teisinis pagrindas</h2>
           <ul>
-            <li data-i18n="legal_priv_li_purpose_1"><strong>Paslaugų teikimas ir rezervacijos</strong> — sutarties vykdymas (BDAR 6 str. 1 d. b p.).</li>
-            <li data-i18n="legal_priv_li_purpose_2"><strong>Komunikacija dėl užklausų</strong> — teisėtas interesas atsakyti į jūsų klausimus (BDAR 6 str. 1 d. f p.).</li>
-            <li data-i18n="legal_priv_li_purpose_3"><strong>Apskaitos ir teisinių pareigų vykdymas</strong> — teisinė prievolė (BDAR 6 str. 1 d. c p.).</li>
-            <li data-i18n="legal_priv_li_purpose_4"><strong>Svetainės veikimas ir saugumas</strong> — teisėtas interesas (BDAR 6 str. 1 d. f p.).</li>
+            <li data-i18n="legal_priv_li_purpose_1"><strong>Procedūrų rezervacija ir vykdymas</strong> — sutarties vykdymas (BDAR 6 str. 1 d. b p.).</li>
+            <li data-i18n="legal_priv_li_purpose_2"><strong>El. parduotuvės užsakymai ir pristatymas</strong> — sutarties vykdymas (BDAR 6 str. 1 d. b p.).</li>
+            <li data-i18n="legal_priv_li_purpose_3"><strong>Atsakymas į jūsų užklausas el. paštu</strong> — teisėtas interesas komunikuoti su klientais (BDAR 6 str. 1 d. f p.).</li>
+            <li data-i18n="legal_priv_li_purpose_4"><strong>Apskaitos pareigos</strong> — Norvegijos apskaitos įstatymo (regnskapsloven) reikalavimas saugoti pirkimo dokumentus (BDAR 6 str. 1 d. c p.).</li>
+            <li data-i18n="legal_priv_li_purpose_5"><strong>Svetainės analitika (GA4)</strong> — tik su jūsų sutikimu, paremtu Consent Mode v2 (BDAR 6 str. 1 d. a p.).</li>
+            <li data-i18n="legal_priv_li_purpose_6"><strong>Svetainės veikimas ir saugumas</strong> — teisėtas interesas užtikrinti tinkamą veikimą (BDAR 6 str. 1 d. f p.).</li>
           </ul>
         </section>
 
         <section class="legal-section">
-          <h2 data-i18n="legal_priv_h_share">5. Kam perduodami duomenys</h2>
-          <p data-i18n="legal_priv_p_share_intro">Jūsų duomenys gali būti perduoti šiems duomenų tvarkytojams:</p>
+          <h2 data-i18n="legal_priv_h_share">5. Kam perduodami duomenys (duomenų tvarkytojai)</h2>
+          <p data-i18n="legal_priv_p_share_intro">Jūsų duomenys perduodami šiems duomenų tvarkytojams, kurie veikia mūsų vardu:</p>
           <ul>
-            <li data-i18n="legal_priv_li_share_1"><strong>Setmore</strong> — rezervacijų sistema (Setmore Inc., JAV). <a href="https://www.setmore.com/privacy-policy" target="_blank" rel="noopener">Privatumo politika</a>.</li>
-            <li data-i18n="legal_priv_li_share_2"><strong>Formspree</strong> — kontaktų formos apdorojimas (Formspree Inc., JAV). <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener">Privatumo politika</a>.</li>
-            <li data-i18n="legal_priv_li_share_3"><strong>Vercel</strong> — svetainės talpinimas (Vercel Inc., JAV). <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Privatumo politika</a>.</li>
-            <li data-i18n="legal_priv_li_share_4"><strong>Sanity</strong> — produktų katalogo CMS (Sanity.io AS, Norvegija). <a href="https://www.sanity.io/legal/privacy" target="_blank" rel="noopener">Privatumo politika</a>.</li>
-            <li data-i18n="legal_priv_li_share_5"><strong>Google</strong> — Google Fonts paslaugos. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privatumo politika</a>.</li>
+            <li data-i18n="legal_priv_li_share_1"><strong>Setmore</strong> (Setmore Inc., JAV) — rezervacijų sistema. <a href="https://www.setmore.com/privacy-policy" target="_blank" rel="noopener">Privatumo politika</a>.</li>
+            <li data-i18n="legal_priv_li_share_2"><strong>Google</strong> (Google LLC / Google Ireland Ltd.) — Google Analytics 4, Google Fonts. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privatumo politika</a>.</li>
+            <li data-i18n="legal_priv_li_share_3"><strong>Cookiebot / Silktide</strong> — sutikimų valdymo platforma (CMP). <a href="https://www.cookiebot.com/en/privacy-policy/" target="_blank" rel="noopener">Cookiebot privatumo politika</a>.</li>
+            <li data-i18n="legal_priv_li_share_4"><strong>Vercel</strong> (Vercel Inc., JAV) — svetainės talpinimas (hosting). <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Privatumo politika</a>.</li>
+            <li data-i18n="legal_priv_li_share_5"><strong>Sanity</strong> (Sanity.io AS, Norvegija) — el. parduotuvės produktų katalogo CMS. <a href="https://www.sanity.io/legal/privacy" target="_blank" rel="noopener">Privatumo politika</a>.</li>
+            <li data-i18n="legal_priv_li_share_6"><strong>Google Workspace / Gmail</strong> — el. pašto paslauga (akvastudio75@gmail.com).</li>
           </ul>
-          <p data-i18n="legal_priv_p_share_outro">Duomenys gali būti perduodami už ES/EEE ribų. Tokiais atvejais užtikriname tinkamas apsaugos priemones (Standard Contractual Clauses).</p>
+          <p data-i18n="legal_priv_p_share_outro">Kai duomenys perduodami už ES/EEE ribų (pvz., į JAV), užtikriname tinkamas apsaugos priemones — Standartines sutartines sąlygas (SCC) ir / arba EU–U.S. Data Privacy Framework. Jūsų duomenų <strong>neperduodame tretiesiems asmenims rinkodaros tikslais</strong> ir neparduodame.</p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_priv_h_retention">6. Saugojimo terminai</h2>
           <ul>
-            <li data-i18n="legal_priv_li_retention_1"><strong>Rezervacijos duomenys</strong> — 3 metai nuo paskutinio vizito.</li>
-            <li data-i18n="legal_priv_li_retention_2"><strong>Pirkimo duomenys</strong> — 10 metų (apskaitos teisės aktų reikalavimas).</li>
-            <li data-i18n="legal_priv_li_retention_3"><strong>Kontaktinės užklausos</strong> — 1 metai nuo paskutinio susirašinėjimo.</li>
-            <li data-i18n="legal_priv_li_retention_4"><strong>Techniniai logai</strong> — iki 90 dienų.</li>
+            <li data-i18n="legal_priv_li_retention_1"><strong>Rezervacijos duomenys (Setmore)</strong> — 3 metai nuo paskutinio vizito; po to anonimizuojami arba ištrinami.</li>
+            <li data-i18n="legal_priv_li_retention_2"><strong>Pirkimo duomenys ir apskaitos dokumentai</strong> — 5 metai (Norvegijoje, regnskapsloven § 13).</li>
+            <li data-i18n="legal_priv_li_retention_3"><strong>El. pašto susirašinėjimas</strong> — 2 metai nuo paskutinio kontakto.</li>
+            <li data-i18n="legal_priv_li_retention_4"><strong>GA4 analitikos duomenys</strong> — 14 mėnesių (Google Analytics standartinis terminas su anonimizuotu IP).</li>
+            <li data-i18n="legal_priv_li_retention_5"><strong>Slapukai</strong> — pagal kiekvieno slapuko galiojimo laiką (žr. <a href="/slapukai">Slapukų politiką</a>).</li>
           </ul>
         </section>
 
@@ -152,36 +184,39 @@
           <p data-i18n="legal_priv_p_rights_intro">Pagal BDAR jūs turite teisę:</p>
           <ul>
             <li data-i18n="legal_priv_li_rights_1">Susipažinti su savo duomenimis ir gauti jų kopiją.</li>
-            <li data-i18n="legal_priv_li_rights_2">Reikalauti ištaisyti netikslius duomenis.</li>
-            <li data-i18n="legal_priv_li_rights_3">Reikalauti ištrinti duomenis („teisė būti pamirštam").</li>
-            <li data-i18n="legal_priv_li_rights_4">Apriboti duomenų tvarkymą.</li>
-            <li data-i18n="legal_priv_li_rights_5">Perkelti duomenis kitam paslaugų teikėjui.</li>
+            <li data-i18n="legal_priv_li_rights_2">Reikalauti ištaisyti netikslius arba neišsamius duomenis.</li>
+            <li data-i18n="legal_priv_li_rights_3">Reikalauti ištrinti duomenis („teisė būti pamirštam") — kai duomenys nebereikalingi tikslui, dėl kurio buvo surinkti.</li>
+            <li data-i18n="legal_priv_li_rights_4">Apriboti duomenų tvarkymą tam tikrais atvejais.</li>
+            <li data-i18n="legal_priv_li_rights_5">Perkelti savo duomenis kitam paslaugų teikėjui (data portability).</li>
             <li data-i18n="legal_priv_li_rights_6">Nesutikti su duomenų tvarkymu, paremtu teisėtu interesu.</li>
-            <li data-i18n="legal_priv_li_rights_7">Pateikti skundą priežiūros institucijai (Lietuvoje — Valstybinė duomenų apsaugos inspekcija; Norvegijoje — Datatilsynet).</li>
+            <li data-i18n="legal_priv_li_rights_7">Atšaukti sutikimą (pvz., GA4 analitika) bet kuriuo metu — per slapukų valdymo skydelį svetainės apačioje.</li>
+            <li data-i18n="legal_priv_li_rights_8">Pateikti skundą priežiūros institucijai: Norvegijoje — <a href="https://www.datatilsynet.no/" target="_blank" rel="noopener">Datatilsynet</a>; Lietuvoje — <a href="https://vdai.lrv.lt/" target="_blank" rel="noopener">Valstybinė duomenų apsaugos inspekcija</a>.</li>
           </ul>
           <p data-i18n="legal_priv_p_rights_contact">
-            Norėdami pasinaudoti šiomis teisėmis, susisiekite el. paštu <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>. Atsakysime per 30 kalendorinių dienų.
+            Norėdami pasinaudoti šiomis teisėmis, parašykite el. paštu <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a> arba skambinkite <a href="tel:+4746240853">+47 462 40 853</a>. Atsakysime per 30 kalendorinių dienų.
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_priv_h_security">8. Duomenų saugumas</h2>
           <p data-i18n="legal_priv_p_security">
-            Taikome technines ir organizacines priemones, užtikrinančias duomenų konfidencialumą ir vientisumą: HTTPS šifravimą, prieigos kontrolę, reguliarius atsarginius kopijavimus. Tačiau jokia perdavimo internetu sistema negali būti 100% saugi — naudokitės atsakingai.
+            Naudojame technines ir organizacines priemones: HTTPS / TLS šifravimą visam svetainės srautui, prieigos kontrolę su slaptažodžiais, dviejų veiksnių autentifikaciją administracinėms paskyroms (Sanity Studio, Google Workspace), reguliarius automatinius atsarginius kopijavimus per Vercel ir Sanity. Tačiau jokia perdavimo internetu sistema negali būti 100% saugi — saugokite savo prisijungimo duomenis ir nedalinkite jais.
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_priv_h_changes">9. Politikos pakeitimai</h2>
           <p data-i18n="legal_priv_p_changes">
-            Mes galime atnaujinti šią politiką. Apie reikšmingus pakeitimus informuosime svetainėje arba el. paštu. Naujausią versiją visada rasite šiame puslapyje.
+            Galime atnaujinti šią politiką, kai keičiasi paslaugos, technologijos ar teisinis reglamentavimas. Apie reikšmingus pakeitimus informuosime el. paštu (jei turime jūsų kontaktą) arba aiškiai pažymėtu pranešimu svetainėje. Naujausią versiją visada rasite šiame puslapyje — patikrinkite datą skirsnio viršuje.
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_priv_h_contact">10. Susisiekite</h2>
           <p data-i18n="legal_priv_p_contact">
-            Klausimai dėl privatumo: <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>
+            Klausimai dėl privatumo ar duomenų apsaugos:<br>
+            El. paštas: <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a><br>
+            Telefonas: <a href="tel:+4746240853">+47 462 40 853</a>
           </p>
         </section>
 
@@ -221,20 +256,15 @@
           </ul>
         </div>
 
-        <div class="footer-col footer-contact">
-          <h4 data-i18n="footer_contact_t">Kontaktai</h4>
-          <p><a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a></p>
-          <p class="footer-tagline">Beauty · Care · Confidence</p>
-        </div>
       </div>
 
       <div class="footer-impressum">
         <span class="footer-impressum-label" data-i18n="footer_impressum_label">Atsakingas asmuo:</span>
-        <span data-i18n="footer_impressum_person">[ATSAKINGAS ASMUO]</span>
+        <span data-i18n="footer_impressum_person">Akvilė Sužiedelytė</span>
         <span class="footer-impressum-sep" aria-hidden="true">·</span>
         <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>
         <span class="footer-impressum-sep" aria-hidden="true">·</span>
-        <a href="tel:[TELEFONAS]" data-i18n="footer_impressum_phone">[TELEFONAS]</a>
+        <a href="tel:+4746240853" data-i18n="footer_impressum_phone">+47 462 40 853</a>
       </div>
 
       <div class="footer-bottom">
@@ -244,6 +274,6 @@
     </div>
   </footer>
 
-  <script src="../js/main.js?v=20260508"></script>
+  <script src="../js/main.js?v=20260513e"></script>
 </body>
 </html>

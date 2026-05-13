@@ -376,28 +376,35 @@ p {
   align-items: center;
   padding-top: 72px;
   background-color: var(--color-bg);
+  background-image: url('../assets/images/siluetas.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   overflow: hidden;
   position: relative;
 }
 
-/* Subtilus dekoratyvinis elementas — ne gradient, o šviesus apskritimas */
+/* Gradient overlay — iš kairės tamsesnis (tekstui skaitomumas), dešinė palieka siluetą matomą */
 .hero::before {
   content: '';
   position: absolute;
-  top: -15%;
-  right: -8%;
-  width: 560px;
-  height: 560px;
-  background: radial-gradient(circle, oklch(93.5% 0.018 50 / 0.7) 0%, transparent 70%);
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    oklch(95% 0.022 50 / 0.92) 0%,
+    oklch(95% 0.022 50 / 0.75) 35%,
+    oklch(95% 0.022 50 / 0.35) 65%,
+    transparent 100%
+  );
   pointer-events: none;
+  z-index: 1;
 }
 
 .hero-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-8);
-  align-items: center;
+  display: block;
   width: 100%;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-content {
@@ -476,70 +483,6 @@ p {
   max-width: 12ch;
 }
 
-.hero-visual {
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.hero-image-frame {
-  position: relative;
-  width: 100%;
-  max-width: 460px;
-  aspect-ratio: 3/4;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--color-surface2);
-  box-shadow: var(--shadow-lg);
-}
-
-.hero-image-frame picture {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.hero-image-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero-image-frame--illustration {
-  background: linear-gradient(160deg, var(--color-surface) 0%, var(--color-surface2) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8%;
-}
-
-.hero-illustration {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.hero-image-frame--empty {
-  background: linear-gradient(160deg, var(--color-surface) 0%, var(--color-surface2) 100%);
-}
-
-.hero-image-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-3);
-  color: var(--color-muted);
-  font-size: 0.85rem;
-}
-
-.placeholder-icon {
-  font-size: 2.5rem;
-  color: var(--color-primary);
-  opacity: 0.4;
-}
 
 /* ─────────────────────────────────────────
    SERVICES
@@ -1542,17 +1485,6 @@ p {
   color: var(--color-accent);
 }
 
-.footer-contact p {
-  color: oklch(97% 0.012 55 / 0.65);
-  font-size: 0.88rem;
-  margin-bottom: var(--space-2);
-  max-width: none;
-}
-
-.footer-contact a {
-  color: var(--color-accent);
-}
-
 .footer-impressum {
   margin-top: var(--space-5);
   padding-top: var(--space-4);
@@ -1610,13 +1542,6 @@ p {
 
 .footer-bottom a:hover {
   color: var(--color-accent);
-}
-
-.footer-tagline {
-  margin-top: var(--space-3);
-  font-size: 0.82rem;
-  color: oklch(97% 0.012 55 / 0.4);
-  max-width: none;
 }
 
 /* ─────────────────────────────────────────
@@ -1688,13 +1613,7 @@ p {
   }
 
   .hero-inner {
-    grid-template-columns: 1fr;
     gap: var(--space-7);
-  }
-
-  /* Vizualus frame paslėptas — image jau yra hero background'as */
-  .hero-visual {
-    display: none;
   }
 
   /* Hero turinys be overlay — paveiksliukas baigiasi virš jo */

@@ -12,12 +12,40 @@
   <meta name="sanity-dataset" content="production">
   <meta name="sanity-api-version" content="2026-01-01">
 
+  <!-- ── Consent Mode v2 + Analytics ── -->
+  <!-- 1. Default consent state (BEFORE Cookiebot + GA4) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'functionality_storage': 'granted',
+      'security_storage': 'granted',
+      'wait_for_update': 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+    gtag('set', 'url_passthrough', true);
+  </script>
+
+  <!-- 2. Cookiebot CMP (auto-blocking) -->
+  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="CBID-PLACEHOLDER" data-blockingmode="auto" type="text/javascript"></script>
+
+  <!-- 3. GA4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXX', { 'anonymize_ip': true });
+  </script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;1,6..12,300;1,6..12,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/src/css/styles.css?v=20260508">
+  <link rel="stylesheet" href="/src/css/styles.css?v=20260513e">
 </head>
 <body class="page-shop page-cart">
 
@@ -109,11 +137,11 @@
       </div>
       <div class="footer-impressum">
         <span class="footer-impressum-label">Ansvarlig person:</span>
-        <span>[ANSVARLIG PERSON]</span>
+        <span>Akvilė Sužiedelytė</span>
         <span class="footer-impressum-sep" aria-hidden="true">·</span>
         <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>
         <span class="footer-impressum-sep" aria-hidden="true">·</span>
-        <a href="tel:[TELEFON]">[TELEFON]</a>
+        <a href="tel:+4746240853">+47 462 40 853</a>
       </div>
 
       <div class="footer-bottom">

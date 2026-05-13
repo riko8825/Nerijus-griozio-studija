@@ -44,3 +44,6 @@ package-lock.json
 # Playwright test artifacts
 .playwright-mcp/
 prod-*.png
+akva-*.png
+*-fullpage.png
+mobile-preview.html

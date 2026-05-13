@@ -7,12 +7,40 @@
   <meta name="robots" content="index, follow">
   <title data-i18n="legal_rules_meta_title">Naudojimosi taisyklės — Akva Studio</title>
 
+  <!-- ── Consent Mode v2 + Analytics ── -->
+  <!-- 1. Default consent state (BEFORE Cookiebot + GA4) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'functionality_storage': 'granted',
+      'security_storage': 'granted',
+      'wait_for_update': 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+    gtag('set', 'url_passthrough', true);
+  </script>
+
+  <!-- 2. Cookiebot CMP (auto-blocking) -->
+  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="CBID-PLACEHOLDER" data-blockingmode="auto" type="text/javascript"></script>
+
+  <!-- 3. GA4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXX', { 'anonymize_ip': true });
+  </script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;1,6..12,300;1,6..12,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../css/styles.css?v=20260508">
+  <link rel="stylesheet" href="../css/styles.css?v=20260513e">
 </head>
 <body>
 
@@ -81,25 +109,26 @@
         <header class="legal-header">
           <span class="legal-eyebrow" data-i18n="legal_rules_eyebrow">Naudojimosi taisyklės</span>
           <h1 data-i18n="legal_rules_title">Naudojimosi taisyklės</h1>
-          <p class="legal-meta" data-i18n="legal_rules_updated">Paskutinį kartą atnaujinta: [DATA]</p>
+          <p class="legal-meta" data-i18n="legal_rules_updated">Paskutinį kartą atnaujinta: 2026-05-13</p>
         </header>
 
         <section class="legal-section">
           <h2 data-i18n="legal_rules_h_scope">1. Taikymo sritis</h2>
           <p data-i18n="legal_rules_p_scope">
-            Šios taisyklės nustato Akva Studio svetainės [DOMAIN] naudojimo tvarką. Naudodamiesi svetaine, jūs sutinkate jų laikytis. Jei nesutinkate — prašome svetaine nesinaudoti.
+            Šios naudojimosi taisyklės (toliau — „Taisyklės") nustato, kaip galite naudotis Akva Studio svetaine <a href="https://akvastudio.no">akvastudio.no</a>, įskaitant rezervacijos puslapį, el. parduotuvę ir krepšelio funkcionalumą. Naudodamiesi svetaine — net jei tik naršote — jūs sutinkate laikytis šių Taisyklių. Jei su jomis nesutinkate, prašome svetaine nesinaudoti.
           </p>
           <p data-i18n="legal_rules_p_scope_note">
-            Taisyklės papildo mūsų <a href="/salygos" data-i18n="legal_rules_link_terms">Naudojimo sąlygas ir pirkimo taisykles</a>, <a href="/privatumas" data-i18n="legal_rules_link_priv">Privatumo politiką</a> ir <a href="/slapukai" data-i18n="legal_rules_link_cookies">Slapukų politiką</a>.
+            Taisyklės papildo mūsų <a href="/salygos" data-i18n="legal_rules_link_terms">Naudojimo sąlygas ir pirkimo taisykles</a>, <a href="/privatumas" data-i18n="legal_rules_link_priv">Privatumo politiką</a> ir <a href="/slapukai" data-i18n="legal_rules_link_cookies">Slapukų politiką</a>. Esant prieštaravimui, Naudojimo sąlygos turi pirmenybę pirkimo / rezervacijos klausimuose.
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_rules_h_access">2. Prieiga prie svetainės</h2>
           <ul>
-            <li data-i18n="legal_rules_li_access_1">Svetainė pasiekiama 24/7, tačiau galimi laikini sutrikimai dėl techninių darbų ar nepriklausomų aplinkybių.</li>
-            <li data-i18n="legal_rules_li_access_2">Akva Studio neįsipareigoja užtikrinti nepertraukiamo, klaidų neturinčio veikimo.</li>
-            <li data-i18n="legal_rules_li_access_3">Mes pasiliekame teisę bet kada keisti, sustabdyti ar nutraukti svetainės veikimą be išankstinio įspėjimo.</li>
+            <li data-i18n="legal_rules_li_access_1">Svetainė pasiekiama 24/7 nemokamai, tačiau galimi laikini sutrikimai dėl techninių darbų, Vercel hosting'o, Sanity CMS arba kitų nepriklausomų aplinkybių.</li>
+            <li data-i18n="legal_rules_li_access_2">Akva Studio neįsipareigoja užtikrinti nepertraukiamo, klaidų neturinčio veikimo. Esant kritiniam gedimui, susisiekite el. paštu <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>.</li>
+            <li data-i18n="legal_rules_li_access_3">Mes pasiliekame teisę bet kada keisti, sustabdyti ar nutraukti svetainės ar jos dalies veikimą be išankstinio įspėjimo — pvz., redizaino, naujų funkcijų diegimo arba paslaugų atsisakymo metu.</li>
+            <li data-i18n="legal_rules_li_access_4">Jūsų prieigos kaštai (interneto ryšys, įrenginiai) — jūsų atsakomybė.</li>
           </ul>
         </section>
 
@@ -107,97 +136,101 @@
           <h2 data-i18n="legal_rules_h_user">3. Naudotojo pareigos</h2>
           <p data-i18n="legal_rules_p_user_intro">Naudodamiesi svetaine, jūs įsipareigojate:</p>
           <ul>
-            <li data-i18n="legal_rules_li_user_1">Pateikti tikslią ir teisingą informaciją (rezervuojant ar perkant).</li>
-            <li data-i18n="legal_rules_li_user_2">Naudoti svetainę tik teisėtais tikslais.</li>
-            <li data-i18n="legal_rules_li_user_3">Negadinti ir netrikdyti svetainės veikimo.</li>
-            <li data-i18n="legal_rules_li_user_4">Gerbti kitų naudotojų ir Akva Studio teises.</li>
-            <li data-i18n="legal_rules_li_user_5">Saugoti savo prisijungimo duomenis (jei tokie yra) ir nedalintis jais su trečiosiomis šalimis.</li>
+            <li data-i18n="legal_rules_li_user_1">Pateikti tikslią ir teisingą informaciją (rezervuojant per Setmore, susirašinėjant el. paštu, perkant produktus).</li>
+            <li data-i18n="legal_rules_li_user_2">Naudoti svetainę tik teisėtais tikslais — pagal Norvegijos teisės aktus ir geras moralines normas.</li>
+            <li data-i18n="legal_rules_li_user_3">Negadinti, netrikdyti svetainės veikimo ir nesielgti būdu, kuris pažeistų kitų naudotojų patirtį.</li>
+            <li data-i18n="legal_rules_li_user_4">Gerbti kitų naudotojų, klientų ir Akva Studio teises bei privatumą.</li>
+            <li data-i18n="legal_rules_li_user_5">Saugoti savo Setmore rezervacijos patvirtinimo el. laiškus ir nedalintis jais su trečiosiomis šalimis.</li>
           </ul>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_rules_h_prohibited">4. Draudžiama veikla</h2>
-          <p data-i18n="legal_rules_p_prohibited_intro">Naudodamiesi svetaine jūs negalite:</p>
+          <p data-i18n="legal_rules_p_prohibited_intro">Naudodamiesi svetaine jums kategoriškai draudžiama:</p>
           <ul>
-            <li data-i18n="legal_rules_li_prohibited_1">Bandyti įsilaužti, skenuoti ar kitaip pažeisti svetainės saugumą.</li>
-            <li data-i18n="legal_rules_li_prohibited_2">Naudoti automatinių priemonių (botų, scraperių, crawlerių) be raštiško sutikimo.</li>
-            <li data-i18n="legal_rules_li_prohibited_3">Įkelti ar siųsti virusus, kenkėjišką kodą arba bet kokį žalingą turinį.</li>
-            <li data-i18n="legal_rules_li_prohibited_4">Pateikti melagingą informaciją ar apsimesti kitu asmeniu.</li>
-            <li data-i18n="legal_rules_li_prohibited_5">Rinkti kitų naudotojų duomenis be jų sutikimo.</li>
-            <li data-i18n="legal_rules_li_prohibited_6">Naudoti svetainę reklamai, šlamštui (spam) ar komerciniams tikslams be leidimo.</li>
-            <li data-i18n="legal_rules_li_prohibited_7">Kopijuoti, modifikuoti ar platinti svetainės turinį be raštiško sutikimo.</li>
-            <li data-i18n="legal_rules_li_prohibited_8">Apeiti ar bandyti apeiti technines apsaugos priemones.</li>
+            <li data-i18n="legal_rules_li_prohibited_1">Bandyti įsilaužti, skenuoti ar kitaip pažeisti svetainės saugumą (SQL injection, XSS, port scanning ir kt.).</li>
+            <li data-i18n="legal_rules_li_prohibited_2">Naudoti automatinių priemonių (botų, scraperių, crawlerių, indeksavimo robotų išskyrus Google/Bing) be raštiško sutikimo.</li>
+            <li data-i18n="legal_rules_li_prohibited_3">Įkelti ar siųsti virusus, kenkėjišką kodą, ransomware arba bet kokį žalingą turinį.</li>
+            <li data-i18n="legal_rules_li_prohibited_4">Pateikti melagingą informaciją, apsimesti kitu asmeniu, naudoti svetimą el. paštą ar telefono numerį.</li>
+            <li data-i18n="legal_rules_li_prohibited_5">Rinkti kitų naudotojų ar klientų duomenis (vardai, kontaktai, atsiliepimai) be jų sutikimo.</li>
+            <li data-i18n="legal_rules_li_prohibited_6">Naudoti svetainę reklamai, šlamštui (spam), affiliate marketing, partnerystės schemoms ar komerciniams tikslams be raštiško leidimo.</li>
+            <li data-i18n="legal_rules_li_prohibited_7">Kopijuoti, modifikuoti, platinti ar atvirkštinio inžinieriaus būdu analizuoti svetainės kodą, turinį arba dizainą be raštiško sutikimo.</li>
+            <li data-i18n="legal_rules_li_prohibited_8">Apeiti ar bandyti apeiti technines apsaugos priemones (slapukų sutikimą, mokėjimų autentifikaciją, Setmore validation).</li>
+            <li data-i18n="legal_rules_li_prohibited_9">Atlikti netikras rezervacijas Setmore platformoje ar užsakymus el. parduotuvėje (pvz., su melagingu adresu) — tai gali būti laikoma sukčiavimu.</li>
           </ul>
         </section>
 
         <section class="legal-section">
-          <h2 data-i18n="legal_rules_h_content">5. Naudotojo turinys</h2>
+          <h2 data-i18n="legal_rules_h_content">5. Naudotojo pateikiamas turinys</h2>
           <p data-i18n="legal_rules_p_content">
-            Jei svetainėje pateikiate atsiliepimus, komentarus ar kitokį turinį, suteikiate Akva Studio neišimtinę, neribotos trukmės teisę jį naudoti, redaguoti ir publikuoti rinkodaros tikslais. Jūs atsakote už pateikto turinio tikslumą ir teisėtumą.
+            Jei pateikiate atsiliepimą, komentarą, nuotrauką ar kitokį turinį (pvz., per Setmore atsiliepimų sistemą arba el. paštu), suteikiate Akva Studio neišimtinę, neapmokestintą, neribotos trukmės teisę šį turinį naudoti, redaguoti, talpinti ir publikuoti svetainėje, soc. tinkluose ar rinkodaros medžiagoje. Jūs atsakote už pateikto turinio tikslumą, teisėtumą ir už tai, kad jis nepažeidžia kitų asmenų teisių.
           </p>
           <p data-i18n="legal_rules_p_content_remove">
-            Akva Studio pasilieka teisę be įspėjimo pašalinti turinį, kuris pažeidžia šias taisykles, įstatymus arba trečiųjų šalių teises.
+            Akva Studio pasilieka teisę be išankstinio įspėjimo pašalinti turinį, kuris pažeidžia šias Taisykles, Norvegijos įstatymus arba trečiųjų šalių teises (autorių teises, garbės ir orumo apsaugą ir t. t.).
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_rules_h_ip">6. Intelektinė nuosavybė</h2>
           <p data-i18n="legal_rules_p_ip">
-            Visas svetainės turinys (tekstai, nuotraukos, video, logotipas, grafika, dizainas, kodas) priklauso Akva Studio arba jo licencijos davėjams ir yra saugomas autorių teisių ir kitų intelektinės nuosavybės įstatymų. Jūs galite turinį peržiūrėti asmeniniam, nekomerciniam naudojimui.
+            Visas svetainės turinys — tekstai, nuotraukos prieš/po, video, logotipas „AKVA STUDIO", grafika, dizainas, ikonos, programos kodas — priklauso Akva Studio arba jo licencijos davėjams ir yra saugomas autorių teisių (åndsverkloven) ir kitų intelektinės nuosavybės įstatymų. Jūs galite turinį peržiūrėti tik asmeniniam, nekomerciniam naudojimui.
           </p>
           <p data-i18n="legal_rules_p_ip_brand">
-            Pavadinimas „Akva Studio", logotipas ir vizualinis identitetas yra saugomi prekės ženklai. Jų naudojimas be raštiško sutikimo draudžiamas.
+            Pavadinimas „Akva Studio", logotipas, frazė „Beauty · Care · Confidence" ir vizualinis identitetas yra saugomi prekės ženklai. Jų naudojimas reklamai, parodijai, panaudojant komerciniams tikslams ar identiteto klaidinimui — be raštiško sutikimo griežtai draudžiamas.
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_rules_h_links">7. Nuorodos į trečiųjų šalių svetaines</h2>
           <p data-i18n="legal_rules_p_links">
-            Svetainėje gali būti nuorodų į trečiųjų šalių svetaines (pvz., Setmore, Sanity, socialiniai tinklai). Akva Studio neatsako už šių svetainių turinį, privatumo praktiką ar veikimą. Lankydamiesi jose, susipažinkite su jų taisyklėmis.
+            Svetainėje yra nuorodų į trečiųjų šalių paslaugas: <strong>Setmore</strong> (rezervacijos), <strong>Sanity</strong> (el. parduotuvės katalogas), <strong>Cookiebot</strong> (sutikimo valdymas), <strong>Google</strong> (Fonts, Analytics), <strong>Forbrukertilsynet</strong> (vartotojų teisės) ir socialiniai tinklai. Akva Studio <strong>neatsako</strong> už šių svetainių turinį, privatumo praktiką ar veikimą. Lankydamiesi jose, susipažinkite su jų taisyklėmis ir privatumo politikomis atskirai.
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_rules_h_liability">8. Atsakomybės apribojimas</h2>
           <ul>
-            <li data-i18n="legal_rules_li_liability_1">Svetainės turinys teikiamas „kaip yra" be jokių garantijų.</li>
-            <li data-i18n="legal_rules_li_liability_2">Akva Studio neatsako už netiesioginę, atsitiktinę ar pasekminę žalą, atsiradusią dėl svetainės naudojimo.</li>
-            <li data-i18n="legal_rules_li_liability_3">Mes neatsakome už duomenų praradimą, įrenginio gedimus ar kitas problemas, kilusias dėl svetainės naudojimo.</li>
-            <li data-i18n="legal_rules_li_liability_4">Šie apribojimai netaikomi tais atvejais, kai įstatymai jų netoleruoja.</li>
+            <li data-i18n="legal_rules_li_liability_1">Svetainės turinys (paslaugų aprašymai, kainos, foto, video, atsiliepimai) teikiamas „kaip yra" (<em>as is</em>) be jokių garantijų dėl tikslumo, išsamumo ar tinkamumo konkrečiam tikslui.</li>
+            <li data-i18n="legal_rules_li_liability_2">Akva Studio neatsako už netiesioginę, atsitiktinę, pasekminę ar specialią žalą (pvz., prarastas pajamas, sugaištą laiką), atsiradusią dėl svetainės naudojimo ar nesugebėjimo ja naudotis.</li>
+            <li data-i18n="legal_rules_li_liability_3">Mes neatsakome už duomenų praradimą, įrenginio gedimus, mokėjimo problemas ar kitas techninės kilmės problemas, kilusias dėl trečiųjų šalių paslaugų (Vercel, Sanity, Setmore, Cookiebot, mokėjimų teikėjas).</li>
+            <li data-i18n="legal_rules_li_liability_4">Šie apribojimai netaikomi tais atvejais, kai Norvegijos įstatymai jų netoleruoja — pvz., tyčinė žala, didelis aplaidumas, vartotojų teisių pažeidimai pagal forbrukerkjøpsloven.</li>
           </ul>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_rules_h_consequences">9. Taisyklių pažeidimo pasekmės</h2>
           <p data-i18n="legal_rules_p_consequences">
-            Pažeidus šias taisykles, Akva Studio pasilieka teisę:
+            Jei pažeidžiate šias Taisykles, Akva Studio pasilieka teisę be išankstinio įspėjimo:
           </p>
           <ul>
-            <li data-i18n="legal_rules_li_consequences_1">Apriboti ar nutraukti prieigą prie svetainės.</li>
-            <li data-i18n="legal_rules_li_consequences_2">Pašalinti su pažeidimu susijusį turinį.</li>
-            <li data-i18n="legal_rules_li_consequences_3">Reikalauti atlyginti žalą įstatymų nustatyta tvarka.</li>
-            <li data-i18n="legal_rules_li_consequences_4">Kreiptis į teisėsaugos institucijas, jei pažeidimas yra teisės akto pažeidimas.</li>
+            <li data-i18n="legal_rules_li_consequences_1">Apriboti ar nutraukti prieigą prie svetainės (IP blokas, Setmore rezervacijos atšaukimas).</li>
+            <li data-i18n="legal_rules_li_consequences_2">Pašalinti su pažeidimu susijusį turinį, komentarus, atsiliepimus.</li>
+            <li data-i18n="legal_rules_li_consequences_3">Reikalauti atlyginti tiesioginę žalą įstatymų nustatyta tvarka (pvz., dėl autorių teisių pažeidimo, sukčiavimo, kenkėjiškų atakų).</li>
+            <li data-i18n="legal_rules_li_consequences_4">Kreiptis į teisėsaugos institucijas (Politiet, Datatilsynet, Forbrukertilsynet), jei pažeidimas yra teisės akto pažeidimas.</li>
           </ul>
         </section>
 
         <section class="legal-section">
-          <h2 data-i18n="legal_rules_h_law">10. Taikoma teisė</h2>
+          <h2 data-i18n="legal_rules_h_law">10. Taikoma teisė ir ginčų sprendimas</h2>
           <p data-i18n="legal_rules_p_law">
-            Šios taisyklės reglamentuojamos pagal [ŠALIES] teisę. Ginčai sprendžiami derybų keliu, o nesusitarus — kompetentingame teisme pagal pardavėjo registracijos vietą.
+            Šios Taisyklės reglamentuojamos pagal <strong>Norvegijos teisę</strong>. Ginčus pirmiausia stengiamės spręsti derybų keliu — kontaktuokite el. paštu arba telefonu. Jei nepavyksta susitarti, vartotojai gali kreiptis į <a href="https://www.forbrukerradet.no/" target="_blank" rel="noopener">Forbrukerrådet</a> mediacijai arba į <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">EU ODR platformą</a>. Galiausiai ginčai sprendžiami kompetentingame Norvegijos teisme pagal pardavėjo registracijos vietą.
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_rules_h_changes">11. Taisyklių pakeitimai</h2>
           <p data-i18n="legal_rules_p_changes">
-            Akva Studio gali keisti šias taisykles. Naujausia versija visada skelbiama šiame puslapyje. Toliau naudodamiesi svetaine po pakeitimų jūs sutinkate su atnaujinta versija.
+            Akva Studio gali keisti šias Taisykles bet kuriuo metu (pvz., pridėjus naujų funkcijų, paskelbus naują mokėjimų teikėją ar pakeitus teisinį reglamentavimą). Naujausia versija visada skelbiama šiame puslapyje, o data viršuje atnaujinama prie kiekvieno pakeitimo. Toliau naudodamiesi svetaine po pakeitimo paskelbimo, jūs sutinkate su atnaujinta versija.
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_rules_h_contact">12. Susisiekite</h2>
           <p data-i18n="legal_rules_p_contact">
-            Klausimai dėl naudojimosi taisyklių: <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>
+            Klausimai dėl Taisyklių, pažeidimų pranešimai arba pageidavimai:<br>
+            El. paštas: <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a><br>
+            Telefonas: <a href="tel:+4746240853">+47 462 40 853</a><br>
+            Taip pat žr.: <a href="/salygos" data-i18n="legal_rules_link_terms_short">Naudojimo sąlygas</a> · <a href="/privatumas" data-i18n="legal_rules_link_priv_short">Privatumo politiką</a> · <a href="/slapukai" data-i18n="legal_rules_link_cookies_short">Slapukų politiką</a>.
           </p>
         </section>
 
@@ -237,20 +270,15 @@
           </ul>
         </div>
 
-        <div class="footer-col footer-contact">
-          <h4 data-i18n="footer_contact_t">Kontaktai</h4>
-          <p><a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a></p>
-          <p class="footer-tagline">Beauty · Care · Confidence</p>
-        </div>
       </div>
 
       <div class="footer-impressum">
         <span class="footer-impressum-label" data-i18n="footer_impressum_label">Atsakingas asmuo:</span>
-        <span data-i18n="footer_impressum_person">[ATSAKINGAS ASMUO]</span>
+        <span data-i18n="footer_impressum_person">Akvilė Sužiedelytė</span>
         <span class="footer-impressum-sep" aria-hidden="true">·</span>
         <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>
         <span class="footer-impressum-sep" aria-hidden="true">·</span>
-        <a href="tel:[TELEFONAS]" data-i18n="footer_impressum_phone">[TELEFONAS]</a>
+        <a href="tel:+4746240853" data-i18n="footer_impressum_phone">+47 462 40 853</a>
       </div>
 
       <div class="footer-bottom">
@@ -260,6 +288,6 @@
     </div>
   </footer>
 
-  <script src="../js/main.js?v=20260508"></script>
+  <script src="../js/main.js?v=20260513e"></script>
 </body>
 </html>

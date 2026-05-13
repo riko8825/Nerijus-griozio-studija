@@ -7,12 +7,40 @@
   <meta name="robots" content="index, follow">
   <title data-i18n="legal_terms_meta_title">Naudojimo sąlygos — Akva Studio</title>
 
+  <!-- ── Consent Mode v2 + Analytics ── -->
+  <!-- 1. Default consent state (BEFORE Cookiebot + GA4) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'functionality_storage': 'granted',
+      'security_storage': 'granted',
+      'wait_for_update': 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+    gtag('set', 'url_passthrough', true);
+  </script>
+
+  <!-- 2. Cookiebot CMP (auto-blocking) -->
+  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="CBID-PLACEHOLDER" data-blockingmode="auto" type="text/javascript"></script>
+
+  <!-- 3. GA4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXX', { 'anonymize_ip': true });
+  </script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;1,6..12,300;1,6..12,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/src/css/styles.css?v=20260508">
+  <link rel="stylesheet" href="/src/css/styles.css?v=20260513e">
 </head>
 <body>
 
@@ -81,113 +109,133 @@
         <header class="legal-header">
           <span class="legal-eyebrow" data-i18n="legal_terms_eyebrow">Naudojimo sąlygos</span>
           <h1 data-i18n="legal_terms_title">Naudojimo sąlygos ir pirkimo taisyklės</h1>
-          <p class="legal-meta" data-i18n="legal_terms_updated">Paskutinį kartą atnaujinta: [DATA]</p>
+          <p class="legal-meta" data-i18n="legal_terms_updated">Paskutinį kartą atnaujinta: 2026-05-13</p>
         </header>
 
         <section class="legal-section">
           <h2 data-i18n="legal_terms_h_general">1. Bendrosios nuostatos</h2>
           <p data-i18n="legal_terms_p_general">
-            Šios naudojimo sąlygos (toliau — „Sąlygos") nustato santykius tarp [ĮMONĖS PAVADINIMAS] (toliau — „Akva Studio") ir svetainės [DOMAIN] lankytojo / kliento. Naudodamiesi svetaine, rezervuodami procedūras ar pirkdami produktus, jūs sutinkate su šiomis Sąlygomis.
+            Šios naudojimo sąlygos (toliau — „Sąlygos") nustato santykius tarp Akvilė Sužiedelytė (individuali veikla / enkeltpersonforetak; toliau — „Akva Studio", „mes") ir svetainės <a href="https://akvastudio.no">akvastudio.no</a> lankytojo arba kliento (toliau — „jūs"). Naudodamiesi svetaine, rezervuodami procedūras per Setmore ar pirkdami produktus el. parduotuvėje, jūs patvirtinate, kad perskaitėte ir sutinkate su šiomis Sąlygomis bei <a href="/privatumas">Privatumo politika</a>.
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_terms_h_seller">2. Pardavėjas</h2>
           <p data-i18n="legal_terms_p_seller">
-            [ĮMONĖS PAVADINIMAS]<br>
-            Adresas: [ADRESAS]<br>
-            Įmonės kodas: [ĮMONĖS KODAS]<br>
-            PVM kodas: [PVM KODAS]<br>
+            <strong>Akvilė Sužiedelytė</strong> (individuali veikla, „Akva Studio")<br>
+            Adresas: [ADRESAS — pateiks klientė]<br>
+            Org.nr. / įmonės kodas: [ORGNR — pateiks klientė]<br>
+            MVA (PVM): [MVA kodas, jei taikoma]<br>
             El. paštas: <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a><br>
-            Telefonas: [TELEFONAS]
+            Telefonas: <a href="tel:+4746240853">+47 462 40 853</a><br>
+            Svetainė: <a href="https://akvastudio.no">akvastudio.no</a>
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_terms_h_services">3. Procedūrų rezervacija</h2>
           <ul>
-            <li data-i18n="legal_terms_li_serv_1">Procedūras galite rezervuoti per Setmore platformą arba kontaktų formą.</li>
-            <li data-i18n="legal_terms_li_serv_2">Po rezervacijos gausite patvirtinimą el. paštu.</li>
-            <li data-i18n="legal_terms_li_serv_3">Procedūros kainos ir trukmė nurodytos svetainėje. Galutinę kainą patvirtina specialistas atvykus.</li>
-            <li data-i18n="legal_terms_li_serv_4">Atsakomybė už pateiktus duomenis (vardas, telefono nr., el. paštas) tenka klientui.</li>
+            <li data-i18n="legal_terms_li_serv_1">Procedūras rezervuojate tiesiogiai per Setmore platformą — paspaudus „Rezervuoti" atidaroma <a href="https://akvastudio.setmore.com/akvile" target="_blank" rel="noopener">akvastudio.setmore.com/akvile</a>, kur pasirenkate paslaugą, datą ir laiką.</li>
+            <li data-i18n="legal_terms_li_serv_2">Patvirtinimą gaunate el. paštu iš Setmore iškart po rezervacijos. Jei patvirtinimas neateina per 15 min., patikrinkite „šlamšto" aplanką arba susisiekite tiesiogiai.</li>
+            <li data-i18n="legal_terms_li_serv_3">Procedūrų kainos ir apytikslė trukmė nurodytos puslapyje „Paslaugos". Galutinę kainą gali įtakoti individualūs poreikiai (pvz., blakstienų tankis, plotas) — specialistas patvirtina atvykus.</li>
+            <li data-i18n="legal_terms_li_serv_4">Atsakomybė už rezervacijos metu pateiktus kontaktinius duomenis (vardas, telefono nr., el. paštas) tenka jums. Klaidingi duomenys gali sukliudyti susisiekti dėl pakeitimų.</li>
+            <li data-i18n="legal_terms_li_serv_5">Klientas turi būti ne jaunesnis kaip 16 metų. Iki 18 m. asmenims kai kurioms procedūroms gali reikėti tėvų/globėjų sutikimo.</li>
           </ul>
         </section>
 
         <section class="legal-section">
-          <h2 data-i18n="legal_terms_h_cancel">4. Vizitų atšaukimas ir perkėlimas</h2>
+          <h2 data-i18n="legal_terms_h_cancel">4. Vizitų atšaukimas, perkėlimas ir neatvykimas</h2>
           <ul>
-            <li data-i18n="legal_terms_li_cancel_1">Vizitą atšaukti ar perkelti galite ne vėliau kaip prieš 24 val. — be jokio mokesčio.</li>
-            <li data-i18n="legal_terms_li_cancel_2">Vėlavimas daugiau kaip 15 min. gali lemti procedūros sutrumpinimą arba atšaukimą.</li>
-            <li data-i18n="legal_terms_li_cancel_3">Pakartotinai neatvykus be įspėjimo Akva Studio pasilieka teisę atsisakyti aptarnauti.</li>
+            <li data-i18n="legal_terms_li_cancel_1">Vizitą atšaukti ar perkelti galite per Setmore patvirtinimo el. laišką arba paskambinę <a href="tel:+4746240853">+47 462 40 853</a> ne vėliau kaip prieš <strong>24 valandas</strong> — be jokio mokesčio.</li>
+            <li data-i18n="legal_terms_li_cancel_2">Atšaukimas mažiau kaip prieš 24 val. — Akva Studio pasilieka teisę paprašyti kompensacijos iki 50% procedūros kainos kitos rezervacijos metu.</li>
+            <li data-i18n="legal_terms_li_cancel_3">Vėlavimas <strong>daugiau kaip 15 minučių</strong> gali lemti procedūros sutrumpinimą (be kainos pakeitimo) arba atšaukimą, jei sutrumpinta versija nebeįmanoma kokybiškai atlikti.</li>
+            <li data-i18n="legal_terms_li_cancel_4">Pakartotinis neatvykimas (<em>no-show</em>) be įspėjimo — Akva Studio pasilieka teisę reikalauti pilno avansinio apmokėjimo prieš sekančią rezervaciją arba atsisakyti aptarnauti.</li>
           </ul>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_terms_h_payment">5. Apmokėjimas</h2>
           <ul>
-            <li data-i18n="legal_terms_li_pay_1">Procedūros apmokamos vietoje grynaisiais arba banko kortele.</li>
-            <li data-i18n="legal_terms_li_pay_2">Produktų užsakymai apmokami internetu per saugų mokėjimų teikėją. Akva Studio nesaugo kortelės duomenų.</li>
-            <li data-i18n="legal_terms_li_pay_3">Visos kainos nurodytos su PVM (jei taikomas).</li>
+            <li data-i18n="legal_terms_li_pay_1"><strong>Procedūros</strong> apmokamos vietoje pasibaigus paslaugai — grynaisiais (NOK) arba banko kortele (Visa, Mastercard). Vipps mokėjimai galimi pagal susitarimą.</li>
+            <li data-i18n="legal_terms_li_pay_2"><strong>Produktų užsakymai</strong> apmokami internetu per saugų mokėjimų teikėją. Akva Studio <strong>nesaugo</strong> jūsų kortelės ar mokėjimo duomenų — juos apdoroja mokėjimų teikėjas (PCI DSS atitikimas).</li>
+            <li data-i18n="legal_terms_li_pay_3">Visos kainos svetainėje nurodytos Norvegijos kronomis (NOK), su MVA (PVM), jei taikomas pagal Norvegijos teisės aktus.</li>
+            <li data-i18n="legal_terms_li_pay_4">Sąskaitą-faktūrą galite paprašyti el. paštu po procedūros ar pirkimo — pridėdami pageidaujamus rekvizitus.</li>
           </ul>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_terms_h_delivery">6. Produktų pristatymas</h2>
           <ul>
-            <li data-i18n="legal_terms_li_del_1">Pristatymo terminai ir kainos nurodomos užsakymo metu.</li>
-            <li data-i18n="legal_terms_li_del_2">Užsakymai apdorojami per 1–3 darbo dienas.</li>
-            <li data-i18n="legal_terms_li_del_3">Atsiimti vietoje galima nemokamai (susitarus iš anksto).</li>
+            <li data-i18n="legal_terms_li_del_1">El. parduotuvėje parduodami produktai (pvz., Aromatic89 kosmetika) — pristatymo terminai ir kainos nurodomos užsakymo metu.</li>
+            <li data-i18n="legal_terms_li_del_2">Užsakymai apdorojami per <strong>1–3 darbo dienas</strong> nuo apmokėjimo gavimo. Pristatymo trukmė priklauso nuo pasirinkto vežėjo (Posten / Bring).</li>
+            <li data-i18n="legal_terms_li_del_3">Atsiimti vietoje galima <strong>nemokamai</strong>, prieš tai susitarus el. paštu arba telefonu. Adresas paaiškės užsakymo patvirtinimo metu.</li>
+            <li data-i18n="legal_terms_li_del_4">Rizika už prekes pereina pirkėjui nuo to momento, kai jas perima jis arba jo įgaliotas asmuo.</li>
           </ul>
         </section>
 
         <section class="legal-section">
-          <h2 data-i18n="legal_terms_h_returns">7. Grąžinimai ir keitimai</h2>
-          <p data-i18n="legal_terms_p_returns_intro">Pagal Lietuvos / Norvegijos vartotojų teisių aktus:</p>
+          <h2 data-i18n="legal_terms_h_returns">7. Grąžinimai, atsisakymo teisė ir keitimai</h2>
+          <p data-i18n="legal_terms_p_returns_intro">
+            Pagal <strong>Norvegijos vartotojų pirkimo įstatymą (forbrukerkjøpsloven)</strong> ir <strong>angrerettsloven</strong> (atsisakymo teisės įstatymą), nuotoliniu būdu pirkdami produktus turite šias teises:
+          </p>
           <ul>
-            <li data-i18n="legal_terms_li_ret_1">Nepatikusią prekę galite grąžinti per 14 dienų nuo gavimo, jei ji nenaudota ir originaliame įpakavime.</li>
-            <li data-i18n="legal_terms_li_ret_2"><strong>Higienos produktai</strong> (kosmetika su pažeistu apsauginiu sluoksniu, atidarytos pakuotės) — negrąžinami pagal įstatymą.</li>
-            <li data-i18n="legal_terms_li_ret_3">Defektines prekes keičiame nemokamai. Susisiekite per 14 dienų nuo trūkumo aptikimo.</li>
-            <li data-i18n="legal_terms_li_ret_4">Grąžinimo siuntimo išlaidos tenka klientui, nebent prekė turi defektą.</li>
+            <li data-i18n="legal_terms_li_ret_1"><strong>14 dienų atsisakymo teisė (angrerett)</strong> — galite atsisakyti pirkimo per 14 dienų nuo prekės gavimo, nenurodydami priežasties. Prekė turi būti nenaudota, originaliame įpakavime, su visomis etiketėmis.</li>
+            <li data-i18n="legal_terms_li_ret_2"><strong>Higienos / kosmetikos produktai</strong> — pagal angrerettsloven § 22(e), atidarius sandariai užplombuotą kosmetikos pakuotę (pvz., kremą, serumą, blakstienų klijus), atsisakymo teisė <strong>nebegalioja</strong>, nes prekė nebetinka pakartotinai parduoti dėl higienos priežasčių.</li>
+            <li data-i18n="legal_terms_li_ret_3"><strong>Defektines prekes</strong> (gamybinis trūkumas, sugadintos siunčiant) keičiame nemokamai arba grąžiname pinigus. Susisiekite per <strong>2 mėnesius</strong> nuo trūkumo aptikimo (forbrukerkjøpsloven § 27).</li>
+            <li data-i18n="legal_terms_li_ret_4">Grąžinimo siuntimo išlaidos tenka jums, nebent prekė turi defektą arba buvo išsiųsta klaidingai.</li>
+            <li data-i18n="legal_terms_li_ret_5"><strong>Atlikta procedūra negrąžinama</strong> — paslauga laikoma įvykdyta, kai ji buvo suteikta. Nesutampant lūkesčiams, prašome iškart pranešti specialistui — bandysime rasti sprendimą.</li>
           </ul>
           <p data-i18n="legal_terms_p_returns_outro">
-            Kreipkitės: <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>
+            Atsisakymą / pretenziją siųskite el. paštu: <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>, nurodydami užsakymo numerį ir priežastį. Standartinę atsisakymo formą galima rasti <a href="https://www.forbrukertilsynet.no/standardkontrakter/angreskjema" target="_blank" rel="noopener">Forbrukertilsynet svetainėje</a>.
           </p>
         </section>
 
         <section class="legal-section">
-          <h2 data-i18n="legal_terms_h_responsibility">8. Atsakomybė</h2>
+          <h2 data-i18n="legal_terms_h_responsibility">8. Klientų atsakomybė ir kontraindikacijos</h2>
           <ul>
-            <li data-i18n="legal_terms_li_resp_1">Klientas privalo informuoti specialistą apie alergijas, kontraindikacijas ir sveikatos sutrikimus prieš procedūrą.</li>
-            <li data-i18n="legal_terms_li_resp_2">Akva Studio neatsako už reakcijas, kurių priežastis — neatskleista informacija.</li>
-            <li data-i18n="legal_terms_li_resp_3">Svetainės turinys teikiamas „kaip yra"; siekiame tikslumo, bet negarantuojame nepertraukiamo veikimo.</li>
+            <li data-i18n="legal_terms_li_resp_1">Klientas <strong>privalo iš anksto informuoti</strong> specialistą apie alergijas, odos jautrumą, akių problemas, nėštumą, vaistus ar bet kokias sveikatos sąlygas, kurios gali turėti įtakos procedūrai.</li>
+            <li data-i18n="legal_terms_li_resp_2">Akva Studio neatsako už reakcijas, alergijas ar komplikacijas, kurių priežastis — neatskleista arba neteisingai pateikta informacija.</li>
+            <li data-i18n="legal_terms_li_resp_3">Prieš pirmą procedūrą rekomenduojame atlikti alerginį testą (patch test) — paklauskite specialisto.</li>
+            <li data-i18n="legal_terms_li_resp_4">Svetainės turinys (paslaugų aprašymai, kainos, video) teikiamas „kaip yra" (<em>as is</em>); siekiame tikslumo, bet negarantuojame nepertraukiamo veikimo ar kad informacija visada absoliučiai aktuali.</li>
           </ul>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_terms_h_ip">9. Intelektinė nuosavybė</h2>
           <p data-i18n="legal_terms_p_ip">
-            Visas svetainės turinys (tekstai, nuotraukos, video, logotipas, dizainas) priklauso Akva Studio arba jo licencijos davėjams. Be raštiško leidimo draudžiama kopijuoti, platinti ar naudoti komerciniams tikslams.
+            Visas svetainės turinys — tekstai, nuotraukos prieš/po, video, logotipas „AKVA STUDIO", dizainas, ikonos — priklauso Akva Studio arba jo licencijos davėjams ir saugomas autorių teisių (åndsverkloven). Be aiškaus raštiško leidimo draudžiama kopijuoti, platinti, modifikuoti arba naudoti komerciniams tikslams. Galite dalintis nuorodomis į svetainės puslapius socialiniuose tinkluose.
           </p>
         </section>
 
         <section class="legal-section">
-          <h2 data-i18n="legal_terms_h_law">10. Taikoma teisė ir ginčai</h2>
+          <h2 data-i18n="legal_terms_h_law">10. Taikoma teisė ir ginčų sprendimas</h2>
           <p data-i18n="legal_terms_p_law">
-            Šios Sąlygos reglamentuojamos pagal [ŠALIES] teisę. Ginčai sprendžiami derybų keliu, o nesusitarus — kompetentingame teisme pagal pardavėjo registracijos vietą. Vartotojas taip pat gali kreiptis į ES interneto ginčų sprendimo platformą: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a>.
+            Šios Sąlygos reglamentuojamos pagal <strong>Norvegijos teisę</strong>. Ginčus pirmiausia stengiamės spręsti derybų keliu — susisiekite el. paštu ar telefonu. Jei nepavyksta susitarti, jūs (kaip vartotojas) galite kreiptis į:
+          </p>
+          <ul>
+            <li data-i18n="legal_terms_li_law_1"><strong>Forbrukertilsynet</strong> (Norvegijos vartotojų reikalų inspekcija): <a href="https://www.forbrukertilsynet.no/" target="_blank" rel="noopener">forbrukertilsynet.no</a></li>
+            <li data-i18n="legal_terms_li_law_2"><strong>Forbrukerrådet</strong> (Vartotojų taryba) ginčų mediacijai: <a href="https://www.forbrukerradet.no/" target="_blank" rel="noopener">forbrukerradet.no</a></li>
+            <li data-i18n="legal_terms_li_law_3"><strong>EU Online Dispute Resolution (ODR)</strong> platforma — tarptautinis vartotojų ginčų sprendimas: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a></li>
+          </ul>
+          <p data-i18n="legal_terms_p_law_outro">
+            Galiausiai ginčai sprendžiami kompetentingame Norvegijos teisme pagal pardavėjo registracijos vietą.
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_terms_h_changes">11. Sąlygų pakeitimai</h2>
           <p data-i18n="legal_terms_p_changes">
-            Akva Studio gali keisti šias Sąlygas. Galioja ta versija, kuri buvo paskelbta užsakymo / rezervacijos metu.
+            Akva Studio gali keisti šias Sąlygas (pvz., pridėjus naujas paslaugas, pakeitus mokėjimų teikėją, atnaujinus teisinį reglamentavimą). Užsakymo ar rezervacijos metu galioja ta Sąlygų versija, kuri buvo paskelbta tą dieną. Reikšmingus pakeitimus pranešime svetainėje. Datą skirsnio viršuje atnaujinsime kiekvienos peržiūros metu.
           </p>
         </section>
 
         <section class="legal-section">
           <h2 data-i18n="legal_terms_h_contact">12. Susisiekite</h2>
           <p data-i18n="legal_terms_p_contact">
-            Klausimai dėl sąlygų: <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>. Taip pat žr. <a href="/privatumas" data-i18n="legal_terms_link_priv">Privatumo politiką</a> ir <a href="/slapukai" data-i18n="legal_terms_link_cookies">Slapukų politiką</a>.
+            Klausimai dėl Sąlygų, rezervacijų ar užsakymų:<br>
+            El. paštas: <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a><br>
+            Telefonas: <a href="tel:+4746240853">+47 462 40 853</a><br>
+            Taip pat žr.: <a href="/privatumas" data-i18n="legal_terms_link_priv">Privatumo politiką</a> · <a href="/slapukai" data-i18n="legal_terms_link_cookies">Slapukų politiką</a> · <a href="/naudojimosi-taisykles" data-i18n="legal_terms_link_rules">Naudojimosi taisykles</a>.
           </p>
         </section>
 
@@ -227,20 +275,15 @@
           </ul>
         </div>
 
-        <div class="footer-col footer-contact">
-          <h4 data-i18n="footer_contact_t">Kontaktai</h4>
-          <p><a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a></p>
-          <p class="footer-tagline">Beauty · Care · Confidence</p>
-        </div>
       </div>
 
       <div class="footer-impressum">
         <span class="footer-impressum-label" data-i18n="footer_impressum_label">Atsakingas asmuo:</span>
-        <span data-i18n="footer_impressum_person">[ATSAKINGAS ASMUO]</span>
+        <span data-i18n="footer_impressum_person">Akvilė Sužiedelytė</span>
         <span class="footer-impressum-sep" aria-hidden="true">·</span>
         <a href="mailto:akvastudio75@gmail.com">akvastudio75@gmail.com</a>
         <span class="footer-impressum-sep" aria-hidden="true">·</span>
-        <a href="tel:[TELEFONAS]" data-i18n="footer_impressum_phone">[TELEFONAS]</a>
+        <a href="tel:+4746240853" data-i18n="footer_impressum_phone">+47 462 40 853</a>
       </div>
 
       <div class="footer-bottom">
@@ -250,6 +293,6 @@
     </div>
   </footer>
 
-  <script src="/src/js/main.js?v=20260508"></script>
+  <script src="/src/js/main.js?v=20260513e"></script>
 </body>
 </html>
