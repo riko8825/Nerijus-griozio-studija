@@ -3,7 +3,7 @@
 import {initCartIcon} from './cart-icon.js';
 import {initCatalog} from './products.js';
 import {initProductDetail} from './product-detail.js';
-import {initCartPage} from './cart-page.js';
+import {initCartPage} from './cart-page.js?v=20260930';
 
 function initMobileNav() {
   const burger = document.querySelector('.nav-burger');
