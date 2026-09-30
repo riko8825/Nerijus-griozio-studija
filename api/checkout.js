@@ -4,6 +4,8 @@
 
 const SANITY_API = 'https://vwtjc4wg.api.sanity.io/v2026-01-01/data/query/production';
 const STRIPE_API = 'https://api.stripe.com/v1/checkout/sessions';
+const STRIPE_VERSION = '2026-08-26.dahlia';
+const INTEGRATION_ID = 'akva-webshop-hqvtmzrk';
 
 const SHIPPING_ORE = 7900; // PostNord 79 kr
 const FREE_SHIPPING_FROM_NOK = 1000;
@@ -114,6 +116,7 @@ module.exports = async (req, res) => {
   const params = {
     mode: 'payment',
     locale: 'nb',
+    integration_identifier: INTEGRATION_ID,
     line_items: lineItems,
     shipping_options: [{shipping_rate_data: shippingRate}],
     shipping_address_collection: delivery === 'ship' ? {allowed_countries: ['NO']} : undefined,
@@ -126,7 +129,11 @@ module.exports = async (req, res) => {
   try {
     const stripeRes = await fetch(STRIPE_API, {
       method: 'POST',
-      headers: {Authorization: `Bearer ${key}`, 'Content-Type': 'application/x-www-form-urlencoded'},
+      headers: {
+        Authorization: `Bearer ${key}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Stripe-Version': STRIPE_VERSION,
+      },
       body: toForm(params),
     });
     const session = await stripeRes.json();
