@@ -3,7 +3,7 @@ import {getItems, getSubtotal, updateQty, removeItem, clear, subscribe} from './
 import {formatPrice, escapeHtml} from './format.js';
 
 const SHOP_EMAIL = 'akvastudio75@gmail.com';
-const FREE_SHIPPING_THRESHOLD = 500;
+const FREE_SHIPPING_THRESHOLD = 1000;
 
 function renderEmpty() {
   return `
