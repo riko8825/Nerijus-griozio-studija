@@ -9,6 +9,8 @@ const STUDIO_ADDRESS = 'Myreneveien 35, 4847 Arendal';
 
 let delivery = 'ship';
 let notice = null; // {type: 'success' | 'info', text}
+let checkoutPending = false;
+let checkoutError = '';
 
 function shippingCost(subtotal) {
   if (delivery === 'pickup' || subtotal >= FREE_SHIPPING_THRESHOLD) return 0;
@@ -25,7 +27,7 @@ function renderEmpty() {
     return `
       <div class="cart-empty cart-success">
         <h2>Takk for bestillingen!</h2>
-        <p>Betalingen er mottatt. Du får en kvittering på e-post, og vi gir beskjed når varene er sendt eller klare for henting.</p>
+        <p>Bestillingen din er registrert. Du får en bekreftelse på e-post når betalingen er gjennomført, og vi gir beskjed når varene er sendt eller klare for henting.</p>
         <a href="/produkter" class="btn btn-primary">Tilbake til butikken</a>
       </div>
     `;
@@ -87,12 +89,12 @@ function renderSummary(subtotal, items) {
       <fieldset class="cart-delivery">
         <legend>Levering</legend>
         <label class="cart-delivery-option">
-          <input type="radio" name="delivery" value="ship" ${delivery === 'ship' ? 'checked' : ''} data-delivery>
+          <input type="radio" name="delivery" value="ship" ${delivery === 'ship' ? 'checked' : ''} ${checkoutPending ? 'disabled' : ''} data-delivery>
           <span>PostNord, 2–5 virkedager</span>
           <strong>${subtotal >= FREE_SHIPPING_THRESHOLD ? 'Gratis' : formatPrice(SHIPPING_PRICE)}</strong>
         </label>
         <label class="cart-delivery-option">
-          <input type="radio" name="delivery" value="pickup" ${delivery === 'pickup' ? 'checked' : ''} data-delivery>
+          <input type="radio" name="delivery" value="pickup" ${delivery === 'pickup' ? 'checked' : ''} ${checkoutPending ? 'disabled' : ''} data-delivery>
           <span>Henting i studio<small>${STUDIO_ADDRESS}</small></span>
           <strong>Gratis</strong>
         </label>
@@ -112,8 +114,8 @@ function renderSummary(subtotal, items) {
         <dt>Total</dt><dd>${formatPrice(subtotal + shipping)}</dd>
       </dl>
 
-      <button type="button" class="btn btn-primary cart-checkout-btn" data-checkout>Gå til betaling</button>
-      <p class="cart-checkout-error" data-checkout-error role="alert" hidden></p>
+      <button type="button" class="btn btn-primary cart-checkout-btn" data-checkout ${checkoutPending ? 'disabled' : ''}>${checkoutPending ? 'Sender deg til betaling…' : 'Gå til betaling'}</button>
+      <p class="cart-checkout-error" data-checkout-error role="alert">${escapeHtml(checkoutError)}</p>
       <p class="cart-checkout-note">
         Sikker betaling med kort, Apple Pay eller Google Pay via Stripe.
         <a href="${mailto}">Eller bestill via e-post</a>.
@@ -124,9 +126,26 @@ function renderSummary(subtotal, items) {
   `;
 }
 
+// Visas krepšelis perpiešiamas per innerHTML — prieš tai įsimenam fokusuotą valdiklį, po to jį grąžinam.
+const FOCUS_ATTRS = ['data-delivery', 'data-qty-incr', 'data-qty-decr', 'data-checkout'];
+
+function focusedSelector() {
+  const el = document.activeElement;
+  if (!el || !el.closest('[data-cart-page]')) return null;
+  if (el.hasAttribute('data-delivery')) return `[data-delivery][value="${el.value}"]`;
+  const attr = FOCUS_ATTRS.find((a) => el.hasAttribute(a));
+  return attr ? `[${attr}="${CSS.escape(el.getAttribute(attr))}"]` : null;
+}
+
 function render() {
   const root = document.querySelector('[data-cart-page]');
   if (!root) return;
+  const refocus = focusedSelector();
+  paint(root);
+  if (refocus) document.querySelector(refocus)?.focus();
+}
+
+function paint(root) {
   const items = getItems();
   if (items.length === 0) {
     root.innerHTML = renderEmpty();
@@ -158,11 +177,11 @@ function checkoutErrorText(status, data) {
   return 'Betalingen kunne ikke startes. Prøv igjen om litt, eller bestill via e-post.';
 }
 
-async function startCheckout(btn) {
-  const errorEl = document.querySelector('[data-checkout-error]');
-  errorEl.hidden = true;
-  btn.disabled = true;
-  btn.textContent = 'Sender deg til betaling…';
+async function startCheckout() {
+  if (checkoutPending) return;
+  checkoutPending = true;
+  checkoutError = '';
+  render();
   try {
     const res = await fetch('/api/checkout', {
       method: 'POST',
@@ -177,13 +196,13 @@ async function startCheckout(btn) {
       window.location.href = data.url;
       return;
     }
-    errorEl.textContent = checkoutErrorText(res.status, data);
+    checkoutError = checkoutErrorText(res.status, data);
   } catch {
-    errorEl.textContent = checkoutErrorText(0, null);
+    checkoutError = checkoutErrorText(0, null);
   }
-  errorEl.hidden = false;
-  btn.disabled = false;
-  btn.textContent = 'Gå til betaling';
+  checkoutPending = false;
+  render();
+  document.querySelector('[data-checkout]')?.focus();
 }
 
 function bindActions() {
@@ -212,7 +231,7 @@ function bindActions() {
       render();
     });
   });
-  document.querySelector('[data-checkout]')?.addEventListener('click', (e) => startCheckout(e.currentTarget));
+  document.querySelector('[data-checkout]')?.addEventListener('click', startCheckout);
   document.querySelector('[data-cart-clear]')?.addEventListener('click', () => {
     if (confirm('Er du sikker på at du vil tømme handlekurven?')) clear();
   });
@@ -234,5 +253,14 @@ function readReturnStatus() {
 export function initCartPage() {
   if (!document.querySelector('[data-cart-page]')) return;
   readReturnStatus();
-  subscribe(() => render());
+  subscribe(() => {
+    checkoutError = ''; // krepšelis pasikeitė — sena likučio klaida nebeaktuali
+    render();
+  });
+  // Grįžus iš Stripe naršyklės „Back“ mygtuku puslapis atkuriamas iš bfcache su „Sender deg…“ būsena.
+  window.addEventListener('pageshow', (e) => {
+    if (!e.persisted) return;
+    checkoutPending = false;
+    render();
+  });
 }

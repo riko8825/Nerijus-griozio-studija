@@ -34,14 +34,16 @@ function toForm(obj, prefix = '', out = new URLSearchParams()) {
 function parseItems(body) {
   const items = body && Array.isArray(body.items) ? body.items : null;
   if (!items || items.length === 0 || items.length > MAX_LINES) return null;
-  const clean = [];
+  // Pasikartojantys productId sujungiami — kitaip dvi eilutės po 3 vnt. apeitų likučio patikrą.
+  const merged = new Map();
   for (const item of items) {
     const id = typeof item?.productId === 'string' ? item.productId : '';
     const qty = Number(item?.quantity);
-    if (!/^[\w.-]{1,100}$/.test(id) || !Number.isInteger(qty) || qty < 1 || qty > MAX_QTY) return null;
-    clean.push({id, qty});
+    if (!/^[\w.-]{1,100}$/.test(id) || !Number.isInteger(qty) || qty < 1) return null;
+    merged.set(id, (merged.get(id) || 0) + qty);
   }
-  return clean;
+  const clean = [...merged].map(([id, qty]) => ({id, qty}));
+  return clean.every((i) => i.qty <= MAX_QTY) ? clean : null;
 }
 
 async function fetchProducts(ids) {
@@ -95,7 +97,7 @@ module.exports = async (req, res) => {
       price_data: {
         currency: 'nok',
         unit_amount: Math.round(p.price * 100),
-        product_data: {name: p.title, images: p.image ? [`${p.image}?w=600`] : undefined, metadata: {sanity_id: id}},
+        product_data: {name: p.title || 'Produkt', images: p.image ? [`${p.image}?w=600`] : undefined, metadata: {sanity_id: id}},
       },
     });
   }
@@ -117,6 +119,8 @@ module.exports = async (req, res) => {
     mode: 'payment',
     locale: 'nb',
     integration_identifier: INTEGRATION_ID,
+    // 30 min (Stripe minimumas) — trumpina langą, kai du pirkėjai moka už paskutinį vienetą.
+    expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
     line_items: lineItems,
     shipping_options: [{shipping_rate_data: shippingRate}],
     shipping_address_collection: delivery === 'ship' ? {allowed_countries: ['NO']} : undefined,
@@ -141,7 +145,7 @@ module.exports = async (req, res) => {
       console.error('[checkout] stripe error:', session?.error?.type, session?.error?.message);
       return res.status(502).json({error: 'payment_provider_error'});
     }
-    return res.status(200).json({url: session.url, livemode: session.livemode});
+    return res.status(200).json({url: session.url});
   } catch (e) {
     console.error('[checkout] stripe request failed:', e.message);
     return res.status(502).json({error: 'payment_provider_error'});
