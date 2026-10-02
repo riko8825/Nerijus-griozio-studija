@@ -1,11 +1,15 @@
-// Produkto detalės puslapis (produkt.html) — render iš ?slug=... query param'o.
+// Produkto detalės puslapis (produkt.html) — slug iš /produkter/<slug> kelio arba ?slug=... query param'o.
 import {getProductBySlug, imageUrl} from './sanity-client.js';
 import {formatPrice, calcDiscount, escapeHtml} from './format.js';
 import {addItem} from './cart.js';
 
 function getSlug() {
   const params = new URLSearchParams(window.location.search);
-  return params.get('slug') || params.get('p') || null;
+  const fromQuery = params.get('slug') || params.get('p');
+  if (fromQuery) return fromQuery;
+  // Vercel rewrite (/produkter/:slug → /produkt?slug=:slug) vyksta serveryje — naršyklėje lieka gražus kelias.
+  const match = window.location.pathname.match(/^\/produkter\/([^/]+)\/?$/);
+  return match ? decodeURIComponent(match[1]) : null;
 }
 
 function injectSchema(product) {
