@@ -1,7 +1,7 @@
 # SESSION STATUS — AKVA STUDIO
 
-**Paskutinė sesija:** 2026-05-08 (#8)
-**Statusas:** 🟢 Legal/Impressum infrastruktūra: 4 nauji legal puslapiai (privatumas/slapukai/salygos/naudojimosi-taisykles) × 3 kalbos + Impressum eilutė visuose 8 puslapiuose. Cache-buster pridėtas. Production deploy ✅ (commit'ai 8b90159 + c74a74a). `/privatumas` desktop verify pass; `/slapukai` + `/salygos` + `/naudojimosi-taisykles` + mobile + i18n switcher — verify ne pilnas (Claude Code crash sutrukdė).
+**Paskutinė sesija:** 2026-10-04 (#11, pradėta 2026-09-24)
+**Statusas:** 🟢 akvastudio.no live (GoDaddy → Vercel) · NO kalba default be LT flash · legal su org.nr./adresu/PostNord · **Stripe Checkout + webhook veikia produkcijoje test režimu** (8/8 E2E mokėjimai) · produkto puslapio sena klaida pataisyta · live mokėjimams trūksta Vercel Pro + live raktų
 
 ---
 
@@ -17,6 +17,164 @@
 | 2026-05-07 | #6 | Sanity Studio deployed (`akva-studio.sanity.studio`, appId `pzscsmv1w270no5ojmth9il5`); klientės invite išsiųstas (akvastudio75@gmail.com → editor); Vercel CORS pridėtas; `sanity.cli.ts` `autoUpdates` migracija į `deployment.{appId, autoUpdates}`; production Playwright verify (390/360/1280 + /produkter Sanity fetch) — visi pass |
 | 2026-05-08 | #7 | `.hero-floating-card` pašalinta (HTML + CSS); naujas `hero-mobile.png` (1536×1024, kliento įkeltas); mobile hero `cover` → `contain` (pilnas paveiksliukas matomas, be cropping); `padding-top: calc(72px + 100vw / 1.5)` rezervuoja paveiksliuko aukštį, gradient overlay pašalintas; `mobile-preview.html` dev tool su 5 device presets |
 | 2026-05-08 | #8 | 4 nauji legal puslapiai (`/privatumas`, `/slapukai`, `/salygos`, `/naudojimosi-taisykles`) × LT/EN/NO i18n; Impressum eilutė visuose 8 footer'iuose (atsakingas asmuo + email + telefonas); naujas `.legal-page` + `.footer-impressum` CSS; `scripts/sync-html.sh` papildytas 4 puslapiais; cache-buster `?v=20260508` styles.css/main.js (Vercel CDN cache fix); commit'ai 8b90159 + c74a74a deployed |
+| 2026-05-08 | #9 | Consent CMP sprendimas užfiksuotas: hybrid status quo (Silktide tik index.html + Cookiebot placeholder × 8 puslapiai). Naujas `DECISION_LOG.md` su 3 variantais + trigger'iais peržiūrai. `PROJECT_STATUS.md` `Cookie consent` matrica ✅ → 🟡 Hybrid; pridėtas L) entry point. Jokio kodo / deploy. |
+| 2026-05-13 | #10 | **Hero desktop full-bleed redesign**: `siluetas.png` kaip `background-size: cover` per visą hero, `.hero-visual` blokas ištrintas, `.hero::before` gradient overlay (oklch 92%→transparent iš kairės), ~60 eilučių mirusio CSS pašalinta. **4 legal puslapiai pilnai perrašyti** (Privatumo politika 10 sk., Slapukų 9 sk., Sąlygos 12 sk., Taisyklės 12 sk.) su Akvilės kontaktais (+47 462 40 853), akvastudio.no domenu, Norvegijos teise (forbrukerkjøpsloven, angrerettsloven, åndsverkloven), Cookiebot only setup (Silktide pašalinimas planuojamas). ~50 naujų i18n raktų × LT/EN/NO. Impressum atnaujinta 8 puslapiuose. DECISION_LOG 2026-05-13 įrašas: B variantas (Cookiebot only) pasirinktas. Cache-buster `v=20260509` → `v=20260513e`. Playwright LT/EN/NO + mobile 390 verify pass. **NE deploy'ed.** |
+| 2026-09-24 → 10-04 | #11 | **Domenas** akvastudio.no (GoDaddy → Vercel). **NO default** + statinis NO HTML. **Legal**: org.nr., adresas, ne MVA, PostNord/fri frakt/henting, Stripe. **Stripe Checkout + webhook** (idempotentiškas likutis Sanity). `stripe-best-practices` skill + 3 agentai → 12 radinių sutaisyta. Produkcijos E2E 8/8 test mokėjimai. Sutaisyta: env vars kitame projekte, `pk_` vietoj `sk_`, CORS, **produkto puslapis neveikė nuo gegužės**. Push: `d42abc9`, `0570fe3`. |
+
+---
+
+## SESIJA #11 (2026-09-24 → 2026-10-04) — DETALĖS
+
+### Ką padarėme
+
+1. **Domenas akvastudio.no** — GoDaddy DNS: A `@` → `216.198.79.1`, CNAME `www` → `86e7fa9b93520a31.vercel-dns-017.com`; Vercel `akva-studio` projekte www primary, apex 308 → www. SSL ✅.
+2. **Norvegų kalba default** (`2f8d5ea`, `f0a7b43`) + **statinis NO HTML** (`3855799`) — `[data-i18n]` turinys 5 puslapiuose prerender'intas iš `translations.no`, LT flash nebėra. Grįžtantys LT vartotojai lieka LT (localStorage).
+3. **Legal pagal Akvilės atsakymus** (`e1b536e`) — org.nr. 937 906 463, Myreneveien 35 4847 Arendal, ne MVA registre, PostNord 79 kr 2–5 d.d., fri frakt ≥1000 kr, henting i studio, grąžinimo adresas; ×3 kalbos. Placeholder'ių 0.
+4. **Stripe Checkout** (`7917e62`, `ae8251c`, `2b9c827`) — `api/checkout.js` (Vercel Node, be npm deps, fetch į Stripe REST): kainos/likutis iš Sanity, eilutės sujungiamos, API `2026-08-26.dahlia`, `integration_identifier`, 30 min `expires_at`, tik NO adresai, telefonas, locale `nb`. Krepšelis: pristatymo pasirinkimas, frakto eilutė, „Gå til betaling“, grįžimo pranešimai, a11y fokusas, bfcache, live region.
+5. **Stripe webhook** — `api/stripe-webhook.js`: rankinis HMAC-SHA256 parašas (v1, 5 min, griežtas `t=`), `checkout.session.completed` + `async_payment_succeeded` (gated `payment_status`), viena Sanity transakcija `create orders.<session>` (be PII) + `dec stock` published+draft; dublikatas tik pagal order ID; test mode likučio neliečia; oversold / ištrintas produktas → `needsReview`.
+6. **Privatumo politika** — Stripe kaip duomenų gavėjas (`legal_priv_li_share_7`), pirkimo duomenų aprašas atnaujintas ×3.
+7. **Skill'ai / agentai** — įdiegtas oficialus `stripe-best-practices` (`~/.claude/skills/`, iš docs.stripe.com/.well-known/skills); security-auditor + code-reviewer + qa-tester + `security-review` → 12 radinių sutaisyta.
+8. **Produkcijos incidentai sutaisyti**: env vars įdėti į dublikatą projektą `nerijus-griozio-studija` → perkelta į `akva-studio`; `STRIPE_SECRET_KEY` buvo `pk_test` → pakeista + redeploy; Sanity CORS neturėjo akvastudio.no → pridėta; **produkto puslapis neveikė nuo 2026-05** (slug tik iš `?slug=`, o Vercel rewrite URL nekeičia) → `0570fe3`.
+9. Smulkūs: `.cart-notice` be side-tab, nav underline `transform: scaleX` (`d42abc9`).
+
+### Testai
+
+- Lokaliai: webhook 28/28, krepšelio pataisos 25/25 (1280+390), pristatymo ribos 4/4, harness su mock Stripe.
+- **Produkcijoje (Stripe test)**: katalogas → produktas → krepšelis → Stripe → grįžimas; ship 91 kr ×3, pickup 12 kr ×2, atmesta kortelė, atšaukimas — visi ✅ (1280 + 390). Webhook 8/8 `fulfilled`, Vercel error log'ų 0, likutis liko 5.
+
+### Kas liko / nepatvirtinta
+
+- **Live mokėjimai**: Vercel Pro; Stripe live `rk_live` (Checkout Sessions: write) → `STRIPE_SECRET_KEY`; live webhook endpoint + naujas `whsec_`; Akvilės Stripe aktyvacija (banko sąskaita).
+- Akvilės Stripe: Customer emails → Successful payments; pranešimai apie mokėjimus (meniu pavadinimai laiške nesutikrinti).
+- Realūs produktai + kategorijos (Akvilė); po to pašalinti test „Kavapukas nr 1“.
+- Vipps — Stripe private preview laukia; po patvirtinimo `Stripe-Version: 2026-08-26.dahlia; vipps_preview=v1`.
+- Studio neturi `order` schemos (užsakymai `orders.*` matomi tik per API; Akvilė mato Stripe).
+- Likutis negrąžinamas po refund; CSP/HSTS; `/api/checkout` rate limit (Vercel Firewall).
+- Sąskaita Akvilei — reikia kainos + Empirra rekvizitų.
+- Vercel dublikatas `nerijus-griozio-studija` — atjungti/ištrinti (vartotojo sprendimas).
+- Debug screenshot'ai repo root'e, `AKVILEI_REIKIA.md` neužcommit'intas.
+
+### Kitas žingsnis
+
+1. Kai Akvilė įkels produktus — verify `/produkter` + vienas test pirkimas su realiu produktu; pašalinti Kavapuką.
+2. Live paleidimas: Vercel Pro → `rk_live` + live webhook → vienas tikras mažas pirkimas + refund.
+3. Sąskaita Akvilei (gavus kainą ir rekvizitus).
+
+---
+
+## SESIJA #10 (2026-05-13) — DETALĖS
+
+### Atlikta
+
+**1. Hero desktop full-bleed redesign**
+- `.hero-visual` blokas pašalintas iš `src/pages/index.html` (–13 eil.)
+- `.hero` CSS: pridėta `background-image: url('../assets/images/siluetas.png')`, `background-size: cover`, `background-position: center`
+- `.hero::before` perdaryta — buvo dekoratyvinis apskritimas, dabar gradient overlay iš kairės (`oklch(95% 0.022 50 / 0.92) → transparent`) tekstui skaitomumui
+- `.hero-inner` grid `1fr 1fr` → block layout
+- Mirę CSS pašalinti: `.hero-visual`, `.hero-image-frame{,picture,img,--illustration,--empty}`, `.hero-illustration`, `.hero-image-placeholder`, `.placeholder-icon` (–60 eil.)
+- Mobile `@media (max-width: 1024px)` override `hero-mobile.png` veikia kaip prieš tai (jokių pakeitimų mobile experience)
+
+**2. 4 legal puslapiai pilnai perrašyti — Akva Studio specifika**
+
+| Puslapis | Skirsniai | Esmė |
+|---|---|---|
+| `/privatumas` | 10 | 4 duomenų srautai (Setmore · email · e-shop · GA4 anonim. IP), §6 retention pagal regnskapsloven § 13 (5 m.), §7 Datatilsynet + VDAI nuorodos |
+| `/slapukai` | 9 | Consent Mode v2 paaiškinimas, 3 lentelės (essential · stats · marketing), 5 trečiosios šalys, `Cookiebot.renew()` mygtukas, **Silktide pašalinta iš teksto** |
+| `/salygos` | 12 | NO teisė: forbrukerkjøpsloven § 27 (2 mėn defektams) + angrerettsloven § 22(e) (kosmetikos seal), §10 Forbrukertilsynet + Forbrukerrådet + EU ODR, atlikta procedūra negrąžinama |
+| `/naudojimosi-taisykles` | 12 | 9 draudžiami veiksmai (SQL inj, XSS, ransomware, fake bookings = sukčiavimas), §10 Norvegijos teisė + Politiet/Datatilsynet/Forbrukertilsynet referal'ai |
+
+- Klientės kontaktai: Akvilė Sužiedelytė · +47 462 40 853 · akvastudio75@gmail.com · akvastudio.no
+- Placeholder'iai liko: `[ADRESAS — pateiks klientė]` ir `[ORGNR — pateiks klientė]` (2 puslapiuose: privatumas, salygos)
+
+**3. Impressum atnaujinta 8 puslapiuose**
+- `[ATSAKINGAS ASMUO]` → Akvilė Sužiedelytė (LT puslapiuose) / Akvilė Sužiedelytė (NO puslapiuose vietoj `[ANSVARLIG PERSON]`)
+- `[TELEFONAS]` / `[TELEFON]` → +47 462 40 853
+- 8 puslapiai: `index`, `privatumas`, `slapukai`, `salygos`, `naudojimosi-taisykles`, `produkter`, `produkt`, `handlekurv`
+
+**4. main.js i18n raktai — ~50 naujų raktų × LT/EN/NO**
+- `legal_priv_*` (5 nauji): `_li_purpose_5`, `_li_purpose_6`, `_li_share_6`, `_li_retention_5`, `_li_rights_8`
+- `legal_cook_*` (25 nauji): `_h_consentmode`, `_p_consentmode`, `_th_type`, `_th_provider`, `_td_localstorage`, `_td_cookie`, `_td_consent`, `_td_1year`, `_td_2years`, `_td_24h`, `_h_stats`, `_p_stats`, `_td_ga`, `_td_ga_session`, `_td_gid`, `_p_stats_note`, `_h_marketing`, `_p_marketing`, `_li_third_setmore/cookiebot/google/vercel/sanity`, `_p_consent_withdraw`, `_p_declaration`
+- `legal_terms_*` (11 nauji): `_li_serv_5`, `_li_cancel_4`, `_li_pay_4`, `_li_del_4`, `_li_ret_5`, `_li_resp_4`, `_li_law_1/_2/_3`, `_p_law_outro`, `_link_rules`
+- `legal_rules_*` (5 nauji): `_li_access_4`, `_li_prohibited_9`, `_link_terms_short`, `_link_priv_short`, `_link_cookies_short`
+
+**5. DECISION_LOG.md — 2026-05-13 įrašas**
+- Klientė pasakė „cookie bot bus" → **B variantas (Cookiebot only)** pasirinktas
+- Migracijos žingsniai užfiksuoti: CBID įdiegimas, Silktide pašalinimas (`silktide-consent-manager.js` 1525 eil. + `consent-init.js` + CSS)
+- 2026-05-08 hybrid status quo įrašas pažymėtas `superseded`
+
+**6. Cache-buster bump'ai**
+- `v=20260509` → `v=20260513` → `v=20260513b` → `v=20260513c` → `v=20260513d` → `v=20260513e`
+- Kelis kartus bump'inti dėl Playwright browser cache issues (stale `<script src=>` despite `?v=` query)
+
+### Verify (Playwright lokaliai, http://localhost:8765)
+
+| Puslapis | Lang | Viewport | Statusas |
+|---|---|---|---|
+| `/` | LT | 1280 | ✅ pass — hero full-bleed siluetas matomas, tekstas overlay'iuje skaitomas |
+| `/` | LT | 390 | ✅ pass — `hero-mobile.png` veikia (mobile media query override) |
+| `/privatumas` | LT/EN/NO | 1280 | ✅ pass — Akvilė Sužiedelytė + +47 462 40 853 + 2026-05-13 |
+| `/privatumas` | LT | 390 | ✅ pass |
+| `/slapukai` | LT/EN/NO | 1280 | ✅ pass — Consent Mode v2 sekcija, 6 lentelės eilutės, jokio Silktide tekste |
+| `/slapukai` | LT | 390 | ✅ pass — 3 sluoksniai (essential/stats/marketing), Cookiebot Declaration script aktyvus |
+| `/salygos` | LT/EN/NO | 1280 | ✅ pass — `forbrukerkjøpsloven` + `angrerettsloven`, Norvegijos teisė |
+| `/salygos` | LT | 390 | ✅ pass |
+| `/naudojimosi-taisykles` | LT/EN/NO | 1280 | ✅ pass — Norvegijos teisė, jokio `[ŠALIES]`/`[COUNTRY]`/`[LANDETS]` |
+| `/naudojimosi-taisykles` | LT | 390 | ✅ pass |
+| Placeholder leak | — | — | ✅ jokio `[DATA]`/`[DOMAIN]`/`[TELEFONAS]` HTML'e ar i18n |
+
+**Console:** tik žinomi Cookiebot 404 (CBID-PLACEHOLDER, laukia kliento CBID).
+
+### Kas liko / nepatvirtinta
+
+- **Working tree neutarptintas** — `git status` rodo ~30+ pakeitimų (4 legal pages × HTML + main.js + DECISION_LOG + 8× cache-buster bumps + hero CSS + 3 debug PNG)
+- **NE deploy'ed** — visi pakeitimai tik lokaliai, klientės dar nematomi production'e (`akva-studio.vercel.app` rodo seną versiją)
+- **HTML strong/br/a tags prarandami i18n perrašyme** — `el.textContent = t[key]` JS logika (main.js:1079) konvertuoja viską į plain text. Privatumo §2 (Duomenų valdytojas) ir Sąlygų §2 (Pardavėjas) HTML lentelė tampa `·`-separated string. Egzistuojantis arch trūkumas, šios sesijos darbas tik išryškino.
+- **Silktide kodas dar repo** — DECISION_LOG teigia „pašalinamas migracijoje", bet faktiškai dar `src/js/silktide-consent-manager.js` (1525 eil.) + `consent-init.js` + `src/css/silktide-consent-manager.css` egzistuoja. Klientės CBID dar nepateiktas.
+- **Cookiebot 404 (CBID-PLACEHOLDER)** — banner'is neveikia, laukia kliento CBID
+- **GA4 ID `G-XXXXXXXX`** — neaktyvus, laukia kliento Measurement ID
+- **Klientės placeholder'iai (2 vietos)** — `[ADRESAS — pateiks klientė]` + `[ORGNR — pateiks klientė]` Privatumo §2 ir Sąlygų §2
+- **Mobile 390 verify**: pilnai testuotas tik `/privatumas` + `/slapukai` + `/naudojimosi-taisykles`. Salygos mobile remta i18n logika veikia identiškai.
+
+### Kitas žingsnis
+
+1. **Commit + push** — sutvarkyti working tree, push į main, Vercel auto-deploy. Po deploy: production verify Playwright (LT/EN/NO + mobile 390) ant visų 4 legal puslapių `akva-studio.vercel.app`
+2. **Klientės follow-up** — paklausti dėl: 1) adreso + org.nr. (placeholder'iai), 2) Cookiebot CBID licencijos, 3) GA4 Measurement ID, 4) custom domain (`akvastudio.no` DNS setup)
+3. **Silktide migracija** — kai gausime Cookiebot CBID, pašalinti `silktide-consent-manager.js` + `consent-init.js` + CSS, atnaujinti `data-cbid="CBID-PLACEHOLDER"` × 8 puslapiai
+
+---
+
+## SESIJA #9 (2026-05-08) — DETALĖS
+
+### Atlikta
+
+**1. Consent CMP sprendimas užfiksuotas — hybrid status quo**
+- Apsvarstyti 3 variantai: A) Silktide visur · B) tik Cookiebot · C) hybrid (palikti)
+- Pasirinktas **C** — klientė dar nenusprendė, lankomumas low, sprendimas grįžtamas
+- Trigger'iai peržiūrai: real Cookiebot CBID → B; klientės atsisakymas → A; production traffic → privaloma A arba B
+
+**2. Failai keisti**
+- `DECISION_LOG.md` (NAUJAS) — 2026-05-08 įrašas su variantų trade-off'ais, motyvu, trigger'iais ir nuorodomis į kodo eilutes
+- `SESSION_STATUS.md` — `Cookie consent banner` eilutė atnaujinta su nuoroda į DECISION_LOG
+- `PROJECT_STATUS.md`:
+  - Modulių matrica `Cookie consent` ✅ → 🟡 Hybrid (su pilnu paaiškinimu)
+  - Pridėtas `L) Consent CMP sprendimas` entry point next session'ui
+
+### Verify
+
+- Tik docs read-back; jokio kodo / production verify nereikalinga
+
+### Kas liko / nepatvirtinta
+
+- **Klientės sprendimas dėl A vs B** — kol kas blokuojamas Cookiebot license / GA4 setup klausimo
+- **Silktide CSS failo egzistavimas nepatikrintas** — `index.html:815` rodo `../css/silktide-consent-manager.css`, bet failo presence Glob'u nepatvirtinta (next session check)
+- **`G-XXXXXXXX` GA4 placeholder** — visuose 8 puslapiuose, neaktyvus
+- **Sesijos #8 carry-over** dar galioja: legal puslapių mobile/i18n production verify, klientės placeholder'iai, debug screenshot cleanup
+
+### Kitas žingsnis
+
+1. **Sesijos #8 carry-over** — `/slapukai`, `/salygos`, `/naudojimosi-taisykles` + mobile 390 + i18n switcher production verify (Playwright)
+2. **Cleanup** — `akva-*.png` debug screenshot'ai (~15 PNG'ų repo root) → `.gitignore` arba ištrinti
+3. **Klientės follow-up** — paklausti dėl Cookiebot license + GA4 ID + legal placeholder'ių užpildymo
 
 ---
 
@@ -73,7 +231,7 @@
 - **Mobile responsive testas neatliktas** — visi 4 legal puslapiai ant 390px viewport
 - **i18n switcher neištestuotas** — ar EN/NO veikia ant legal puslapių (raktai pridėti, bet runtime nepatikrintas)
 - **Klientė neužpildė placeholder'ių** — `[ATSAKINGAS ASMUO]`, `[TELEFONAS]`, `[ĮMONĖS PAVADINIMAS]`, `[ADRESAS]`, `[ĮMONĖS KODAS]`, `[DOMAIN]`, `[DATA]`, `[ŠALIES]`
-- **Cookie consent banner** — atidėtas (klientė pasakė „ne dabar")
+- **Cookie consent banner** — hybrid status quo (žr. `DECISION_LOG.md` 2026-05-08): Silktide veikia tik `index.html`, Cookiebot placeholder visuose 8 puslapiuose, klientės license/CBID dar negauta
 - **Debug screenshot'ai dar repo root'e** — sesijos #7 (11) + #8 (4) = ~15 PNG'ų
 - **`paveiksliukas nr2.png`** — duplikatas šalia `hero-mobile.png` (paveldėta iš #7)
 
@@ -368,12 +526,9 @@
 
 ## KITAS ŽINGSNIS
 
-1. **Studio deploy** — `cd studio && npm run deploy` → live URL klientei + invite į Members
-2. **Sanity CORS** — pridėti `https://akva-studio.vercel.app` (production) ir bet koks future domain
-3. **Aromatic89 produktų pildymas Sanity'je** — klientė pildys per Studio kai gaus prieigą; jei skubu — tu gali įvesti pirmus 5 demo
-4. **Mobile fix patvirtinimas** — atidaryk Chrome DevTools (Ctrl+Shift+M → iPhone 12 → 390px) ant `https://akva-studio.vercel.app`, patikrink ar nėra horizontal scroll'o
-
----
+1. Akvilė įkelia produktus → verify `/produkter` + test pirkimas → pašalinti „Kavapukas nr 1“
+2. Live: Vercel Pro → Stripe `rk_live` + live webhook `whsec_` → tikras mažas pirkimas + refund
+3. Sąskaita Akvilei (kaina + rekvizitai iš vartotojo)
 
 ## SVARBU
 - Kontaktų el. paštas: **akvastudio75@gmail.com**

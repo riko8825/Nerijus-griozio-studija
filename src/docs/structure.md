@@ -83,6 +83,15 @@ Atnaujinta: 2026-05-04
 
 ---
 
+## SERVERLESS API (Vercel, `api/`)
+
+| Failas | Metodas | Paskirtis |
+|---|---|---|
+| `api/checkout.js` | POST | Stripe Checkout Session iš krepšelio (`{items:[{productId, quantity}], delivery:'ship'|'pickup'}`) → `{url}` |
+| `api/stripe-webhook.js` | POST | Stripe įvykiai → užsakymas + likučio mažinimas Sanity |
+
+Shop moduliai (`src/js/modules/`): `cart-page.js` (krepšelis + checkout + pristatymas), `product-detail.js` (slug iš `/produkter/<slug>` arba `?slug=`). `shop-init.js` importuoja juos su `?v=` cache-buster'iu.
+
 ## I18N RAKTŲ KATEGORIJOS
 
 | Kategorija | Raktai | Pavyzdžiai |

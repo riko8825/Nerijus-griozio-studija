@@ -111,7 +111,16 @@ Vercel `cleanUrls: true` — `/produkter` veikia be `.html`.
 
 - Expiration: 30d
 - Cross-tab: nėra (vienas browser only)
-- Checkout: F2 fazė (kol kas — mailto su order summary)
+- Checkout: **Stripe Checkout** (F2, 2026-10-02) — `cart-page.js` → `POST /api/checkout` → redirect į Stripe; grįžimas `?betaling=ok|avbrutt`. Mailto liko kaip atsarginis variantas.
+
+## Mokėjimai (F2 — Stripe, nuo 2026-10-02)
+
+| Failas | Paskirtis |
+|---|---|
+| `api/checkout.js` | Checkout Session: kainos/likutis iš Sanity, pristatymas (PostNord 79 kr / fri frakt ≥1000 kr / henting i studio), tik NO adresai, `expires_at` 30 min, API `2026-08-26.dahlia` |
+| `api/stripe-webhook.js` | `checkout.session.completed` / `async_payment_succeeded` → Sanity transakcija `orders.<session>` (be PII) + `dec stock` (published + draft); test mode likučio neliečia |
+
+Env (Vercel `akva-studio`, Sensitive, Production): `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SANITY_WRITE_TOKEN`. Webhook endpoint: `https://www.akvastudio.no/api/stripe-webhook`. Sprendimas: DECISION_LOG 2026-10-02.
 
 ## Schema.org markup
 

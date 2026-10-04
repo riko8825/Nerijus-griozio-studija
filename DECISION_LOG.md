@@ -4,6 +4,26 @@ Architektūriniai ir produkto sprendimai. Naujausi viršuje.
 
 ---
 
+## 2026-10-02 — Mokėjimai: Stripe Checkout (hosted) + webhook, užsakymai Sanity be asmens duomenų
+
+**Sprendimas:** F2 mokėjimams pasirinktas **Stripe Checkout (Stripe-hosted)** per dvi Vercel Node funkcijas be npm priklausomybių (`fetch` į Stripe REST):
+- `api/checkout.js` — sesijos kūrimas; kaina, pavadinimas ir likutis imami tik iš Sanity serveryje (naršyklė siunčia `productId` + kiekį); pristatymas skaičiuojamas serveryje.
+- `api/stripe-webhook.js` — įvykdymas: viena Sanity transakcija `create orders.<session.id>` + `dec stock`. Dokumento ID su tašku → viešai neprieinamas; jame **nėra asmens duomenų** (vardą, adresą, telefoną laiko Stripe).
+
+**Atmesta:**
+- Snipcart / Shopify Buy Button — papildomas % mokestis ir vendor lock-in; Stripe Checkout neturi mėnesinio mokesčio.
+- Payment Element (forma svetainėje) — daugiau kodo ir PCI atsakomybės; hosted Checkout pakanka.
+- Supabase orders lentelė — užsakymų sąrašą Akvilė mato Stripe Dashboard; Sanity `order` dokumentas reikalingas tik likučio idempotencijai.
+- Stripe Node SDK — vienai `POST` + `GET` užklausai nereikia build žingsnio statiniam projektui.
+
+**Taisyklės (pagal oficialų `stripe-best-practices` skill):** be `payment_method_types` (dinaminiai metodai — Vipps atsiras įjungus Dashboard'e), API versija `2026-08-26.dahlia` fiksuota, webhook privalomas (ne success page), `automatic_tax` neįjungtas, nes klientė ne MVA registre.
+
+**Test vs live:** test režimo (`livemode=false`) užsakymai įrašomi, bet tikro likučio nemažina.
+
+**Peržiūros trigger'iai:** Akvilė registruojasi MVA → `automatic_tax` + Stripe Tax registracija; Vipps patvirtintas → `vipps_preview=v1` antraštė; >~50 užsakymų/mėn → `order` schema Studio arba atskira DB.
+
+---
+
 ## 2026-05-13 — Consent CMP: Cookiebot only (B variantas pasirinktas)
 
 **Sprendimas:** Klientė nusprendė naudoti **Cookiebot** kaip vienintelę CMP visoje svetainėje. Silktide consent manager pašalinamas.
