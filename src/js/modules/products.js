@@ -7,7 +7,104 @@ const STATE = {
   products: [],
   categories: [],
   activeCategory: null,
+  view: 'products', // 'categories' | 'products'
 };
+
+const ALL = 'alle';
+
+// Kategorijos su bent viena preke — tuščių pirkėjui nerodom.
+function visibleCategories() {
+  return STATE.categories.filter((c) => STATE.products.some((p) => p.categoryId === c._id));
+}
+
+function categoryImage(c) {
+  if (c.imageUrl) return imageUrl({url: c.imageUrl}, {w: 360});
+  const p = STATE.products.find((x) => x.categoryId === c._id && x.images && x.images[0]);
+  return p ? imageUrl(p.images[0], {w: 360}) : null;
+}
+
+function countLabel(n) {
+  return n === 1 ? '1 produkt' : `${n} produkter`;
+}
+
+function categoryCardHtml(c) {
+  const img = categoryImage(c);
+  const n = STATE.products.filter((p) => p.categoryId === c._id).length;
+  return `
+    <a class="category-card" href="/produkter?kategori=${encodeURIComponent(c.slug || '')}" data-category-link="${escapeHtml(c._id)}">
+      <span class="category-card-media">
+        ${img ? `<img src="${escapeHtml(img)}" alt="" loading="lazy" decoding="async" width="360" height="360">` : `<span class="category-card-initial" aria-hidden="true">${escapeHtml((c.title || '').charAt(0))}</span>`}
+      </span>
+      <span class="category-card-body">
+        <span class="category-card-title">${escapeHtml(c.title)}</span>
+        ${c.description ? `<span class="category-card-desc">${escapeHtml(c.description)}</span>` : ''}
+        <span class="category-card-count">${countLabel(n)}</span>
+      </span>
+    </a>
+  `;
+}
+
+function renderCategoryList() {
+  const list = document.querySelector('[data-category-list]');
+  if (!list) return;
+  const showList = STATE.view === 'categories';
+  list.hidden = !showList;
+  if (!showList) {
+    list.innerHTML = '';
+    return;
+  }
+  list.innerHTML =
+    visibleCategories().map(categoryCardHtml).join('') +
+    `<a class="category-all-link" href="/produkter?kategori=${ALL}" data-category-link="">Se alle produkter →</a>`;
+  list.querySelectorAll('[data-category-link]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      selectCategory(a.getAttribute('data-category-link') || null, true);
+    });
+  });
+}
+
+function slugFor(id) {
+  if (!id) return ALL;
+  const c = STATE.categories.find((x) => x._id === id);
+  return (c && c.slug) || ALL;
+}
+
+function selectCategory(id, scroll) {
+  STATE.view = 'products';
+  STATE.activeCategory = id;
+  const url = `/produkter?kategori=${encodeURIComponent(slugFor(id))}`;
+  if (location.pathname + location.search !== url) history.pushState({}, '', url);
+  render();
+  if (scroll) document.querySelector('.shop-catalog')?.scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+
+// Būsena iš URL: be ?kategori — kategorijų sąrašas (jei yra ką rodyti).
+function readStateFromUrl() {
+  const slug = new URLSearchParams(location.search).get('kategori');
+  const cats = visibleCategories();
+  if (!slug) {
+    STATE.view = cats.length ? 'categories' : 'products';
+    STATE.activeCategory = null;
+    return;
+  }
+  const c = STATE.categories.find((x) => x.slug === slug);
+  STATE.view = 'products';
+  STATE.activeCategory = c ? c._id : null;
+}
+
+function render() {
+  const toolbar = document.querySelector('.products-toolbar');
+  const grid = document.querySelector('[data-products-grid]');
+  const inProducts = STATE.view === 'products';
+  if (toolbar) toolbar.hidden = !inProducts;
+  if (grid) grid.hidden = !inProducts;
+  renderCategoryList();
+  if (inProducts) {
+    renderFilters();
+    renderGrid();
+  }
+}
 
 function productCardHtml(p) {
   const discount = calcDiscount(p.price, p.compareAtPrice);
@@ -74,26 +171,35 @@ function bindCardActions() {
 function renderFilters() {
   const filterContainer = document.querySelector('[data-products-filters]');
   if (!filterContainer) return;
+  const cats = visibleCategories();
+  const back = cats.length
+    ? `<a class="products-filter products-filter-back" href="/produkter" data-back-to-categories>← Kategorier</a>`
+    : '';
   const items = [
     {id: null, title: 'Alle'},
-    ...STATE.categories.map((c) => ({id: c._id, title: c.title})),
+    ...cats.map((c) => ({id: c._id, title: c.title})),
   ];
-  filterContainer.innerHTML = items
-    .map(
-      (c) => `
-      <button class="products-filter ${STATE.activeCategory === c.id ? 'is-active' : ''}" data-category="${c.id || ''}">
+  filterContainer.innerHTML =
+    back +
+    items
+      .map(
+        (c) => `
+      <button type="button" class="products-filter ${STATE.activeCategory === c.id ? 'is-active' : ''}" data-category="${escapeHtml(c.id || '')}" aria-pressed="${STATE.activeCategory === c.id}">
         ${escapeHtml(c.title)}
       </button>
     `,
-    )
-    .join('');
+      )
+      .join('');
   filterContainer.querySelectorAll('[data-category]').forEach((btn) => {
     btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-category') || null;
-      STATE.activeCategory = id;
-      renderFilters();
-      renderGrid();
+      selectCategory(btn.getAttribute('data-category') || null, false);
     });
+  });
+  filterContainer.querySelector('[data-back-to-categories]')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    history.pushState({}, '', '/produkter');
+    readStateFromUrl();
+    render();
   });
 }
 
@@ -105,8 +211,12 @@ export async function initCatalog() {
     const [products, categories] = await Promise.all([getProducts(), getCategories()]);
     STATE.products = products;
     STATE.categories = categories;
-    renderFilters();
-    renderGrid();
+    readStateFromUrl();
+    render();
+    window.addEventListener('popstate', () => {
+      readStateFromUrl();
+      render();
+    });
   } catch (e) {
     console.error('[products] load failed:', e);
     grid.innerHTML = `<p class="products-empty">Kunne ikke laste produkter. Vennligst prøv igjen senere.</p>`;

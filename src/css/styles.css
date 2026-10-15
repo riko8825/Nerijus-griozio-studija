@@ -1895,6 +1895,7 @@ p {
 /* === CATALOG === */
 .shop-catalog {
   padding: var(--space-6) 0 var(--space-8);
+  scroll-margin-top: 72px;
 }
 
 .products-toolbar {
@@ -1929,6 +1930,114 @@ p {
   background: var(--color-primary);
   border-color: var(--color-primary);
   color: var(--color-bg);
+}
+
+.products-filter-back {
+  text-decoration: none;
+  color: var(--color-primary);
+}
+
+.category-list[hidden],
+.products-toolbar[hidden],
+.products-grid[hidden] {
+  display: none;
+}
+
+/* === CATEGORY CARDS (parduotuvės įėjimas) === */
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.category-card {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  text-decoration: none;
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+}
+
+.category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-accent);
+}
+
+.category-card:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.category-card-media {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-surface2);
+}
+
+.category-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.category-card-initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  color: var(--color-primary);
+}
+
+.category-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.category-card-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.category-card-desc {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.category-card-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-top: var(--space-1);
+}
+
+.category-all-link {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: var(--space-3);
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
 }
 
 .products-grid {
@@ -2694,6 +2803,20 @@ p {
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-3);
+  }
+
+  .category-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+
+  .category-card {
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+
+  .category-card-title {
+    font-size: 1.15rem;
   }
 
   .shop-info-grid {
