@@ -4,6 +4,27 @@ Architektūriniai ir produkto sprendimai. Naujausi viršuje.
 
 ---
 
+## 2026-10-19 — Prekių variantai (kvapai): masyvas produkte, likutis per variantą
+
+**Kontekstas:** Akvilė parduoda tą patį buteliuką su ~10 kvapų; nenori kelti 10 atskirų prekių.
+
+**Sprendimas:** `product.variants[]` (`name`, `stock`, `image?`) + `variantLabel` (default „Duft“) tame pačiame Sanity dokumente. Kaina bendra prekei. Kai variantų yra — produkto `stock` laukas Studio paslepiamas, bendras likutis = variantų suma (`sanity-client.js withVariants`). Variantas identifikuojamas Sanity `_key`; krepšelio eilutė `productId:variantKey`; checkout ir webhook tikrina/mažina varianto likutį (`dec variants[_key=="…"].stock`, patikrinta Sanity `dryRun`).
+
+**Atmesta:**
+- Atskiri produktai kiekvienam kvapui — būtent tai, ko klientė nenori (dubliuotas aprašymas, nuotraukos, kategorijos).
+- Atskiras `variant` dokumentų tipas su reference — Studio sudėtingesnis klientei, papildomos užklausos; ~10 variantų masyvui pakanka.
+- Kaina per variantą — dabar nereikia (kvapai vienos kainos); pridėti `price` lauką galima vėliau be migracijos.
+
+**Peržiūros trigger'iai:** reikės skirtingų kainų pagal dydį → `variants[].price`; reikės dviejų dimensijų (dydis × kvapas) → atskiras modelis.
+
+---
+
+## 2026-10-15 — Parduotuvės įėjimas: kategorijų kortelės vietoj filtrų
+
+**Sprendimas:** `/produkter` be `?kategori=` rodo kategorijų korteles (Sanity `category.image` + `description`, jau egzistavę schemoje — Studio deploy nereikėjo). Tuščios kategorijos nerodomos. `?kategori=<slug>|alle` → prekių grid su filtrais. Pagal Akvilės pavyzdį (2026-10-15).
+
+---
+
 ## 2026-10-02 — Mokėjimai: Stripe Checkout (hosted) + webhook, užsakymai Sanity be asmens duomenų
 
 **Sprendimas:** F2 mokėjimams pasirinktas **Stripe Checkout (Stripe-hosted)** per dvi Vercel Node funkcijas be npm priklausomybių (`fetch` į Stripe REST):

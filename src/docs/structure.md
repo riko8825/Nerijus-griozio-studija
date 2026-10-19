@@ -87,10 +87,16 @@ Atnaujinta: 2026-05-04
 
 | Failas | Metodas | Paskirtis |
 |---|---|---|
-| `api/checkout.js` | POST | Stripe Checkout Session iš krepšelio (`{items:[{productId, quantity}], delivery:'ship'|'pickup'}`) → `{url}` |
-| `api/stripe-webhook.js` | POST | Stripe įvykiai → užsakymas + likučio mažinimas Sanity |
+| `api/checkout.js` | POST | Stripe Checkout Session iš krepšelio (`{items:[{productId, variantKey?, quantity}], delivery:'ship'|'pickup'}`) → `{url}`; prekei su variantais `variantKey` privalomas, likutis tikrinamas variantui |
+| `api/stripe-webhook.js` | POST | Stripe įvykiai → užsakymas + likučio mažinimas Sanity (`stock` arba `variants[_key=="…"].stock`) |
 
-Shop moduliai (`src/js/modules/`): `cart-page.js` (krepšelis + checkout + pristatymas), `product-detail.js` (slug iš `/produkter/<slug>` arba `?slug=`). `shop-init.js` importuoja juos su `?v=` cache-buster'iu.
+Shop moduliai (`src/js/modules/`):
+- `products.js` — katalogas: be `?kategori=` rodomos **kategorijų kortelės** (`.category-card`: nuotrauka/aprašymas iš Sanity, fallback — pirmos prekės nuotrauka; tuščios kategorijos nerodomos); `?kategori=<slug>|alle` → filtrai + grid; `history.pushState` + `popstate`. Prekė su variantais kortelėje → nuoroda „Velg duft“.
+- `product-detail.js` — slug iš `/produkter/<slug>` arba `?slug=`; **variantų pasirinkimas** (`.product-variants` radio grupė, išparduoti `disabled`, kiekio max = varianto likutis, be pasirinkimo — „Velg duft først.“).
+- `cart.js` — eilutės ID `lineId` = `productId` arba `productId:variantKey` (`lineIdOf()` palaiko senus įrašus be `lineId`).
+- `cart-page.js` — krepšelis + checkout + pristatymas; varianto eilutė `.cart-item-variant`; nuotraukos per `imageUrl(..., {w: 240})`.
+- `sanity-client.js` — `withVariants()`: prekės su variantais `stock` = variantų suma.
+- `shop-init.js` — visi importai su tuo pačiu `?v=` (JS `max-age=86400`; skirtingi URL → du `cart.js` egzemplioriai, skaitiklis nesinchronizuotų).
 
 ## I18N RAKTŲ KATEGORIJOS
 

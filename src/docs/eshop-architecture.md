@@ -95,7 +95,11 @@ Vercel `cleanUrls: true` — `/produkter` veikia be `.html`.
 ```json
 {
   "items": [{
+    "lineId": "prod-001:vanil01",
     "productId": "prod-001",
+    "variantKey": "vanil01",
+    "variantLabel": "Duft",
+    "variantName": "Vanilje",
     "sku": "AKV-001",
     "title": "...",
     "slug": "...",
@@ -119,6 +123,8 @@ Vercel `cleanUrls: true` — `/produkter` veikia be `.html`.
 |---|---|
 | `api/checkout.js` | Checkout Session: kainos/likutis iš Sanity, pristatymas (PostNord 79 kr / fri frakt ≥1000 kr / henting i studio), tik NO adresai, `expires_at` 30 min, API `2026-08-26.dahlia` |
 | `api/stripe-webhook.js` | `checkout.session.completed` / `async_payment_succeeded` → Sanity transakcija `orders.<session>` (be PII) + `dec stock` (published + draft); test mode likučio neliečia |
+
+**Variantai (kvapai, nuo 2026-10-19):** `product.variants[] {_key, name, stock, image?}` + `variantLabel` („Duft“). Checkout eilutės pavadinimas „Prekė — Kvapas“, `product_data.metadata.variant_key`, `metadata.items` = `id:qty[:variantKey]`. Webhook mažina `variants[_key=="<key>"].stock` (published + draft, jei variantas egzistuoja), oversold/ištrintas variantas → `needsReview`. Sprendimas: DECISION_LOG 2026-10-19.
 
 Env (Vercel `akva-studio`, Sensitive, Production): `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SANITY_WRITE_TOKEN`. Webhook endpoint: `https://www.akvastudio.no/api/stripe-webhook`. Sprendimas: DECISION_LOG 2026-10-02.
 

@@ -1,8 +1,7 @@
 # SESSION STATUS — AKVA STUDIO
 
-**Paskutinė sesija:** 2026-10-04 (#11, pradėta 2026-09-24)
-**Statusas:** 🟢 akvastudio.no live (GoDaddy → Vercel) · NO kalba default be LT flash · legal su org.nr./adresu/PostNord · **Stripe Checkout + webhook veikia produkcijoje test režimu** (8/8 E2E mokėjimai) · produkto puslapio sena klaida pataisyta · live mokėjimams trūksta Vercel Pro + live raktų
-
+**Paskutinė sesija:** 2026-10-19 (#12, pradėta 2026-10-08)
+**Statusas:** 🟢 akvastudio.no live · Akvilė kelia realius produktus · **parduotuvės įėjimas su kategorijų kortelėmis** · **prekių variantai (kvapai)** svetainėje + Studio · Stripe vis dar test režimu (live trūksta Vercel Pro + live raktų)
 ---
 
 ## ISTORIJA
@@ -20,8 +19,40 @@
 | 2026-05-08 | #9 | Consent CMP sprendimas užfiksuotas: hybrid status quo (Silktide tik index.html + Cookiebot placeholder × 8 puslapiai). Naujas `DECISION_LOG.md` su 3 variantais + trigger'iais peržiūrai. `PROJECT_STATUS.md` `Cookie consent` matrica ✅ → 🟡 Hybrid; pridėtas L) entry point. Jokio kodo / deploy. |
 | 2026-05-13 | #10 | **Hero desktop full-bleed redesign**: `siluetas.png` kaip `background-size: cover` per visą hero, `.hero-visual` blokas ištrintas, `.hero::before` gradient overlay (oklch 92%→transparent iš kairės), ~60 eilučių mirusio CSS pašalinta. **4 legal puslapiai pilnai perrašyti** (Privatumo politika 10 sk., Slapukų 9 sk., Sąlygos 12 sk., Taisyklės 12 sk.) su Akvilės kontaktais (+47 462 40 853), akvastudio.no domenu, Norvegijos teise (forbrukerkjøpsloven, angrerettsloven, åndsverkloven), Cookiebot only setup (Silktide pašalinimas planuojamas). ~50 naujų i18n raktų × LT/EN/NO. Impressum atnaujinta 8 puslapiuose. DECISION_LOG 2026-05-13 įrašas: B variantas (Cookiebot only) pasirinktas. Cache-buster `v=20260509` → `v=20260513e`. Playwright LT/EN/NO + mobile 390 verify pass. **NE deploy'ed.** |
 | 2026-09-24 → 10-04 | #11 | **Domenas** akvastudio.no (GoDaddy → Vercel). **NO default** + statinis NO HTML. **Legal**: org.nr., adresas, ne MVA, PostNord/fri frakt/henting, Stripe. **Stripe Checkout + webhook** (idempotentiškas likutis Sanity). `stripe-best-practices` skill + 3 agentai → 12 radinių sutaisyta. Produkcijos E2E 8/8 test mokėjimai. Sutaisyta: env vars kitame projekte, `pk_` vietoj `sk_`, CORS, **produkto puslapis neveikė nuo gegužės**. Push: `d42abc9`, `0570fe3`. |
+| 2026-10-08 → 10-19 | #12 | **Kategorijų kortelės** parduotuvės įėjime (`4c6a5c0`). **Prekių variantai (kvapai)**: Sanity schema + Studio deploy, pasirinkimas produkto puslapyje, krepšelis, checkout + webhook likutis per variantą (`7c0d4db`). Krepšelio nuotraukos 1.9 MB → 240px (`f9de492`). Ištrinti test „Kavapukas nr 1“ + „bandymas“. Konsultacijos: Sanity Viewer → Editor/Admin, Setmore atsiliepimai (Auto-publish), prekių atsiliepimų variantai. Testai: API 38/38 + 28/28, UI desktop+mobile 0 FAIL. |
 
 ---
+
+## SESIJA #12 (2026-10-08 → 2026-10-19) — DETALĖS
+
+### Ką padarėme
+
+1. **Sanity prieiga** — Akvilė turėjo Viewer rolę; instrukcija vartotojui: sanity.io/manage → Members → Editor (arba Administrator, jei Free planas Editor neturi). Akvilė dabar kelia produktus.
+2. **Atsiliepimai (konsultacija, be kodo)** — svetainės atsiliepimai statiniai (5 pavyzdiniai, ne tikri — markedsføringsloven rizika); Setmore atsiliepimai rodomi tik Setmore booking puslapyje (Settings → Reviews → Preferences → Auto-publish); Setmore neturi reviews embed. Prekių atsiliepimams pasiūlyta sava sistema (Stripe webhook → Resend laiškas → forma → Sanity, su moderavimu) — **sprendimas nepriimtas**.
+3. **Kategorijų kortelės** (`4c6a5c0`) — `/produkter` be `?kategori=` rodo korteles (nuotrauka + aprašymas + prekių skaičius), tuščios nerodomos, `?kategori=` URL + back mygtukas, `scroll-margin-top` po sticky header. Schema jau turėjo `image`/`description`.
+4. **Sanity valymas** — ištrinti mūsų test dokumentai „Kavapukas nr 1“ (Empirra paveikslėlis) + kategorija „bandymas“ (nuorodų patikrinta prieš trynimą).
+5. **Prekių variantai / kvapai** (`7c0d4db`) — `studio/schemaTypes/product.ts` (`variants[]`, `variantLabel`, `stock` paslepiamas, preview su suma); `sanity-client.js withVariants`; `product-detail.js` radio pasirinkimas; `products.js` „Velg duft“ CTA; `cart.js` `lineId`; `cart-page.js` varianto eilutė; `api/checkout.js` variantKey validacija + varianto likutis + pavadinimas „Prekė — Kvapas“; `api/stripe-webhook.js` `dec variants[_key=="…"].stock`, unikalūs order item `_key`, oversold per variantą. Visi shop importai `?v=20261018`.
+6. **Mobile pataisos** (`f9de492`) — krepšelio nuotraukos per `imageUrl(w=240)` (buvo 1.9 MB PNG originalas); išparduoto kvapo užrašas skaitomas.
+7. **Deploy** — push `4c6a5c0`, `7c0d4db`, `f9de492`; `sanity deploy` (schema + Studio).
+8. **Laiškai Akvilei** — kategorijos (nuotrauka, aprašymas, Rekkefølge, Publish) + Setmore Auto-publish; kvapų įkėlimo instrukcija.
+
+### Testai
+
+- `variants_api_test.js` 38/38 (checkout + webhook su variantais, injekciniai raktai, oversold, draft be varianto, line_items fallback, test mode).
+- `webhook_test.js` 28/28 (regresija).
+- Sanity `dryRun` mutacija: `dec variants[_key=="vanil01"].stock` 3→1, kiti nepaliesti, niekas neįrašyta.
+- Playwright: `cat_test.py` 28 PASS (lokaliai + produkcijoje), `variants_ui_test.py` desktop+mobile 0 FAIL, `mobile_check.py` 360/390 (be h-scroll, JS klaidų 0).
+- Produkcijoje: `/api/checkout` paprasta prekė 200, nežinomas variantas 400.
+
+### Kas liko / nepatvirtinta
+
+- **Variantų E2E produkcijoje** su realia preke su kvapais — Akvilė dar tokios neįkėlė.
+- **Prekių atsiliepimai** — laukia vartotojo/Akvilės sprendimo (A: sava sistema + Resend).
+- **Statiniai pavyzdiniai atsiliepimai** index'e — pakeisti tikrais iš Setmore (laukia tekstų).
+- **Kategorijų `Rekkefølge`** — visos 1 (Akvilė turi sunumeruoti).
+- Akvilės Sanity rolė — nepatvirtinta, ar pakeista į Editor/Admin (produktus kelia → greičiausiai taip).
+- Lokalūs serveriai (:8080 harness, :3333 studio dev) paleisti sesijos metu.
+- Visi #11 blokeriai (live mokėjimai, Vipps, sąskaita, Cookiebot, GA4, CSP) — nepakito.
 
 ## SESIJA #11 (2026-09-24 → 2026-10-04) — DETALĖS
 
@@ -526,9 +557,9 @@
 
 ## KITAS ŽINGSNIS
 
-1. Akvilė įkelia produktus → verify `/produkter` + test pirkimas → pašalinti „Kavapukas nr 1“
-2. Live: Vercel Pro → Stripe `rk_live` + live webhook `whsec_` → tikras mažas pirkimas + refund
-3. Sąskaita Akvilei (kaina + rekvizitai iš vartotojo)
+1. Kai Akvilė įkels prekę su kvapais — test pirkimas produkcijoje (Stripe test) su variantu + patikrinti `orders.*` ir kad test mode likučio neliečia.
+2. Live: Vercel Pro → Stripe `rk_live` + live webhook `whsec_` → tikras mažas pirkimas + refund.
+3. Prekių atsiliepimų sprendimas (A variantas) + tikri atsiliepimai index'e; sąskaita Akvilei (kaina + rekvizitai).
 
 ## SVARBU
 - Kontaktų el. paštas: **akvastudio75@gmail.com**

@@ -10,7 +10,7 @@
 | Apie mus | ✅ Tekstas + video | Klientės balsas, foninis video1 (autoplay/muted/loop, aria-hidden) — Akvilės foto vis dar nėra |
 | Kodėl mes | ✅ Įgyvendinta | 4 privalumai |
 | Portfolio | ✅ 5 nuotraukos + video grid | 4 darbai + depiliacijos pavyzdys (span 2) + video (span 2, autoplay) |
-| Atsiliepimai | 🟡 Mišrus | 3 LT placeholder + 3 norvegiški (Janne/Marie/Anita) |
+| Atsiliepimai | 🟡 Pavyzdiniai | Statiniai pavyzdiniai tekstai (ne tikri — markedsføringsloven rizika); tikri yra Setmore (Auto-publish įjungti Akvilė); laukia tekstų pakeitimui |
 | **Rezervacija** | ✅ **Setmore tiesioginis** | Visi 15 mygtukų → `https://akvastudio.setmore.com/akvile` `target=_blank` |
 | Footer | ✅ Įgyvendinta | Kontaktai, navigacija, copyright + Teisinė informacija (4 nuorodos) + Impressum eilutė (atsakingas asmuo + email + telefonas) |
 | LT/EN/NO i18n | ✅ Pilni | **NO default + statinis NO HTML** (be LT flash, 2026-09-27); 380 raktų × 3 kalbos (+`legal_priv_li_share_7` Stripe) (sesijoje #10 pridėta ~50 legal raktai: `legal_priv_*` 5, `legal_cook_*` 25, `legal_terms_*` 11, `legal_rules_*` 5); e-shop puslapiai NO only |
@@ -24,7 +24,7 @@
 | Setmore embed mobile | ✅ Pataisyta | CTA `min-width: 0`, mobile `width: 100%` + 16px padding; iframe telpa 390/360 viewport'e (Playwright verify ✓) |
 | Image optimization | ✅ Sukurta | `scripts/optimize-images.py` (PIL, WebP+JPG, 3 dydžiai) |
 | Video compress | ⬜ Nedaryta | `akva-video-2.mp4` 5MB — reikia ffmpeg install + compress |
-| Cache-buster | ✅ Įgyvendinta | `?v=20260930d` styles/main.js; shop moduliai `shop-init.js?v=20261002` + versijuoti importai (cart-page, product-detail) |
+| Cache-buster | ✅ Įgyvendinta | `styles.css?v=20261018`; `shop-init.js?v=20261018` + **visi** shop importai (cart, cart-icon, sanity-client, products, product-detail, cart-page) su tuo pačiu `?v=` |
 | **Deploy (Vercel)** | ✅ **Live** | **`https://www.akvastudio.no`** (GoDaddy DNS: A @ 216.198.79.1, CNAME www → vercel-dns-017; apex 308 → www). Projektas `akva-studio`. ⚠️ Dublikatas `nerijus-griozio-studija` deploy'ina tą patį repo — atjungti. Hobby planas → Pro prieš live mokėjimus |
 | Klientės patvirtinimas | ✅ Patinka | Akvilė 2026-10-02: „labai patinka rezultatai“ |
 
@@ -35,15 +35,17 @@
 | Modulis | Statusas | Pastaba |
 |---|---|---|
 | Sanity Studio | ✅ Production | `https://akva-studio.sanity.studio/` (appId: `pzscsmv1w270no5ojmth9il5`); deploy 2026-05-07 |
-| Sanity projektas | ✅ Production | ID: `vwtjc4wg`, dataset: `production`, dabartiniai produktai: 1 (test „Kavapukas nr 1") |
+| Sanity projektas | ✅ Production | ID: `vwtjc4wg`, dataset: `production`; test „Kavapukas nr 1“ + „bandymas“ ištrinti 2026-10-15; Studio deploy 2026-10-19 (variantų schema) |
 | Sanity CORS | ✅ Pilna | + `https://www.akvastudio.no`, `https://akvastudio.no` (2026-10-02, be credentials) |
-| Klientės invite | ✅ Priimta | Akvilė prisijungusi; produktų dar neįkėlė |
-| Frontend katalogas (`/produkter`) | ✅ Live | Render iš Sanity CDN su fallback į src/data/*.json (dabar tuščias `[]`) |
+| Klientės invite | ✅ Priimta | Akvilė buvo Viewer → instrukcija keisti į Editor/Admin (2026-10-08); kelia produktus |
+| Frontend katalogas (`/produkter`) | ✅ Live | **Kategorijų kortelės** įėjime (`4c6a5c0`), `?kategori=` filtrai, tuščios kategorijos nerodomos; prekė su variantais → „Velg duft“ |
 | Produkto puslapis (`/produkter/[slug]`) | ✅ Live (pataisyta) | **Nuo 2026-05 neveikė** („Produkt ikke funnet“ — slug skaitytas tik iš `?slug=`); fix `0570fe3` — slug iš pathname. E2E ✅ |
 | Krepšelis (`/handlekurv`) | ✅ Live | Pristatymo pasirinkimas (PostNord 79 kr / fri frakt ≥1000 kr / henting i studio), „Gå til betaling“ → Stripe, grįžimo pranešimai, a11y fokusas, bfcache |
 | Cart icon homepage'e | ✅ Live | Counter veikia per `localStorage` listener (be ES module) |
 | Demo Aromatic89 produktai | ⬜ Ištrinti | 12 demo buvo, ištrinti į `[]` (variantas A: tik Sanity) |
-| Realūs Aromatic89 produktai | ⬜ Nedaryta | Tik 1 test produktas Sanity'je |
+| Realūs Aromatic89 produktai | 🟡 In Build | Akvilė kelia (Arocell serija); kategorijų nuotraukos/eilė dar nepildyta |
+| Prekių variantai (kvapai) | 🟢 Tested (live, be realaus varianto) | `7c0d4db`: schema + Studio deploy, pasirinkimas, krepšelis, checkout, webhook `dec variants[_key].stock`. API 38/38, UI desktop+mobile ✅, Sanity dryRun ✅. Laukia pirmos realios prekės su kvapais E2E |
+| Prekių atsiliepimai | ⬜ Planned | Pasiūlyta sava sistema (laiškas po pirkimo → forma → Sanity + moderavimas); laukia sprendimo |
 | Mokėjimų gateway (F2) — Stripe Checkout | 🟢 Tested (test mode, live svetainėje) | `api/checkout.js`: kainos/likutis iš Sanity, API `2026-08-26.dahlia`, 30 min sesija, tik NO adresai, locale nb. E2E produkcijoje 2026-10-02: 8 sėkmingi test mokėjimai, atmesta kortelė, atšaukimas — visi ✅. Live: reikia `rk_live` + live webhook + Vercel Pro |
 | Email confirmations (F4) | ⬜ Laukia klientės | Stripe kvitai (Settings → Customer emails) + pranešimai Akvilei — įjungia ji |
 | Order management (F5) — Stripe webhook | 🟢 Tested | `api/stripe-webhook.js`: HMAC parašas, idempotentiška Sanity transakcija (`orders.<session>` be PII + `dec stock` published+draft), test mode likučio neliečia, oversold/missing → `needsReview`. 8/8 `fulfilled` produkcijoje. Studio dar neturi `order` schemos (užsakymus Akvilė mato Stripe) |
@@ -51,10 +53,10 @@
 
 ---
 
-## BLOCKERS (po sesijos #11, 2026-10-04)
+## BLOCKERS (po sesijos #12, 2026-10-19)
 
 1. **Live mokėjimai** — reikia: Vercel Pro, Stripe live `rk_live` (Checkout Sessions: write) + live webhook endpoint + `whsec_`, Akvilės Stripe paskyros aktyvacija (banko sąskaita)
-2. **Realūs produktai** — Akvilė žadėjo įkelti; test „Kavapukas nr 1“ (12 kr, Lager 5) pašalinti po to
+2. **Realūs produktai** — Akvilė kelia; kategorijoms trūksta nuotraukų + `Rekkefølge` (visos 1); variantų E2E laukia pirmos prekės su kvapais
 3. **Vipps** — laukia Stripe private preview patvirtinimo
 4. **Sąskaita Akvilei** — trūksta sutartos kainos + Empirra rekvizitų
 5. **Cookiebot CBID + Silktide pašalinimas** — Silktide banneris (EN) vis dar rodomas index ir uždengia mobile lang switcher
