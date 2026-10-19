@@ -1,5 +1,5 @@
 // Krepšelio puslapis (handlekurv.html) — pilna cart UI + Stripe Checkout (api/checkout.js).
-import {getItems, getSubtotal, updateQty, removeItem, clear, subscribe} from './cart.js';
+import {getItems, getSubtotal, updateQty, removeItem, clear, subscribe, lineIdOf} from './cart.js?v=20261018';
 import {formatPrice, escapeHtml} from './format.js';
 
 const SHOP_EMAIL = 'akvastudio75@gmail.com';
@@ -44,25 +44,29 @@ function renderEmpty() {
 function renderItems(items) {
   return items
     .map(
-      (item) => `
-    <article class="cart-item" data-cart-item="${escapeHtml(item.productId)}">
+      (item) => {
+        const id = escapeHtml(lineIdOf(item));
+        return `
+    <article class="cart-item" data-cart-item="${id}">
       <a class="cart-item-image" href="/produkter/${escapeHtml(item.slug)}">
         <img src="${escapeHtml(item.image || 'src/assets/images/products/product-placeholder.svg')}" alt="${escapeHtml(item.title)}" width="120" height="120" loading="lazy">
       </a>
       <div class="cart-item-info">
         <a class="cart-item-title" href="/produkter/${escapeHtml(item.slug)}">${escapeHtml(item.title)}</a>
+        ${item.variantName ? `<p class="cart-item-variant">${escapeHtml(item.variantLabel || 'Variant')}: ${escapeHtml(item.variantName)}</p>` : ''}
         <p class="cart-item-sku">SKU: ${escapeHtml(item.sku)}</p>
         <p class="cart-item-price">${formatPrice(item.price)}</p>
       </div>
       <div class="cart-item-qty">
-        <button data-qty-decr="${escapeHtml(item.productId)}" aria-label="Reduser">−</button>
+        <button data-qty-decr="${id}" aria-label="Reduser">−</button>
         <span class="cart-item-qty-value">${item.quantity}</span>
-        <button data-qty-incr="${escapeHtml(item.productId)}" aria-label="Øk">+</button>
+        <button data-qty-incr="${id}" aria-label="Øk">+</button>
       </div>
       <p class="cart-item-total">${formatPrice(item.price * item.quantity)}</p>
-      <button class="cart-item-remove" data-cart-remove="${escapeHtml(item.productId)}" aria-label="Fjern">✕</button>
+      <button class="cart-item-remove" data-cart-remove="${id}" aria-label="Fjern">✕</button>
     </article>
-  `,
+  `;
+      },
     )
     .join('');
 }
@@ -72,7 +76,7 @@ function renderSummary(subtotal, items) {
   const itemsCount = items.reduce((sum, i) => sum + i.quantity, 0);
   const shipping = shippingCost(subtotal);
   const orderText = items
-    .map((i) => `${i.quantity} × ${i.title} (${i.sku}) — ${formatPrice(i.price * i.quantity)}`)
+    .map((i) => `${i.quantity} × ${i.title}${i.variantName ? ` — ${i.variantName}` : ''} (${i.sku}) — ${formatPrice(i.price * i.quantity)}`)
     .join('\n');
   const mailto = `mailto:${SHOP_EMAIL}?subject=${encodeURIComponent('Bestilling fra nettbutikk')}&body=${encodeURIComponent(`Hei,\n\nJeg ønsker å bestille:\n\n${orderText}\n\nTotal: ${formatPrice(subtotal)}\n\nNavn:\nAdresse:\nTelefon:\n`)}`;
 
@@ -188,7 +192,7 @@ async function startCheckout() {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         delivery,
-        items: getItems().map((i) => ({productId: i.productId, quantity: i.quantity})),
+        items: getItems().map((i) => ({productId: i.productId, variantKey: i.variantKey || undefined, quantity: i.quantity})),
       }),
     });
     const data = await res.json().catch(() => null);
@@ -209,16 +213,14 @@ function bindActions() {
   document.querySelectorAll('[data-qty-decr]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const id = btn.getAttribute('data-qty-decr');
-      const items = getItems();
-      const item = items.find((i) => i.productId === id);
+      const item = getItems().find((i) => lineIdOf(i) === id);
       if (item) updateQty(id, item.quantity - 1);
     });
   });
   document.querySelectorAll('[data-qty-incr]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const id = btn.getAttribute('data-qty-incr');
-      const items = getItems();
-      const item = items.find((i) => i.productId === id);
+      const item = getItems().find((i) => lineIdOf(i) === id);
       if (item) updateQty(id, item.quantity + 1);
     });
   });

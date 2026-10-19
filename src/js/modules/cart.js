@@ -70,23 +70,33 @@ export function getSubtotal() {
   );
 }
 
-export function addItem(product, quantity = 1) {
+// Eilutės ID: produktas be variantų → productId; su variantu → productId:variantKey.
+export function lineIdOf(item) {
+  return item.lineId || item.productId;
+}
+
+export function addItem(product, quantity = 1, variant = null) {
   if (!product || !product._id) {
     console.warn('[cart] addItem: invalid product');
     return;
   }
+  const lineId = variant ? `${product._id}:${variant._key}` : product._id;
   const cart = readCart();
-  const existing = cart.items.find((i) => i.productId === product._id);
+  const existing = cart.items.find((i) => lineIdOf(i) === lineId);
   if (existing) {
     existing.quantity = Math.max(1, existing.quantity + quantity);
   } else {
     cart.items.push({
+      lineId,
       productId: product._id,
+      variantKey: variant ? variant._key : null,
+      variantLabel: variant ? product.variantLabel : null,
+      variantName: variant ? variant.name : null,
       sku: product.sku,
       title: product.title,
       slug: product.slug,
       price: Number(product.price),
-      image: product.images?.[0]?.url || null,
+      image: (variant && variant.imageUrl) || product.images?.[0]?.url || null,
       quantity: Math.max(1, quantity),
       addedAt: new Date().toISOString(),
     });
@@ -94,18 +104,18 @@ export function addItem(product, quantity = 1) {
   writeCart(cart);
 }
 
-export function removeItem(productId) {
+export function removeItem(lineId) {
   const cart = readCart();
-  cart.items = cart.items.filter((i) => i.productId !== productId);
+  cart.items = cart.items.filter((i) => lineIdOf(i) !== lineId);
   writeCart(cart);
 }
 
-export function updateQty(productId, quantity) {
+export function updateQty(lineId, quantity) {
   const cart = readCart();
-  const item = cart.items.find((i) => i.productId === productId);
+  const item = cart.items.find((i) => lineIdOf(i) === lineId);
   if (!item) return;
   if (quantity <= 0) {
-    cart.items = cart.items.filter((i) => i.productId !== productId);
+    cart.items = cart.items.filter((i) => lineIdOf(i) !== lineId);
   } else {
     item.quantity = quantity;
   }

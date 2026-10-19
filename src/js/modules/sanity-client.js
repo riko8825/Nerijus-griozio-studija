@@ -40,6 +40,19 @@ async function sanityQuery(query) {
   return data.result;
 }
 
+// Prekė su variantais (kvapais): bendras likutis = variantų suma; variantai be pavadinimo atmetami.
+function withVariants(p) {
+  if (!p) return p;
+  const variants = (p.variants || []).filter((v) => v && v._key && v.name);
+  if (!variants.length) return {...p, variants: []};
+  return {
+    ...p,
+    variants: variants.map((v) => ({...v, stock: Number(v.stock) || 0})),
+    variantLabel: p.variantLabel || 'Variant',
+    stock: variants.reduce((sum, v) => sum + (Number(v.stock) || 0), 0),
+  };
+}
+
 export async function getProducts() {
   if (!isSanityConfigured()) {
     return fetchJson(STATIC_FALLBACK_PATH.products);
@@ -51,9 +64,10 @@ export async function getProducts() {
       "categoryId": category->_id, "categoryTitle": category->title,
       "images": images[]{"url": asset->url, alt},
       shortDescription, description, ingredients, usage, volume,
-      gtin13, mpn, seo
+      gtin13, mpn, seo,
+      variantLabel, "variants": variants[]{_key, name, stock, "imageUrl": image.asset->url}
     }`;
-    return await sanityQuery(query);
+    return (await sanityQuery(query)).map(withVariants);
   } catch (e) {
     console.warn('[sanity-client] fallback to static JSON:', e.message);
     return fetchJson(STATIC_FALLBACK_PATH.products);
@@ -73,9 +87,10 @@ export async function getProductBySlug(slug) {
       "categoryId": category->_id, "categoryTitle": category->title, "categorySlug": category->slug.current,
       "images": images[]{"url": asset->url, alt},
       shortDescription, description, ingredients, usage, volume,
-      gtin13, mpn, seo
+      gtin13, mpn, seo,
+      variantLabel, "variants": variants[]{_key, name, stock, "imageUrl": image.asset->url}
     }`;
-    return await sanityQuery(query);
+    return withVariants(await sanityQuery(query));
   } catch (e) {
     console.warn('[sanity-client] fallback to static JSON:', e.message);
     const products = await fetchJson(STATIC_FALLBACK_PATH.products);

@@ -1,7 +1,7 @@
 // Produkto detalės puslapis (produkt.html) — slug iš /produkter/<slug> kelio arba ?slug=... query param'o.
-import {getProductBySlug, imageUrl} from './sanity-client.js';
+import {getProductBySlug, imageUrl} from './sanity-client.js?v=20261018';
 import {formatPrice, calcDiscount, escapeHtml} from './format.js';
-import {addItem} from './cart.js';
+import {addItem} from './cart.js?v=20261018';
 
 function getSlug() {
   const params = new URLSearchParams(window.location.search);
@@ -95,6 +95,8 @@ function renderProduct(product) {
 
         <p class="product-detail-short">${escapeHtml(product.shortDescription || '')}</p>
 
+        ${renderVariants(product)}
+
         <div class="product-detail-actions">
           <div class="product-detail-qty">
             <button data-qty-decr aria-label="Reduser antall">−</button>
@@ -106,9 +108,7 @@ function renderProduct(product) {
           </button>
         </div>
 
-        <p class="product-detail-stock">
-          ${product.stock > 0 ? `✓ På lager (${product.stock} stk)` : '⚠️ Utsolgt'}
-        </p>
+        <p class="product-detail-stock" data-stock-text>${stockText(product, null)}</p>
 
         ${descBlock ? `<div class="product-detail-section"><h2>Beskrivelse</h2>${descBlock}</div>` : ''}
         ${product.ingredients ? `<div class="product-detail-section"><h2>Ingredienser</h2><p>${escapeHtml(product.ingredients)}</p></div>` : ''}
@@ -119,6 +119,40 @@ function renderProduct(product) {
 
   bindActions(product);
   injectSchema(product);
+}
+
+function hasVariants(product) {
+  return Array.isArray(product.variants) && product.variants.length > 0;
+}
+
+function stockText(product, variant) {
+  const stock = variant ? variant.stock : product.stock;
+  if (!(stock > 0)) return '⚠️ Utsolgt';
+  if (hasVariants(product) && !variant) return '✓ På lager';
+  return `✓ På lager (${stock} stk)`;
+}
+
+// Kvapų (variantų) pasirinkimas — radio grupė; išparduoti variantai neaktyvūs.
+function renderVariants(product) {
+  if (!hasVariants(product)) return '';
+  const label = product.variantLabel || 'Variant';
+  return `
+    <fieldset class="product-variants" data-variants>
+      <legend class="product-variants-legend">Velg ${escapeHtml(label.toLowerCase())}</legend>
+      <div class="product-variant-options">
+        ${product.variants
+          .map(
+            (v) => `
+          <label class="product-variant ${v.stock > 0 ? '' : 'is-soldout'}">
+            <input type="radio" name="variant" value="${escapeHtml(v._key)}" ${v.stock > 0 ? '' : 'disabled'} data-variant>
+            <span>${escapeHtml(v.name)}${v.stock > 0 ? '' : ' · utsolgt'}</span>
+          </label>`,
+          )
+          .join('')}
+      </div>
+      <p class="product-variant-error" role="alert" data-variant-error></p>
+    </fieldset>
+  `;
 }
 
 function renderDescription(description) {
@@ -139,8 +173,34 @@ function renderDescription(description) {
   return '';
 }
 
+function selectedVariant(product) {
+  const input = document.querySelector('[data-variant]:checked');
+  return input ? product.variants.find((v) => v._key === input.value) || null : null;
+}
+
+function bindVariants(product, qtyInput) {
+  if (!hasVariants(product)) return;
+  const error = document.querySelector('[data-variant-error]');
+  document.querySelectorAll('[data-variant]').forEach((input) => {
+    input.addEventListener('change', () => {
+      const variant = selectedVariant(product);
+      if (!variant) return;
+      error.textContent = '';
+      qtyInput.max = variant.stock;
+      qtyInput.value = Math.min(Number(qtyInput.value) || 1, variant.stock);
+      document.querySelector('[data-stock-text]').textContent = stockText(product, variant);
+      const mainImg = document.querySelector('.product-detail-main-image img');
+      if (mainImg && variant.imageUrl) {
+        mainImg.src = imageUrl({url: variant.imageUrl}, {w: 800});
+        mainImg.alt = `${product.title} — ${variant.name}`;
+      }
+    });
+  });
+}
+
 function bindActions(product) {
   const qtyInput = document.querySelector('[data-qty-input]');
+  bindVariants(product, qtyInput);
   document.querySelector('[data-qty-decr]')?.addEventListener('click', () => {
     qtyInput.value = Math.max(1, Number(qtyInput.value) - 1);
   });
@@ -152,7 +212,17 @@ function bindActions(product) {
   document.querySelector('[data-add-to-cart-detail]')?.addEventListener('click', (e) => {
     e.preventDefault();
     const qty = Math.max(1, Number(qtyInput.value) || 1);
-    addItem(product, qty);
+    let variant = null;
+    if (hasVariants(product)) {
+      variant = selectedVariant(product);
+      if (!variant) {
+        document.querySelector('[data-variant-error]').textContent =
+          `Velg ${(product.variantLabel || 'variant').toLowerCase()} først.`;
+        document.querySelector('[data-variant]:not([disabled])')?.focus();
+        return;
+      }
+    }
+    addItem(product, qty, variant);
     const btn = e.currentTarget;
     btn.textContent = '✓ Lagt til';
     btn.classList.add('added');

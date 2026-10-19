@@ -11,6 +11,7 @@ const SANITY_BASE = 'https://vwtjc4wg.api.sanity.io/v2026-01-01/data';
 const STRIPE_VERSION = '2026-08-26.dahlia';
 const TOLERANCE_SEC = 300;
 const ID_RE = /^[\w-]{1,100}$/;
+const VARIANT_RE = /^[\w-]{1,64}$/;
 
 // Vercel req.body parsinamas tik jį perskaičius (getter) — todėl skaitom žalią srautą ir req.body neliečiam.
 // https://vercel.com/docs/functions/runtimes/node-js
@@ -43,14 +44,14 @@ function sanityHeaders() {
   return {Authorization: `Bearer ${process.env.SANITY_WRITE_TOKEN}`, 'Content-Type': 'application/json'};
 }
 
-// metadata.items = "sanityId:qty,sanityId:qty" (nustato api/checkout.js); jei nėra — imam iš line_items.
+// metadata.items = "sanityId:qty[:variantKey],..." (nustato api/checkout.js); jei nėra — imam iš line_items.
 async function getOrderItems(session) {
   const meta = session.metadata?.items;
   let items;
   if (meta) {
-    items = meta.split(',').map((pair) => {
-      const [productId, qty] = pair.split(':');
-      return {productId, quantity: Number(qty)};
+    items = meta.split(',').map((part) => {
+      const [productId, qty, variantKey] = part.split(':');
+      return {productId, quantity: Number(qty), variantKey: variantKey || null};
     });
   } else {
     const url = `https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(session.id)}/line_items?limit=100&expand[]=data.price.product`;
@@ -59,16 +60,26 @@ async function getOrderItems(session) {
     });
     if (!res.ok) throw new Error(`Stripe line_items ${res.status}`);
     const data = await res.json();
-    items = data.data.map((li) => ({productId: li.price?.product?.metadata?.sanity_id, quantity: li.quantity}));
+    items = data.data.map((li) => ({
+      productId: li.price?.product?.metadata?.sanity_id,
+      quantity: li.quantity,
+      variantKey: li.price?.product?.metadata?.variant_key || null,
+    }));
   }
-  return items.filter((i) => ID_RE.test(i.productId || '') && Number.isInteger(i.quantity) && i.quantity > 0);
+  return items.filter(
+    (i) =>
+      ID_RE.test(i.productId || '') &&
+      Number.isInteger(i.quantity) &&
+      i.quantity > 0 &&
+      (i.variantKey === null || VARIANT_RE.test(i.variantKey)),
+  );
 }
 
 // Publikuotas produktas ir jo Studio juodraštis (drafts.<id>) — abu turi gauti tą patį sumažinimą,
 // kitaip juodraščio publikavimas perrašytų likutį.
 async function fetchStockDocs(productIds) {
   const ids = productIds.flatMap((id) => [id, `drafts.${id}`]);
-  const query = '*[_id in $ids]{_id, stock}';
+  const query = '*[_id in $ids]{_id, stock, "variants": variants[]{_key, stock}}';
   const url = `${SANITY_BASE}/query/production?query=${encodeURIComponent(query)}&%24ids=${encodeURIComponent(JSON.stringify(ids))}&perspective=raw`;
   const res = await fetch(url, {headers: sanityHeaders()});
   if (!res.ok) throw new Error(`Sanity query ${res.status}`);
@@ -83,6 +94,12 @@ async function mutate(mutations, returnDocuments = false) {
   return {ok: res.ok, status: res.status, text};
 }
 
+// Ar dokumente yra ką mažinti: variantas su skaitiniu likučiu arba produkto likutis.
+function hasStockTarget(doc, variantKey) {
+  if (!variantKey) return typeof doc.stock === 'number';
+  return (doc.variants || []).some((v) => v && v._key === variantKey && typeof v.stock === 'number');
+}
+
 async function fulfillOrder(session) {
   const orderId = `orders.${session.id}`;
   const items = await getOrderItems(session);
@@ -91,11 +108,14 @@ async function fulfillOrder(session) {
 
   const patches = [];
   const missing = [];
-  for (const {productId, quantity} of items) {
+  for (const {productId, quantity, variantKey} of items) {
     const published = docs.get(productId);
-    if (adjustStock && !published) missing.push(productId);
+    const label = variantKey ? `${productId}:${variantKey}` : productId;
+    if (adjustStock && !(published && hasStockTarget(published, variantKey))) missing.push(label);
     for (const doc of [published, docs.get(`drafts.${productId}`)]) {
-      if (doc && typeof doc.stock === 'number') patches.push({patch: {id: doc._id, dec: {stock: quantity}}});
+      if (!doc || !hasStockTarget(doc, variantKey)) continue;
+      const path = variantKey ? `variants[_key=="${variantKey}"].stock` : 'stock';
+      patches.push({patch: {id: doc._id, dec: {[path]: quantity}}});
     }
   }
 
@@ -109,7 +129,12 @@ async function fulfillOrder(session) {
     delivery: session.metadata?.delivery === 'pickup' ? 'pickup' : 'ship',
     amountTotal: (session.amount_total || 0) / 100,
     currency: session.currency,
-    items: items.map((i) => ({_key: crypto.createHash('sha1').update(i.productId).digest('hex').slice(0, 12), productId: i.productId, quantity: i.quantity})),
+    items: items.map((i) => ({
+      _key: crypto.createHash('sha1').update(`${i.productId}:${i.variantKey || ''}`).digest('hex').slice(0, 12),
+      productId: i.productId,
+      variantKey: i.variantKey || undefined,
+      quantity: i.quantity,
+    })),
     needsReview: missing.length > 0 || items.length === 0,
     missingProducts: missing,
     paidAt: new Date().toISOString(),
@@ -126,10 +151,15 @@ async function fulfillOrder(session) {
   // Parduota daugiau nei buvo (du pirkėjai už paskutinį vienetą) → užsakymą pažymim peržiūrai.
   if (patches.length) {
     const body = JSON.parse(result.text);
-    const oversold = (body.results || []).map((r) => r.document).filter((d) => d && d._type === 'product' && d.stock < 0);
+    const oversold = [];
+    for (const d of (body.results || []).map((r) => r.document)) {
+      if (!d || d._type !== 'product') continue;
+      if (d.stock < 0) oversold.push(d._id);
+      for (const v of d.variants || []) if (v && v.stock < 0) oversold.push(`${d._id}:${v._key}`);
+    }
     if (oversold.length) {
-      console.error(`[webhook] ${session.id}: stock below zero for ${oversold.map((d) => d._id).join(',')}`);
-      const flag = await mutate([{patch: {id: orderId, set: {needsReview: true, oversold: oversold.map((d) => d._id)}}}]);
+      console.error(`[webhook] ${session.id}: stock below zero for ${oversold.join(',')}`);
+      const flag = await mutate([{patch: {id: orderId, set: {needsReview: true, oversold}}}]);
       if (!flag.ok) console.error(`[webhook] could not flag ${orderId}: ${flag.status}`);
     }
   }

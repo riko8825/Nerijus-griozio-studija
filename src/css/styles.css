@@ -2354,6 +2354,89 @@ p {
   margin-bottom: var(--space-5);
 }
 
+/* Variantai (kvapai) — radio grupė kaip „chip“ mygtukai */
+.product-variants {
+  border: 0;
+  padding: 0;
+  margin: 0 0 var(--space-4);
+  min-width: 0;
+}
+
+.product-variants-legend {
+  padding: 0;
+  margin-bottom: var(--space-2);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.product-variant-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.product-variant {
+  position: relative;
+  cursor: pointer;
+}
+
+.product-variant input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.product-variant span {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.92rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: border-color 0.2s var(--ease-out), background 0.2s var(--ease-out), color 0.2s var(--ease-out);
+}
+
+.product-variant:hover span {
+  border-color: var(--color-primary);
+}
+
+.product-variant input:checked + span {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.product-variant input:focus-visible + span {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.product-variant.is-soldout {
+  cursor: not-allowed;
+}
+
+.product-variant.is-soldout span {
+  color: var(--color-muted);
+  border-style: dashed;
+  text-decoration: line-through;
+}
+
+.product-variant-error {
+  margin: var(--space-2) 0 0;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.product-variant-error:empty {
+  display: none;
+}
+
 .product-detail-actions {
   display: flex;
   gap: var(--space-3);
@@ -2550,6 +2633,13 @@ p {
 }
 
 .cart-item-sku {
+  overflow-wrap: anywhere;
+}
+
+.cart-item-variant {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  margin: 0;
   overflow-wrap: anywhere;
 }
 

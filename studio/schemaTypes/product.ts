@@ -87,6 +87,65 @@ export default defineType({
       validation: (Rule) => Rule.min(1).error('Minst ett bilde kreves'),
     }),
     defineField({
+      name: 'variants',
+      title: 'Varianter (f.eks. dufter)',
+      description:
+        'Én linje per duft/farge, hver med eget lager. Kunden velger på produktsiden. La stå tom hvis produktet ikke har valg.',
+      type: 'array',
+      group: 'main',
+      of: [
+        {
+          type: 'object',
+          name: 'variant',
+          title: 'Variant',
+          fields: [
+            defineField({
+              name: 'name',
+              title: 'Navn',
+              description: 'F.eks. «Vanilje»',
+              type: 'string',
+              validation: (Rule) => Rule.required().max(60),
+            }),
+            defineField({
+              name: 'stock',
+              title: 'Lager',
+              type: 'number',
+              initialValue: 0,
+              validation: (Rule) => Rule.required().min(0).integer(),
+            }),
+            defineField({
+              name: 'image',
+              title: 'Bilde (valgfritt)',
+              description: 'Vises når kunden velger denne varianten',
+              type: 'image',
+              options: {hotspot: true},
+            }),
+          ],
+          preview: {
+            select: {title: 'name', stock: 'stock', media: 'image'},
+            prepare({title, stock, media}) {
+              return {title, subtitle: `Lager: ${stock ?? 0}`, media}
+            },
+          },
+        },
+      ],
+      validation: (Rule) =>
+        Rule.custom((variants?: {name?: string}[]) => {
+          if (!variants) return true
+          const names = variants.map((v) => (v.name || '').trim().toLowerCase()).filter(Boolean)
+          return new Set(names).size === names.length || 'To varianter har samme navn'
+        }),
+    }),
+    defineField({
+      name: 'variantLabel',
+      title: 'Hva kunden velger',
+      description: 'Overskrift over valgene, f.eks. «Duft» eller «Farge»',
+      type: 'string',
+      group: 'main',
+      initialValue: 'Duft',
+      hidden: ({document}) => !(document?.variants as unknown[] | undefined)?.length,
+    }),
+    defineField({
       name: 'shortDescription',
       title: 'Kort beskrivelse',
       description: 'Vises i produktkortet (maks 200 tegn)',
@@ -139,10 +198,11 @@ export default defineType({
     defineField({
       name: 'stock',
       title: 'Lager',
-      description: 'Manuell oppdatering — antall på lager',
+      description: 'Manuell oppdatering — antall på lager. Har produktet varianter, settes lager per variant.',
       type: 'number',
       group: 'inventory',
       initialValue: 0,
+      hidden: ({document}) => Boolean((document?.variants as unknown[] | undefined)?.length),
       validation: (Rule) => Rule.min(0).integer(),
     }),
     defineField({
@@ -203,14 +263,19 @@ export default defineType({
       sku: 'sku',
       price: 'price',
       stock: 'stock',
+      variants: 'variants',
       isAvailable: 'isAvailable',
       media: 'images.0',
     },
-    prepare({title, sku, price, stock, isAvailable, media}) {
-      const status = !isAvailable ? '🚫' : stock === 0 ? '⚠️' : '✅'
+    prepare({title, sku, price, stock, variants, isAvailable, media}) {
+      const list = Array.isArray(variants) ? variants : []
+      const total = list.length
+        ? list.reduce((sum: number, v: {stock?: number}) => sum + (v.stock || 0), 0)
+        : stock ?? 0
+      const status = !isAvailable ? '🚫' : total === 0 ? '⚠️' : '✅'
       return {
         title: `${status} ${title}`,
-        subtitle: `${sku} · ${price} kr · Lager: ${stock ?? 0}`,
+        subtitle: `${sku} · ${price} kr · Lager: ${total}${list.length ? ` (${list.length} varianter)` : ''}`,
         media,
       }
     },

@@ -1,7 +1,7 @@
 // Katalogas (produkter.html) — render produktų grid + filtravimas.
-import {getProducts, getCategories, imageUrl} from './sanity-client.js';
+import {getProducts, getCategories, imageUrl} from './sanity-client.js?v=20261018';
 import {formatPrice, calcDiscount, escapeHtml} from './format.js';
-import {addItem} from './cart.js';
+import {addItem} from './cart.js?v=20261018';
 
 const STATE = {
   products: [],
@@ -106,6 +106,18 @@ function render() {
   }
 }
 
+// Prekė su variantais į krepšelį dedama tik pasirinkus variantą — kortelėje nuoroda į produkto puslapį.
+function cardCta(p) {
+  if (p.stock === 0) {
+    return `<button class="btn btn-primary product-card-cta" disabled>Utsolgt</button>`;
+  }
+  if (p.variants && p.variants.length) {
+    const label = (p.variantLabel || 'variant').toLowerCase();
+    return `<a class="btn btn-primary product-card-cta" href="/produkter/${escapeHtml(p.slug)}">Velg ${escapeHtml(label)}</a>`;
+  }
+  return `<button class="btn btn-primary product-card-cta" data-add-to-cart="${escapeHtml(p._id)}">Legg i kurv</button>`;
+}
+
 function productCardHtml(p) {
   const discount = calcDiscount(p.price, p.compareAtPrice);
   const img = p.images && p.images[0];
@@ -129,9 +141,7 @@ function productCardHtml(p) {
           </div>
         </div>
       </a>
-      <button class="btn btn-primary product-card-cta" data-add-to-cart="${escapeHtml(p._id)}" ${p.stock === 0 ? 'disabled' : ''}>
-        ${p.stock === 0 ? 'Utsolgt' : 'Legg i kurv'}
-      </button>
+      ${cardCta(p)}
     </article>
   `;
 }
