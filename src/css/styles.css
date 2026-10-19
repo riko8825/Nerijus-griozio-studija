@@ -2423,7 +2423,6 @@ p {
 .product-variant.is-soldout span {
   color: var(--color-muted);
   border-style: dashed;
-  text-decoration: line-through;
 }
 
 .product-variant-error {

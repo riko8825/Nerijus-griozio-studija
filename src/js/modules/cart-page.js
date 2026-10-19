@@ -1,6 +1,7 @@
 // Krepšelio puslapis (handlekurv.html) — pilna cart UI + Stripe Checkout (api/checkout.js).
 import {getItems, getSubtotal, updateQty, removeItem, clear, subscribe, lineIdOf} from './cart.js?v=20261018';
 import {formatPrice, escapeHtml} from './format.js';
+import {imageUrl} from './sanity-client.js?v=20261018';
 
 const SHOP_EMAIL = 'akvastudio75@gmail.com';
 const FREE_SHIPPING_THRESHOLD = 1000;
@@ -49,7 +50,7 @@ function renderItems(items) {
         return `
     <article class="cart-item" data-cart-item="${id}">
       <a class="cart-item-image" href="/produkter/${escapeHtml(item.slug)}">
-        <img src="${escapeHtml(item.image || 'src/assets/images/products/product-placeholder.svg')}" alt="${escapeHtml(item.title)}" width="120" height="120" loading="lazy">
+        <img src="${escapeHtml(imageUrl(item.image ? {url: item.image} : null, {w: 240}))}" alt="${escapeHtml(item.title)}" width="120" height="120" loading="lazy">
       </a>
       <div class="cart-item-info">
         <a class="cart-item-title" href="/produkter/${escapeHtml(item.slug)}">${escapeHtml(item.title)}</a>

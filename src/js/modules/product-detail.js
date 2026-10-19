@@ -145,7 +145,7 @@ function renderVariants(product) {
             (v) => `
           <label class="product-variant ${v.stock > 0 ? '' : 'is-soldout'}">
             <input type="radio" name="variant" value="${escapeHtml(v._key)}" ${v.stock > 0 ? '' : 'disabled'} data-variant>
-            <span>${escapeHtml(v.name)}${v.stock > 0 ? '' : ' · utsolgt'}</span>
+            <span>${v.stock > 0 ? escapeHtml(v.name) : `<s>${escapeHtml(v.name)}</s> · utsolgt`}</span>
           </label>`,
           )
           .join('')}
