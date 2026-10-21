@@ -51,7 +51,8 @@
 - **Statiniai pavyzdiniai atsiliepimai** index'e — pakeisti tikrais iš Setmore (laukia tekstų).
 - **Kategorijų `Rekkefølge`** — visos 1 (Akvilė turi sunumeruoti).
 - Akvilės Sanity rolė — nepatvirtinta, ar pakeista į Editor/Admin (produktus kelia → greičiausiai taip).
-- Lokalūs serveriai (:8080 harness, :3333 studio dev) paleisti sesijos metu.
+- Lokalūs serveriai (:8080 harness, :3333 studio dev) paleisti sesijos metu — nesustabdyti.
+- Docs commit `e396f8b` push'intas 2026-10-19; svetainė 200, Studio 302 (login) — patikrinta po push.
 - Visi #11 blokeriai (live mokėjimai, Vipps, sąskaita, Cookiebot, GA4, CSP) — nepakito.
 
 ## SESIJA #11 (2026-09-24 → 2026-10-04) — DETALĖS
