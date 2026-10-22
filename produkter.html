@@ -49,7 +49,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;1,6..12,300;1,6..12,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/src/css/styles.css?v=20261018">
+  <link rel="stylesheet" href="/src/css/styles.css?v=20261022">
 </head>
 <body class="page-shop">
 
@@ -104,12 +104,25 @@
     <!-- ── SHOP HERO ── -->
     <section class="shop-hero">
       <div class="container">
-        <span class="section-label">Nettbutikk</span>
-        <h1 class="section-title">Aromatic89 hudpleie</h1>
-        <div class="divider divider-center"></div>
-        <p class="section-subtitle">
-          Profesjonelle produkter brukt i Akva Studio — nå tilgjengelig hjem til deg. Frakt i hele Norge.
-        </p>
+        <h1 class="visually-hidden">Aromatic89 hudpleie — Akva Studio nettbutikk</h1>
+        <picture>
+          <source
+            type="image/webp"
+            srcset="/src/assets/images/shop-promo-480w.webp 480w,
+                    /src/assets/images/shop-promo-768w.webp 768w,
+                    /src/assets/images/shop-promo-1200w.webp 1200w"
+            sizes="(max-width: 900px) 100vw, 900px">
+          <img
+            class="shop-promo-img"
+            srcset="/src/assets/images/shop-promo-480w.jpg 480w,
+                    /src/assets/images/shop-promo-768w.jpg 768w,
+                    /src/assets/images/shop-promo-1200w.jpg 1200w"
+            sizes="(max-width: 900px) 100vw, 900px"
+            src="/src/assets/images/shop-promo-1200w.jpg"
+            width="1200" height="800"
+            fetchpriority="high"
+            alt="Spesialtilbud: Kjøp for 400 kr – få 1 ansiktsmaske gratis. Kjøp for 600 kr – få 2 ansiktsmasker gratis. Verdi: 79 kr per maske.">
+        </picture>
       </div>
     </section>
 
