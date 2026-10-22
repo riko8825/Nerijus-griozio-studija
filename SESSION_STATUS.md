@@ -1,7 +1,7 @@
 # SESSION STATUS — AKVA STUDIO
 
-**Paskutinė sesija:** 2026-10-19 (#12, pradėta 2026-10-08)
-**Statusas:** 🟢 akvastudio.no live · Akvilė kelia realius produktus · **parduotuvės įėjimas su kategorijų kortelėmis** · **prekių variantai (kvapai)** svetainėje + Studio · Stripe vis dar test režimu (live trūksta Vercel Pro + live raktų)
+**Paskutinė sesija:** 2026-10-22 (#13)
+**Statusas:** 🟢 akvastudio.no live · Akvilė kelia realius produktus · **parduotuvės įėjimas su kategorijų kortelėmis** · **prekių variantai (kvapai)** svetainėje + Studio · **akcijos banneris** parduotuvėje (`2bdf91e`) · Stripe vis dar test režimu (live trūksta Vercel Pro + live raktų)
 ---
 
 ## ISTORIJA
@@ -20,8 +20,41 @@
 | 2026-05-13 | #10 | **Hero desktop full-bleed redesign**: `siluetas.png` kaip `background-size: cover` per visą hero, `.hero-visual` blokas ištrintas, `.hero::before` gradient overlay (oklch 92%→transparent iš kairės), ~60 eilučių mirusio CSS pašalinta. **4 legal puslapiai pilnai perrašyti** (Privatumo politika 10 sk., Slapukų 9 sk., Sąlygos 12 sk., Taisyklės 12 sk.) su Akvilės kontaktais (+47 462 40 853), akvastudio.no domenu, Norvegijos teise (forbrukerkjøpsloven, angrerettsloven, åndsverkloven), Cookiebot only setup (Silktide pašalinimas planuojamas). ~50 naujų i18n raktų × LT/EN/NO. Impressum atnaujinta 8 puslapiuose. DECISION_LOG 2026-05-13 įrašas: B variantas (Cookiebot only) pasirinktas. Cache-buster `v=20260509` → `v=20260513e`. Playwright LT/EN/NO + mobile 390 verify pass. **NE deploy'ed.** |
 | 2026-09-24 → 10-04 | #11 | **Domenas** akvastudio.no (GoDaddy → Vercel). **NO default** + statinis NO HTML. **Legal**: org.nr., adresas, ne MVA, PostNord/fri frakt/henting, Stripe. **Stripe Checkout + webhook** (idempotentiškas likutis Sanity). `stripe-best-practices` skill + 3 agentai → 12 radinių sutaisyta. Produkcijos E2E 8/8 test mokėjimai. Sutaisyta: env vars kitame projekte, `pk_` vietoj `sk_`, CORS, **produkto puslapis neveikė nuo gegužės**. Push: `d42abc9`, `0570fe3`. |
 | 2026-10-08 → 10-19 | #12 | **Kategorijų kortelės** parduotuvės įėjime (`4c6a5c0`). **Prekių variantai (kvapai)**: Sanity schema + Studio deploy, pasirinkimas produkto puslapyje, krepšelis, checkout + webhook likutis per variantą (`7c0d4db`). Krepšelio nuotraukos 1.9 MB → 240px (`f9de492`). Ištrinti test „Kavapukas nr 1“ + „bandymas“. Konsultacijos: Sanity Viewer → Editor/Admin, Setmore atsiliepimai (Auto-publish), prekių atsiliepimų variantai. Testai: API 38/38 + 28/28, UI desktop+mobile 0 FAIL. |
+| 2026-10-22 | #13 | Akvilės prašymu: pradiniame ištrinta `#products` „Kommer snart“ sekcija (footer → `/produkter` Butikk); `/produkter` antraštė → akcijos banneris (`shop-promo-*` 480/768/1200 WebP+JPG, max 900px, h1 `visually-hidden`); cache-buster `v=20261022`. Playwright 8 psl. × 1280/390/360 + produkcija ✅. Push `2bdf91e`. Laiškas Akvilei (Vipps → Stripe support). |
 
 ---
+
+## SESIJA #13 (2026-10-22) — DETALĖS
+
+### Ką padarėme
+
+1. **Pradinis puslapis** — ištrinta `#products` sekcija (3 „Kommer snart“ kortelės + „Kontakt om produkter“ CTA). Footer nuoroda `#products` → `/produkter` (`nav_shop` „Butikk“). Tvarka dabar: hero → services → about → …
+2. **Parduotuvės banneris** — `src/pages/produkter.html` `.shop-hero` turinys (label + h1 „Aromatic89 hudpleie“ + sub) pakeistas Akvilės akcijos nuotrauka „En gave til huden din“ (400 kr → 1 kaukė, 600 kr → 2 kaukės). `<picture>` `shop-promo-{480,768,1200}w.{webp,jpg}` (WebP 24–90 KB), `sizes` 900px, `fetchpriority=high`, alt su pilnu akcijos tekstu; h1 paliktas `.visually-hidden` (SEO).
+3. **CSS** — `.shop-hero:has(.shop-promo-img)` padding, `.shop-promo-img` (max 900px, `--radius-md`), naujas utility `.visually-hidden`. Cache-buster `styles.css?v=20261022` × 8 psl.
+4. **Deploy** — commit + push `2bdf91e` (Vercel live po ~30 s).
+5. **Laiškas Akvilei** — pakeitimai, akcija svetainėje tik paveikslėlis (kaukes dėti rankiniu būdu pagal sumą Stripe), rekomendacija nurodyti galiojimo datą; Vipps — rašyti Stripe support (prašymas 2026-10-01 per Stripe), paruoštas EN tekstas.
+6. Akvilė patvirtino: kvapų (variantų) įkėlimas Studio veikia.
+
+### Testai
+
+- Statiniai: nuorodų į `#products` 0, `src/pages` ↔ root sync identiškas, cache-buster vienodas 16/16, `node --check` visi JS OK.
+- Playwright lokaliai (:8080, su Sanity duomenimis): 8 puslapiai × 1280/390/360 — h-scroll 0, JS klaidų 0; banneris užsikrauna (1200w/480w WebP), 6 kategorijų kortelės po banneriu. Vienintelės 404 — Cookiebot `consentconfig//…` (tuščias CBID), tos pačios ir produkcijoje prieš pakeitimą.
+- Produkcijoje po push: `/produkter` banneris + 6 kategorijos, `/` be `#products`, JS klaidų 0, 1280 + 390.
+
+### Kas liko / nepatvirtinta
+
+- **Akcija neautomatizuota** — checkout/webhook kaukių neprideda; Akvilė deda rankiniu būdu. Akcijos galiojimo data svetainėje nenurodyta (markedsføringsloven) — laukia Akvilės datos.
+- Akcijos tekstas tik paveikslėlyje (NO) — LT/EN vartotojai mato NO banerį (e-shop puslapiai vis tiek NO only).
+- `main.js` liko nebenaudojami i18n raktai `products_*`, `prod1..3_*` ir CSS `.product-card`/`.products-cta` (netrinta — „nieko kito nekeisk“).
+- Vipps — Akvilė turi parašyti Stripe support.
+- `AKVILEI_REIKIA.md` neužcommit'intas, pasenęs.
+- Variantų E2E su realia preke su kvapais produkcijoje (test pirkimas) — dar nedarytas.
+
+### Kitas žingsnis
+
+1. Gavus akcijos galiojimo datą — pridėti po baneriu (NO tekstas); svarstyti automatinį kaukių pridėjimą checkout'e (Stripe line item 0 kr pagal subtotal).
+2. Test pirkimas produkcijoje su preke su kvapu (Stripe test) + `orders.*` patikra.
+3. Live mokėjimai: Vercel Pro → `rk_live` + live webhook.
 
 ## SESIJA #12 (2026-10-08 → 2026-10-19) — DETALĖS
 
@@ -558,6 +591,7 @@
 
 ## KITAS ŽINGSNIS
 
+0. Akcijos galiojimo data po baneriu (gavus iš Akvilės); Vipps statusas per Stripe support.
 1. Kai Akvilė įkels prekę su kvapais — test pirkimas produkcijoje (Stripe test) su variantu + patikrinti `orders.*` ir kad test mode likučio neliečia.
 2. Live: Vercel Pro → Stripe `rk_live` + live webhook `whsec_` → tikras mažas pirkimas + refund.
 3. Prekių atsiliepimų sprendimas (A variantas) + tikri atsiliepimai index'e; sąskaita Akvilei (kaina + rekvizitai).

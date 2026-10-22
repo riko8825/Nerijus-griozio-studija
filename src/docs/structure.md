@@ -12,7 +12,6 @@ Atnaujinta: 2026-05-04
 | 2 | Mobile nav overlay | `#mobile-nav` | Pilnas ekranas, rodomas tik mobile |
 | 3 | Hero | `#hero` | Antraštė, sub, 2× CTA, 3 stats (200+ / 10+ / 500+), SVG iliustracija |
 | 4 | Services | `#services` | 2 kategorijos × 8 subkategorijos × 17 paslaugų eilučių |
-| 5 | Products | `#products` | 3 placeholder kortelės + bottom CTA |
 | 6 | About | `#about` | Akvilės nuotrauka kairėje, klientės balso tekstas dešinėje |
 | 7 | Why Us | `#whyus` | 4 privalumai su numeriais (grid) |
 | 8 | Portfolio | `#portfolio` | 4 nuotraukų kortelės (klientė atsiųs) |
@@ -30,7 +29,7 @@ Atnaujinta: 2026-05-04
 - `.about-inner` — 2-col grid
 - `.booking-inner` — 2-col grid
 - `.services-categories` — auto-fit minmax(420px) ← **NAUJAS** (pakeitė `.services-grid`)
-- `.products-grid` — auto-fit minmax(260px) ← **NAUJAS**
+- `.products-grid` — auto-fit minmax(260px) (naudojamas `/produkter` kataloge)
 - `.whyus-grid` — auto-fit minmax(240px)
 - `.portfolio-grid` — auto-fit minmax(280px)
 - `.testimonials-grid` — auto-fit minmax(300px) (dabar 6 kortelės)
@@ -42,8 +41,9 @@ Atnaujinta: 2026-05-04
 - `.service-subgroup` `.service-subgroup-title` — subkategorija ← **NAUJAS**
 - `.service-row` — paslaugos eilutė (4-col desktop / 2x2 mobile) ← **NAUJAS**
 - `.service-row-name` `.service-row-time` `.service-row-price` `.service-row-btn` — eilutės elementai
-- `.product-card` `.product-icon` `.product-card-tag` — produktų kortelė ← **NAUJAS**
-- `.products-cta` — bottom susisiekimo blokas ← **NAUJAS**
+- `.product-card` `.product-icon` `.product-card-tag`, `.products-cta` — buvusios homepage `#products` sekcijos stiliai (sekcija ištrinta 2026-10-22)
+- `.shop-promo-img` — `/produkter` akcijos banneris `.shop-hero` viduje (max 900px)
+- `.visually-hidden` — paslėptas tekstas ekrano skaitytuvams/SEO (`/produkter` h1)
 - `.testimonial-card` — atsiliepimo kortelė
 - `.booking-form` — kontaktų forma
 - `.lang-switcher` `.lang-btn.active` — kalbų switcher

@@ -6,7 +6,7 @@
 | Header / nav | ✅ Įgyvendinta | LT/EN/NO switcher (**NO default** nuo 2026-09-27), mobile nav, „Parduotuvė" + „Krepšelis" + cart icon counter |
 | Hero | ✅ Full-bleed desktop + mobile image | **Desktop (≥1025px):** `siluetas.png` kaip `background-size: cover` per visą hero, tekstas overlay'iuje su gradient (oklch 95%→transparent iš kairės). `.hero-visual` blokas pašalintas sesijoje #10. Mobile (<1024px): `hero-mobile.png` (1536×1024) `background-size: contain`, content seka po image. |
 | Paslaugos | ✅ Pilna | 2 kategorijos × 8 subkategorijos × 17 paslaugų; visi 19 „Rezervuoti" mygtukų rodo į Setmore |
-| Produktai (homepage placeholder) | 🟡 Senos kortelės | 3 generinės „Netrukus" kortelės — orphan po e-shop sukūrimo |
+| Produktai (homepage placeholder) | ✅ Pašalinta | `#products` „Kommer snart" sekcija ištrinta 2026-10-22 (`2bdf91e`); footer → `/produkter`. Liko nenaudojami i18n raktai `products_*`/`prod1..3_*` + CSS `.product-card` |
 | Apie mus | ✅ Tekstas + video | Klientės balsas, foninis video1 (autoplay/muted/loop, aria-hidden) — Akvilės foto vis dar nėra |
 | Kodėl mes | ✅ Įgyvendinta | 4 privalumai |
 | Portfolio | ✅ 5 nuotraukos + video grid | 4 darbai + depiliacijos pavyzdys (span 2) + video (span 2, autoplay) |
@@ -24,7 +24,7 @@
 | Setmore embed mobile | ✅ Pataisyta | CTA `min-width: 0`, mobile `width: 100%` + 16px padding; iframe telpa 390/360 viewport'e (Playwright verify ✓) |
 | Image optimization | ✅ Sukurta | `scripts/optimize-images.py` (PIL, WebP+JPG, 3 dydžiai) |
 | Video compress | ⬜ Nedaryta | `akva-video-2.mp4` 5MB — reikia ffmpeg install + compress |
-| Cache-buster | ✅ Įgyvendinta | `styles.css?v=20261018`; `shop-init.js?v=20261018` + **visi** shop importai (cart, cart-icon, sanity-client, products, product-detail, cart-page) su tuo pačiu `?v=` |
+| Cache-buster | ✅ Įgyvendinta | `styles.css?v=20261022`; `shop-init.js?v=20261018` + **visi** shop importai (cart, cart-icon, sanity-client, products, product-detail, cart-page) su tuo pačiu `?v=` |
 | **Deploy (Vercel)** | ✅ **Live** | **`https://www.akvastudio.no`** (GoDaddy DNS: A @ 216.198.79.1, CNAME www → vercel-dns-017; apex 308 → www). Projektas `akva-studio`. ⚠️ Dublikatas `nerijus-griozio-studija` deploy'ina tą patį repo — atjungti. Hobby planas → Pro prieš live mokėjimus |
 | Klientės patvirtinimas | ✅ Patinka | Akvilė 2026-10-02: „labai patinka rezultatai“ |
 
@@ -38,7 +38,7 @@
 | Sanity projektas | ✅ Production | ID: `vwtjc4wg`, dataset: `production`; test „Kavapukas nr 1“ + „bandymas“ ištrinti 2026-10-15; Studio deploy 2026-10-19 (variantų schema) |
 | Sanity CORS | ✅ Pilna | + `https://www.akvastudio.no`, `https://akvastudio.no` (2026-10-02, be credentials) |
 | Klientės invite | ✅ Priimta | Akvilė buvo Viewer → instrukcija keisti į Editor/Admin (2026-10-08); kelia produktus |
-| Frontend katalogas (`/produkter`) | ✅ Live | **Kategorijų kortelės** įėjime (`4c6a5c0`), `?kategori=` filtrai, tuščios kategorijos nerodomos; prekė su variantais → „Velg duft“ |
+| Frontend katalogas (`/produkter`) | ✅ Live | **Akcijos banneris** viršuje (`shop-promo-*`, 2026-10-22; akcija rankinė — checkout kaukių neprideda, galiojimo data nenurodyta); **Kategorijų kortelės** įėjime (`4c6a5c0`), `?kategori=` filtrai, tuščios kategorijos nerodomos; prekė su variantais → „Velg duft“ |
 | Produkto puslapis (`/produkter/[slug]`) | ✅ Live (pataisyta) | **Nuo 2026-05 neveikė** („Produkt ikke funnet“ — slug skaitytas tik iš `?slug=`); fix `0570fe3` — slug iš pathname. E2E ✅ |
 | Krepšelis (`/handlekurv`) | ✅ Live | Pristatymo pasirinkimas (PostNord 79 kr / fri frakt ≥1000 kr / henting i studio), „Gå til betaling“ → Stripe, grįžimo pranešimai, a11y fokusas, bfcache |
 | Cart icon homepage'e | ✅ Live | Counter veikia per `localStorage` listener (be ES module) |
@@ -53,11 +53,11 @@
 
 ---
 
-## BLOCKERS (po sesijos #12, 2026-10-19)
+## BLOCKERS (po sesijos #13, 2026-10-22)
 
 1. **Live mokėjimai** — reikia: Vercel Pro, Stripe live `rk_live` (Checkout Sessions: write) + live webhook endpoint + `whsec_`, Akvilės Stripe paskyros aktyvacija (banko sąskaita)
 2. **Realūs produktai** — Akvilė kelia; kategorijoms trūksta nuotraukų + `Rekkefølge` (visos 1); variantų E2E laukia pirmos prekės su kvapais
-3. **Vipps** — laukia Stripe private preview patvirtinimo
+3. **Vipps** — laukia Stripe private preview patvirtinimo (>3 sav.; Akvilei 2026-10-22 nurodyta rašyti Stripe support)
 4. **Sąskaita Akvilei** — trūksta sutartos kainos + Empirra rekvizitų
 5. **Cookiebot CBID + Silktide pašalinimas** — Silktide banneris (EN) vis dar rodomas index ir uždengia mobile lang switcher
 6. **GA4 Measurement ID** — `G-XXXXXXXX` placeholder
