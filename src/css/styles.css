@@ -2660,6 +2660,13 @@ p {
   overflow-wrap: anywhere;
 }
 
+.cart-item-warning {
+  font-size: 0.85rem;
+  color: var(--color-text);
+  font-weight: 600;
+  margin: var(--space-1) 0 0;
+}
+
 .cart-item-variant {
   font-size: 0.9rem;
   color: var(--color-text);
@@ -2684,8 +2691,13 @@ p {
   font-size: 1rem;
 }
 
-.cart-item-qty button:hover {
+.cart-item-qty button:hover:not(:disabled) {
   background: var(--color-surface);
+}
+
+.cart-item-qty button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .cart-item-qty-value {
@@ -2807,6 +2819,10 @@ p {
 
 .cart-checkout-btn:disabled {
   opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cart-checkout-btn[aria-busy="true"] {
   cursor: wait;
 }
 

@@ -12,6 +12,7 @@ const FREE_SHIPPING_FROM_NOK = 1000;
 const STUDIO_ADDRESS = 'Myreneveien 35, 4847 Arendal';
 const MAX_LINES = 20;
 const MAX_QTY = 99;
+const META_VALUE_MAX = 500; // Stripe metadata reikšmės riba
 
 const ALLOWED_ORIGINS = [
   'https://www.akvastudio.no',
@@ -134,8 +135,6 @@ module.exports = async (req, res) => {
       };
 
   const origin = ALLOWED_ORIGINS.includes(req.headers.origin) ? req.headers.origin : DEFAULT_ORIGIN;
-  // "id:qty" arba "id:qty:variantKey" — skaito api/stripe-webhook.js.
-  const itemsMeta = items.map((i) => (i.variantKey ? `${i.id}:${i.qty}:${i.variantKey}` : `${i.id}:${i.qty}`)).join(',');
 
   const params = {
     mode: 'payment',
@@ -149,7 +148,8 @@ module.exports = async (req, res) => {
     phone_number_collection: {enabled: true},
     success_url: `${origin}/handlekurv?betaling=ok&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/handlekurv?betaling=avbrutt`,
-    metadata: {delivery, items: itemsMeta.length <= 500 ? itemsMeta : undefined},
+    // Skaito api/stripe-webhook.js.
+    metadata: {delivery, ...itemsMetadata(items)},
   };
 
   try {
@@ -174,6 +174,19 @@ module.exports = async (req, res) => {
   }
 };
 
+// "id:qty[:variantKey]" eilutės dalijamos į metadata raktus items, items_1, items_2… (kiekvienas ≤500 simbolių).
+// 20 eilučių × ~52 simboliai = 3 raktai; webhook'as juos sujungia.
+function itemsMetadata(items) {
+  const parts = items.map((i) => (i.variantKey ? `${i.id}:${i.qty}:${i.variantKey}` : `${i.id}:${i.qty}`));
+  const chunks = [];
+  for (const part of parts) {
+    const last = chunks.length - 1;
+    if (last >= 0 && chunks[last].length + 1 + part.length <= META_VALUE_MAX) chunks[last] += `,${part}`;
+    else chunks.push(part);
+  }
+  return Object.fromEntries(chunks.map((c, n) => [n === 0 ? 'items' : `items_${n}`, c]));
+}
+
 function safeJson(str) {
   try {
     return JSON.parse(str);
@@ -181,3 +194,5 @@ function safeJson(str) {
     return null;
   }
 }
+
+module.exports.itemsMetadata = itemsMetadata;

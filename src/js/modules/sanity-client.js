@@ -18,12 +18,15 @@ function isSanityConfigured() {
   return id && id !== 'REPLACE_WITH_PROJECT_ID' && id.length > 0;
 }
 
-function buildSanityUrl(query) {
+// params → GROQ parametrai ($name), perduodami kaip JSON reikšmės (ne įterpiami į užklausos tekstą).
+function buildSanityUrl(query, params = {}) {
   const projectId = getMeta('sanity-project-id');
   const dataset = getMeta('sanity-dataset') || 'production';
   const apiVersion = getMeta('sanity-api-version') || '2026-01-01';
-  const encoded = encodeURIComponent(query);
-  return `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}?query=${encoded}`;
+  const encodedParams = Object.entries(params)
+    .map(([name, value]) => `&${encodeURIComponent(`$${name}`)}=${encodeURIComponent(JSON.stringify(value))}`)
+    .join('');
+  return `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}?query=${encodeURIComponent(query)}${encodedParams}`;
 }
 
 async function fetchJson(path) {
@@ -32,8 +35,8 @@ async function fetchJson(path) {
   return res.json();
 }
 
-async function sanityQuery(query) {
-  const url = buildSanityUrl(query);
+async function sanityQuery(query, params) {
+  const url = buildSanityUrl(query, params);
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Sanity query failed: ${res.status}`);
   const data = await res.json();
@@ -81,7 +84,7 @@ export async function getProductBySlug(slug) {
     return products.find((p) => p.slug === slug) || null;
   }
   try {
-    const query = `*[_type == "product" && slug.current == "${slug}" && isAvailable == true][0]{
+    const query = `*[_type == "product" && slug.current == $slug && isAvailable == true][0]{
       _id, title, "slug": slug.current, sku, brand, price, compareAtPrice, stock,
       isAvailable, isFeatured,
       "categoryId": category->_id, "categoryTitle": category->title, "categorySlug": category->slug.current,
@@ -90,7 +93,7 @@ export async function getProductBySlug(slug) {
       gtin13, mpn, seo,
       variantLabel, "variants": variants[]{_key, name, stock, "imageUrl": image.asset->url}
     }`;
-    return withVariants(await sanityQuery(query));
+    return withVariants(await sanityQuery(query, {slug}));
   } catch (e) {
     console.warn('[sanity-client] fallback to static JSON:', e.message);
     const products = await fetchJson(STATIC_FALLBACK_PATH.products);

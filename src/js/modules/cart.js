@@ -1,9 +1,12 @@
 // Krepšelio state — localStorage.
-// Public API: addItem, removeItem, updateQty, getItems, getCount, getSubtotal, clear, subscribe.
-// Future: checkout() metodas paliktas placeholder'iui (F2 fazė — Snipcart/Stripe).
+// Public API: addItem, removeItem, updateQty, getItems, getCount, getSubtotal, clear, subscribe, maxQtyOf, syncWithCatalog.
+// Apmokėjimas — cart-page.js → api/checkout.js (Stripe).
 
 const STORAGE_KEY = 'akva_cart_v1';
 const CART_EXPIRATION_DAYS = 30;
+// Tos pačios ribos kaip api/checkout.js (MAX_QTY, MAX_LINES).
+export const MAX_QTY = 99;
+export const MAX_LINES = 20;
 
 const listeners = new Set();
 
@@ -75,17 +78,26 @@ export function lineIdOf(item) {
   return item.lineId || item.productId;
 }
 
+// Didžiausias leistinas kiekis eilutei: likutis (jei žinomas), bet ne daugiau nei MAX_QTY.
+export function maxQtyOf(item) {
+  return typeof item.stock === 'number' ? Math.max(0, Math.min(MAX_QTY, item.stock)) : MAX_QTY;
+}
+
+// Grąžina false, jei prekės pridėti nebegalima (krepšelyje MAX_LINES eilučių).
 export function addItem(product, quantity = 1, variant = null) {
   if (!product || !product._id) {
     console.warn('[cart] addItem: invalid product');
-    return;
+    return false;
   }
   const lineId = variant ? `${product._id}:${variant._key}` : product._id;
+  const stock = variant ? variant.stock : product.stock;
   const cart = readCart();
   const existing = cart.items.find((i) => lineIdOf(i) === lineId);
   if (existing) {
-    existing.quantity = Math.max(1, existing.quantity + quantity);
+    if (typeof stock === 'number') existing.stock = stock;
+    existing.quantity = Math.max(1, Math.min(maxQtyOf(existing), existing.quantity + quantity));
   } else {
+    if (cart.items.length >= MAX_LINES) return false;
     cart.items.push({
       lineId,
       productId: product._id,
@@ -97,11 +109,13 @@ export function addItem(product, quantity = 1, variant = null) {
       slug: product.slug,
       price: Number(product.price),
       image: (variant && variant.imageUrl) || product.images?.[0]?.url || null,
-      quantity: Math.max(1, quantity),
+      stock: typeof stock === 'number' ? stock : null,
+      quantity: Math.max(1, Math.min(typeof stock === 'number' ? stock : MAX_QTY, MAX_QTY, quantity)),
       addedAt: new Date().toISOString(),
     });
   }
   writeCart(cart);
+  return true;
 }
 
 export function removeItem(lineId) {
@@ -117,9 +131,35 @@ export function updateQty(lineId, quantity) {
   if (quantity <= 0) {
     cart.items = cart.items.filter((i) => lineIdOf(i) !== lineId);
   } else {
-    item.quantity = quantity;
+    item.quantity = Math.min(quantity, Math.max(1, maxQtyOf(item)));
   }
   writeCart(cart);
+}
+
+// Krepšelis saugo kainą pridėjimo metu — atidarius krepšelį kaina, pavadinimas ir likutis atnaujinami iš katalogo.
+// products = tik parduodamos prekės (getProducts). Nerasta prekė/variantas → unavailable: true (kiekis nekeičiamas).
+export function syncWithCatalog(products) {
+  const byId = new Map(products.map((p) => [p._id, p]));
+  const cart = readCart();
+  let changed = false;
+  for (const item of cart.items) {
+    const p = byId.get(item.productId);
+    const variant = p && item.variantKey ? (p.variants || []).find((v) => v._key === item.variantKey) : null;
+    // Kaip api/checkout.js: kaina > 0; prekė su variantais parduodama tik su konkrečiu variantu.
+    const found = Boolean(
+      p && typeof p.price === 'number' && p.price > 0 && (item.variantKey ? variant : !(p.variants || []).length),
+    );
+    const next = found
+      ? {price: Number(p.price), title: p.title, stock: variant ? variant.stock : (typeof p.stock === 'number' ? p.stock : null), unavailable: false}
+      : {unavailable: true};
+    for (const [key, value] of Object.entries(next)) {
+      if (item[key] !== value) {
+        item[key] = value;
+        changed = true;
+      }
+    }
+  }
+  if (changed) writeCart(cart);
 }
 
 export function clear() {
@@ -129,10 +169,4 @@ export function clear() {
 function clearCart() {
   localStorage.removeItem(STORAGE_KEY);
   notify(emptyCart());
-}
-
-// Placeholder ateičiai — F2 fazė
-export async function checkout() {
-  console.warn('[cart] checkout() not implemented yet — F2 phase (Snipcart/Stripe)');
-  return {success: false, reason: 'NOT_IMPLEMENTED'};
 }

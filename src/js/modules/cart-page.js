@@ -1,7 +1,7 @@
 // Krepšelio puslapis (handlekurv.html) — pilna cart UI + Stripe Checkout (api/checkout.js).
-import {getItems, getSubtotal, updateQty, removeItem, clear, subscribe, lineIdOf} from './cart.js?v=20261018';
+import {getItems, getSubtotal, updateQty, removeItem, clear, subscribe, lineIdOf, maxQtyOf, syncWithCatalog} from './cart.js?v=20261031';
 import {formatPrice, escapeHtml} from './format.js';
-import {imageUrl} from './sanity-client.js?v=20261018';
+import {imageUrl, getProducts} from './sanity-client.js?v=20261031';
 
 const SHOP_EMAIL = 'akvastudio75@gmail.com';
 const FREE_SHIPPING_THRESHOLD = 1000;
@@ -42,11 +42,21 @@ function renderEmpty() {
   `;
 }
 
+// Eilutė, kurios nupirkti negalima: prekė nebeparduodama arba kiekis viršija likutį.
+function itemProblem(item) {
+  if (item.unavailable) return 'Ikke lenger tilgjengelig. Fjern varen fra handlekurven.';
+  if (typeof item.stock === 'number' && item.quantity > item.stock) {
+    return item.stock > 0 ? `Bare ${item.stock} stk på lager. Reduser antallet.` : 'Utsolgt. Fjern varen fra handlekurven.';
+  }
+  return '';
+}
+
 function renderItems(items) {
   return items
     .map(
       (item) => {
         const id = escapeHtml(lineIdOf(item));
+        const problem = itemProblem(item);
         return `
     <article class="cart-item" data-cart-item="${id}">
       <a class="cart-item-image" href="/produkter/${escapeHtml(item.slug)}">
@@ -57,11 +67,12 @@ function renderItems(items) {
         ${item.variantName ? `<p class="cart-item-variant">${escapeHtml(item.variantLabel || 'Variant')}: ${escapeHtml(item.variantName)}</p>` : ''}
         <p class="cart-item-sku">SKU: ${escapeHtml(item.sku)}</p>
         <p class="cart-item-price">${formatPrice(item.price)}</p>
+        ${problem ? `<p class="cart-item-warning">${escapeHtml(problem)}</p>` : ''}
       </div>
       <div class="cart-item-qty">
         <button data-qty-decr="${id}" aria-label="Reduser">−</button>
         <span class="cart-item-qty-value">${item.quantity}</span>
-        <button data-qty-incr="${id}" aria-label="Øk">+</button>
+        <button data-qty-incr="${id}" aria-label="Øk" ${item.quantity >= maxQtyOf(item) ? 'disabled' : ''}>+</button>
       </div>
       <p class="cart-item-total">${formatPrice(item.price * item.quantity)}</p>
       <button class="cart-item-remove" data-cart-remove="${id}" aria-label="Fjern">✕</button>
@@ -73,6 +84,7 @@ function renderItems(items) {
 }
 
 function renderSummary(subtotal, items) {
+  const blocked = items.some((i) => itemProblem(i));
   const freeShippingMissing = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const itemsCount = items.reduce((sum, i) => sum + i.quantity, 0);
   const shipping = shippingCost(subtotal);
@@ -119,8 +131,8 @@ function renderSummary(subtotal, items) {
         <dt>Total</dt><dd>${formatPrice(subtotal + shipping)}</dd>
       </dl>
 
-      <button type="button" class="btn btn-primary cart-checkout-btn" data-checkout ${checkoutPending ? 'disabled' : ''}>${checkoutPending ? 'Sender deg til betaling…' : 'Gå til betaling'}</button>
-      <p class="cart-checkout-error" data-checkout-error role="alert">${escapeHtml(checkoutError)}</p>
+      <button type="button" class="btn btn-primary cart-checkout-btn" data-checkout ${checkoutPending || blocked ? 'disabled' : ''} ${checkoutPending ? 'aria-busy="true"' : ''}>${checkoutPending ? 'Sender deg til betaling…' : 'Gå til betaling'}</button>
+      <p class="cart-checkout-error" data-checkout-error role="alert">${escapeHtml(checkoutError || (blocked ? 'Rett opp varene som er merket i handlekurven.' : ''))}</p>
       <p class="cart-checkout-note">
         Sikker betaling med kort, Apple Pay eller Google Pay via Stripe.
         <a href="${mailto}">Eller bestill via e-post</a>.
@@ -178,6 +190,9 @@ function checkoutErrorText(status, data) {
   }
   if (status === 400 && data?.error === 'unavailable') {
     return 'Et av produktene er ikke lenger tilgjengelig. Fjern det fra handlekurven og prøv igjen.';
+  }
+  if (status === 400 && data?.error === 'invalid_items') {
+    return 'Handlekurven kan ha maks 20 ulike varer og 99 stk per vare.';
   }
   return 'Betalingen kunne ikke startes. Prøv igjen om litt, eller bestill via e-post.';
 }
@@ -260,6 +275,14 @@ export function initCartPage() {
     checkoutError = ''; // krepšelis pasikeitė — sena likučio klaida nebeaktuali
     render();
   });
+  // Šviežios kainos ir likučiai. Tuščias sąrašas = Sanity nepasiekiamas (statinis fallback) → krepšelio neliečiam.
+  if (getItems().length) {
+    getProducts()
+      .then((products) => {
+        if (Array.isArray(products) && products.length) syncWithCatalog(products);
+      })
+      .catch((e) => console.warn('[cart-page] catalog sync failed:', e.message));
+  }
   // Grįžus iš Stripe naršyklės „Back“ mygtuku puslapis atkuriamas iš bfcache su „Sender deg…“ būsena.
   window.addEventListener('pageshow', (e) => {
     if (!e.persisted) return;

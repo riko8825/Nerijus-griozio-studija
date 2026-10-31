@@ -1,7 +1,7 @@
 // Katalogas (produkter.html) — render produktų grid + filtravimas.
-import {getProducts, getCategories, imageUrl} from './sanity-client.js?v=20261018';
+import {getProducts, getCategories, imageUrl} from './sanity-client.js?v=20261031';
 import {formatPrice, calcDiscount, escapeHtml} from './format.js';
-import {addItem} from './cart.js?v=20261018';
+import {addItem} from './cart.js?v=20261031';
 
 const STATE = {
   products: [],
@@ -167,9 +167,9 @@ function bindCardActions() {
       const id = btn.getAttribute('data-add-to-cart');
       const product = STATE.products.find((p) => p._id === id);
       if (!product) return;
-      addItem(product, 1);
-      btn.textContent = '✓ Lagt til';
-      btn.classList.add('added');
+      const added = addItem(product, 1);
+      btn.textContent = added ? '✓ Lagt til' : 'Handlekurven er full';
+      btn.classList.toggle('added', added);
       setTimeout(() => {
         btn.textContent = 'Legg i kurv';
         btn.classList.remove('added');

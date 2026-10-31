@@ -36,7 +36,7 @@ function verifySignature(rawBody, header, secret, nowSec = Math.floor(Date.now()
   if (!Number.isInteger(timestamp) || signatures.length === 0) return false;
   if (Math.abs(nowSec - timestamp) > TOLERANCE_SEC) return false;
 
-  const expected = crypto.createHmac('sha256', secret).update(`${timestamp}.${rawBody.toString('utf8')}`).digest();
+  const expected = crypto.createHmac('sha256', secret).update(`${timestamp}.`).update(rawBody).digest();
   return signatures.some((sig) => crypto.timingSafeEqual(Buffer.from(sig, 'hex'), expected));
 }
 
@@ -44,9 +44,17 @@ function sanityHeaders() {
   return {Authorization: `Bearer ${process.env.SANITY_WRITE_TOKEN}`, 'Content-Type': 'application/json'};
 }
 
-// metadata.items = "sanityId:qty[:variantKey],..." (nustato api/checkout.js); jei nėra — imam iš line_items.
+// metadata.items (+ items_1, items_2… ilgiems krepšeliams) = "sanityId:qty[:variantKey],..." (nustato api/checkout.js).
+function metadataItems(metadata) {
+  if (!metadata?.items) return '';
+  const chunks = [metadata.items];
+  for (let n = 1; metadata[`items_${n}`]; n++) chunks.push(metadata[`items_${n}`]);
+  return chunks.join(',');
+}
+
+// Jei metadata nėra (senesnės sesijos) — imam iš line_items.
 async function getOrderItems(session) {
-  const meta = session.metadata?.items;
+  const meta = metadataItems(session.metadata);
   let items;
   if (meta) {
     items = meta.split(',').map((part) => {
@@ -224,3 +232,4 @@ async function handler(req, res) {
 
 module.exports = handler;
 module.exports.verifySignature = verifySignature;
+module.exports.metadataItems = metadataItems;

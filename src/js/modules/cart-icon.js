@@ -1,5 +1,5 @@
 // Header krepšelio ikona — counter visam site'ui.
-import {subscribe, getCount} from './cart.js?v=20261018';
+import {subscribe, getCount} from './cart.js?v=20261031';
 
 export function initCartIcon() {
   const icons = document.querySelectorAll('[data-cart-icon]');
