@@ -47,3 +47,6 @@ prod-*.png
 akva-*.png
 *-fullpage.png
 mobile-preview.html
+
+# Laiškai klientei (repo viešas)
+AKVILEI_*.md
